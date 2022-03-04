@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
-        "weekly_meeting"
+        "weekly_meeting",
+        "Theoretical_Principles"
     ]
 }

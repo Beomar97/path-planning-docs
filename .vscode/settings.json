@@ -1,6 +1,3 @@
 {
-    "conventionalCommits.scopes": [
-        "weekly_meeting",
-        "Theoretical_Principles"
-    ]
+  "ltex.language": "en-GB"
 }

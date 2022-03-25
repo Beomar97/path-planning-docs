@@ -7,35 +7,39 @@
     \item (Nennt kurz den Industriepartner und/oder weitere Kooperationspartner und dessen/deren Interesse am Thema Fragestellung)
 \end{itemize}
 
-%\lipsum[1] \cite{quelle2}
-There has already been done a lot of research when it comes to path planning algorithms. In the following chapter a limited list of implementation is presented in which it is distinguished between past theses, state-of-the-art implementations in robotics and for formula students team around the world. This chapter also introduces the reader to the formula student ZHAW (Zurich university of applied science) association.
+A lot of research has already been done when it comes to path planning algorithms. In the following chapter, a limited list of implementations is presented, with these algorithms being distinguished between past theses, state-of-the-art implementations in robotics and in Formula Student teams all around the world. This chapter also introduces the reader to the \acrlong{fszhaw} (\acrshort{fszhaw}) association of the \acrlong{zhaw}.
 
-\subsection{Formula Student ZHAW Association}
-In 1980 the idea of a combustion engine asphalt racing competition was born at the University of Texas by Ron Matthews. Initially it was called the SAE Mini Indy competition but was later renamed to Formula SAE. Since 2010 Formula Student Germany is also part of the SAE.
+\subsection{Formula SAE Competitions}
+
+In 1980, the idea of a combustion engine asphalt racing competition was born at the University of Texas by Ron Matthews. Initially it was called the SAE Mini Indy Competition, but was later renamed to \Gls{formula_sae}. Since 2010, Formula Student Germany is also a part of the \Gls{sae_international} association.
 \cite{formula_sae}
 
-2010 was also the year when the first electric vehicle competition was introduced which was later extended with a self-driving discipline. The self-driving discipline has the same 3 tracks as the normal electric competition with a driver: the acceleration, the skid pad and a track that is unknown to the team. In the competition the team will be rewarded with points in different categories. The team with the highest points wins the whole event. The disciplines are divided by two categories static and dynamic. The static discipline has three subcategories: engineering design (150 points), cost (100 points) and the business plan (75 points). The dynamic discipline is divided into five subcategories: endurance (325 points), efficiency (100 points), autocross (100 points), skid pad (75 points), acceleration (75 points). The point system and how the competition works varies by the competition event. The mentioned points are based on the Formula Student Germany competition. The competition is held around the world and is the biggest student engineering competition. As of today there are approximately 600 teams.
+These competitions challenge teams of university students to conceive, design, fabricate, develop, and compete with small, formula-style vehicles. They are held around the world and are one of the biggest student engineering competitions. As of today, there are approximately 600 teams. \cite{sae_student_events}
+Each competition is split into two classes: an \acrlong{cv} (\acrshort{cv}) class and an \acrlong{ev} (\acrshort{ev}) class, which was first introduced in 2010. Additionally, vehicles of both classes can participate in an \acrlong{dc} (\acrshort{dc}). After a series of technical inspections, vehicles will compete in a series of static and dynamic events, and the team with the most overall points will win the competition for its class or the \acrshort{dc} respectively. The cars will be driven on three different tracks: an acceleration track, a skid pad track and a track that is not known to the team. The static discipline has three subcategories: engineering design (150 points), cost (100 points) and business plan (75 points). The dynamic discipline is divided into five subcategories: endurance (325 points), efficiency (100 points), autocross (100 points), skid pad (75 points) and acceleration (75 points). The point system, and how the competition works varies by the competition event itself. The mentioned points are based on the Formula Student Germany competition.
 \cite{amz_racing_history}
 
-The formula student ZHAW association was launched in 2019 with 20 members involved. The first fully functional car was build in the year of 2021. Whereas a new car for the season of 2022 is being built. The new car has several improvements in aerodynamics, design and many more. \cite{fszhaw_launch}
-To compete against other teams in the driverless category an improved version of the current software in regard to prediction, path planing, localization and many more has to be build. This thesis covers an approach how to implement a path planing or in other word trajectory planing algorithm.
-The following topics cover what kind of related work it has been done in this area and state-of-the-art implementation even specifically for the formula student race car autonomous system.
+\subsection{Formula Student ZHAW Association}
+
+The \acrlong{fszhaw} association was launched back in 2019 with initially 20 members involved. The first fully functional car was build in the year of 2021. A new car  is being built for the 2022 season. The new car has seen several improvements in aerodynamics, design and more. \cite{fszhaw_launch}
+For the first time in the association's history, the team will also compete in the \acrshort{dc} category.
+To be able to do that, a new and improved version of the current software, with regard to prediction, path planing, localization and more, has to be build. This thesis covers an approach on how to implement a path planing algorithm, or in other words a trajectory planing algorithm.
+In the following sections, related work and state-of-the-art implementations in this area will be covered, even specifically for the Formula Student race car autonomous system.
 
 \subsection{Related Work}
 
-Ignat Georgiev a student from the University of Edinburgh did a report on the topic "Path planning and control for an autonomous race car" in his master program. The report was based on the formula student project by the University of Edinburgh. The car follows the see-think-act cycle as an abstract way how the path planning and control process is structured. By "see", he means what information the sensors and cameras provide. With "think", the processing of the images, sensor data, mapping, localization and path planning is meant. And control is the mechanism to steer acceleration and break the vehicle.
+Ignat Georgiev, a student at the University of Edinburgh, did a report on the topic "Path planning and control for an autonomous race car" in his master program. The report was based on the Formula Student project by the University of Edinburgh. The car follows the see-think-act cycle as an abstract way on how the path planning and control process is structured. By "see", he means what kind of information the sensors and cameras provide. With "think", the processing of the images, sensor data, mapping, localization and path planning is meant. And as for "act", the mechanism to steer, accelerate and break the vehicle is meant.
 
-For path planning specifically the report mentions two algorithm the A* and the Rapidly-exploring Random Trees (RRT) algorithm. In the DARPA Grand Challenge all the vehicles used the A* Graph Search Algorithm with consideration of the kinematics. Furthermore, the incremental search algorithm "Rapidly-exploring Random Trees (RRT)" was also used in the path in regard to autonomous driving.
-For controlling the vehicle another algorithm is used the so-called "Model Predictive Path Integration" (MPPI).
+For path planning specifically, the report mentions two algorithms: the A* algorithm and the Rapidly-exploring Random Trees (RRT) algorithm. In the DARPA Grand Challenge, all vehicles used a variety of the A* Graph Search Algorithm, with consideration of the kinematics. Furthermore, the incremental search algorithm "Rapidly-exploring Random Trees (RRT)" was also used in the path in regard to autonomous driving.
+To control the vehicle, another algorithm is used, the so-called "Model Predictive Path Integration" (MPPI).
 \cite{path_planning_and_control_georgiev}
 
 \subsection{State of the Art}
-This section gives a brief overview of different implementation in regard to path planning algorithms. We differ between raw python implementations and implementation from other formula student teams
+This section gives a brief overview of different implementation of path planning algorithms. We differ between raw Python implementations and implementations by other Formula Student teams.
 
 \subsubsection{Python Implementations}
-PythonRobotics is a python library hub for different implementations in robotics. It varies between arm, aerial, car robotics and many more.
-In these segments of robotics it provides an overview of different algorithm implementations including path planning algorithms.
-The path planning algorithms differs from different approaches for example a dynamic window, breadth first search, Dijkstra just to name a few. 
+PythonRobotics is a Python library hub for a wide range of different implementations in robotics. It varies between arm, aerial, car robotics and more.
+For these segments of robotics, it provides an overview of different algorithm implementations, including several path planning algorithms.
+The path planning algorithms differ from different approaches, dynamic window, breadth first search, Dijkstra algorithm, just to name a few. 
 \cite{python_robotics}
 
 \subsubsection{Formula Student Implementations}

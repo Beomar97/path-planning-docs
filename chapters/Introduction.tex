@@ -29,8 +29,8 @@ In the following sections, related work and state-of-the-art implementations in 
 
 Ignat Georgiev, a student at the University of Edinburgh, did a report on the topic "Path planning and control for an autonomous race car" in his master program. The report was based on the Formula Student project by the University of Edinburgh. The car follows the see-think-act cycle as an abstract way on how the path planning and control process is structured. By "see", he means what kind of information the sensors and cameras provide. With "think", the processing of the images, sensor data, mapping, localization and path planning is meant. And as for "act", the mechanism to steer, accelerate and break the vehicle is meant.
 
-For path planning specifically, the report mentions two algorithms: the A* algorithm and the Rapidly-exploring Random Trees (RRT) algorithm. In the DARPA Grand Challenge, all vehicles used a variety of the A* Graph Search Algorithm, with consideration of the kinematics. Furthermore, the incremental search algorithm "Rapidly-exploring Random Trees (RRT)" was also used in the path in regard to autonomous driving.
-To control the vehicle, another algorithm is used, the so-called "Model Predictive Path Integration" (MPPI).
+For path planning specifically, the report mentions two algorithms: the A* algorithm and the \acrlong{rrt} (\acrshort{rrt}) algorithm. In the DARPA Grand Challenge, all vehicles used a variety of the A* Graph Search Algorithm, with consideration of the kinematics. Furthermore, the incremental search algorithm \acrshort{rrt} was also used in the path in regard to autonomous driving.
+To control the vehicle, another algorithm is used, the so-called \acrlong{mppi} (\acrshort{mppi}).
 \cite{path_planning_and_control_georgiev}
 
 \subsection{State of the Art}
@@ -43,10 +43,10 @@ The path planning algorithms differ from different approaches, dynamic window, b
 \cite{python_robotics}
 
 \subsubsection{Formula Student Implementations}
-Jérôme Perdrizat was the first student in the FSZHAW team which was working on path planning in the driverless team. He used the Delaunay-Triangulation method to evaluate the center line of the track. The error rate was mentioned in the master thesis as well for example when a cone wasn't detected. The thesis does not cover an algorithm which draws the optimum line in consideration of curves and speed.
+The first student in the \acrshort{fszhaw} team to work on path planning was Jérôme Perdrizat. The implemented path planner consists of a middle line detection, path smoothening and a velocity / acceleration Profile. The work was done as part of his master thesis. To evaluate the middle line of the track, Delaunay-Triangulation was used. An error rate was also mentioned in the thesis, e.g. when a cone wasn't detected. The thesis does not cover an algorithm which draws the optimum line in consideration of curves and speed.
 \cite{autopilot_for_formula_student_jerome}
 
-The AMZ (Academic Motorsports Club Zurich) from the ETH Zurich made a document to quote implementations of path planning algorithms. They mentioned the RRT algorithm for track exploration and Model Predictive Contouring Controller (MPCC) for autonomous racing. Furthermore, they provide a skeleton for building and implementing driverless algorithms for easier software distribution.
+The \acrshort{amz} (\acrlong{amz}) from \acrshort{eth} (\acrlong{eth}) made Formula Student driverless resources available in a public repository, which also includes implementations of path planning algorithms. Several algorithms are being mentioned, e.g. the \acrshort{rrt} algorithm for track exploration and a \acrlong{mpcc} (\acrshort{mpcc}) for autonomous racing. Furthermore, for easier software distribution, a skeleton for building and implementing driverless algorithms is provided.
 \cite{amz_racing_github}
 
 \section{Objective / Problem definition / Requirements}

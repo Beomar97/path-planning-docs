@@ -7,23 +7,7 @@
     \item (Nennt kurz den Industriepartner und/oder weitere Kooperationspartner und dessen/deren Interesse am Thema Fragestellung)
 \end{itemize}
 
-A lot of research has already been done when it comes to path planning algorithms. In the following chapter, a limited list of implementations is presented, with these algorithms being distinguished between past theses, state-of-the-art implementations in robotics and in Formula Student teams all around the world. This chapter also introduces the reader to the \acrlong{fszhaw} (\acrshort{fszhaw}) association of the \acrlong{zhaw}.
-
-\subsection{Formula SAE Competitions}
-
-In 1980, the idea of a combustion engine asphalt racing competition was born at the University of Texas by Ron Matthews. Initially it was called the SAE Mini Indy Competition, but was later renamed to \Gls{formula_sae}. Since 2010, Formula Student Germany is also a part of the \Gls{sae_international} association.
-\cite{formula_sae}
-
-These competitions challenge teams of university students to conceive, design, fabricate, develop, and compete with small, formula-style vehicles. They are held around the world and are one of the biggest student engineering competitions. As of today, there are approximately 600 teams. \cite{sae_student_events}
-Each competition is split into two classes: an \acrlong{cv} (\acrshort{cv}) class and an \acrlong{ev} (\acrshort{ev}) class, which was first introduced in 2010. Additionally, vehicles of both classes can participate in an \acrlong{dc} (\acrshort{dc}). After a series of technical inspections, vehicles will compete in a series of static and dynamic events, and the team with the most overall points will win the competition for its class or the \acrshort{dc} respectively. The cars will be driven on three different tracks: an acceleration track, a skid pad track and a track that is not known to the team. The static discipline has three subcategories: engineering design (150 points), cost (100 points) and business plan (75 points). The dynamic discipline is divided into five subcategories: endurance (325 points), efficiency (100 points), autocross (100 points), skid pad (75 points) and acceleration (75 points). The point system, and how the competition works varies by the competition event itself. The mentioned points are based on the Formula Student Germany competition.
-\cite{amz_racing_history}
-
-\subsection{Formula Student ZHAW Association}
-
-The \acrlong{fszhaw} association was launched back in 2019 with initially 20 members involved. The first fully functional car was build in the year of 2021. A new car  is being built for the 2022 season. The new car has seen several improvements in aerodynamics, design and more. \cite{fszhaw_launch}
-For the first time in the association's history, the team will also compete in the \acrshort{dc} category.
-To be able to do that, a new and improved version of the current software, with regard to prediction, path planing, localization and more, has to be build. This thesis covers an approach on how to implement a path planing algorithm, or in other words a trajectory planing algorithm.
-In the following sections, related work and state-of-the-art implementations in this area will be covered, even specifically for the Formula Student race car autonomous system.
+When it comes to path planning algorithms, a lot of research has already been done. In the following chapter, a limited list of implementations is presented, with these algorithms being distinguished between past theses, state-of-the-art implementations in robotics and in Formula Student teams all around the world. This chapter also introduces the reader to the \acrlong{zur} (\acrshort{zur}) association of the \acrlong{zhaw}.
 
 \subsection{Related Work}
 
@@ -43,13 +27,26 @@ The path planning algorithms differ from different approaches, dynamic window, b
 \cite{python_robotics}
 
 \subsubsection{Formula Student Implementations}
-The first student in the \acrshort{fszhaw} team to work on path planning was Jérôme Perdrizat. The implemented path planner consists of a middle line detection, path smoothening and a velocity / acceleration Profile. The work was done as part of his master thesis. To evaluate the middle line of the track, Delaunay-Triangulation was used. An error rate was also mentioned in the thesis, e.g. when a cone wasn't detected. The thesis does not cover an algorithm which draws the optimum line in consideration of curves and speed.
+The first student in the \acrshort{fszhaw} team to work on path planning was Jérôme Perdrizat. The implemented path planner consists of a middle line detection, path smoothening and a velocity / acceleration profile. The work was done as part of his master thesis. To evaluate the middle line of the track, Delaunay-Triangulation was used. An error rate was also mentioned in the thesis, e.g. when a cone wasn't detected. The thesis did not cover an algorithm which draws the optimum line in consideration of curves and speed.
 \cite{autopilot_for_formula_student_jerome}
 
 The \acrshort{amz} (\acrlong{amz}) from \acrshort{eth} (\acrlong{eth}) made Formula Student driverless resources available in a public repository, which also includes implementations of path planning algorithms. Several algorithms are being mentioned, e.g. the \acrshort{rrt} algorithm for track exploration and a \acrlong{mpcc} (\acrshort{mpcc}) for autonomous racing. Furthermore, for easier software distribution, a skeleton for building and implementing driverless algorithms is provided.
 \cite{amz_racing_github}
 
-\section{Objective / Problem definition / Requirements}
+% TODO Edinburgh and TUMFTM implementations
+
+\subsection{Formula SAE}
+In 1980, the idea of a combustion engine asphalt racing competition was born at the University of Texas by Ron Matthews. Initially it was called the SAE Mini Indy Competition, but was later renamed to \Gls{formula_sae}. Today, there are many events organized by local associations worldwide.
+\cite{formula_sae}
+These competitions challenge teams of university students to conceive, design, fabricate, develop, and compete with small, formula-style vehicles. They are held around the world and are one of the biggest student engineering competitions. As of today, there are approximately 600 teams. \cite{sae_student_events}
+
+\subsubsection{Zurich UAS Racing}
+Zurich UAS Racing (ZUR), formerly known as \acrlong{fszhaw} (\acrshort{fszhaw}), was launched back in 2019 with initially 20 members involved, with the first fully functional car finished in 2021. A new car is currently being built for the 2022 season, with currently more than 60 students involved. The new car has seen several improvements in aerodynamics, design, and most signifiant, with driverless capabilities. \cite{fszhaw_launch}
+Therefore, for the first time in the association's history, the team will compete in the \acrshort{dc} category.
+The ability to orientate itself in an unknown track and the ability to optimize a fully-known track are both critical components of a driverless race car. Therefore, it is imperative to research, implement and test various path planning algorithms. As part of the newly revised autonomous system, which also includes prediction, localization and controlling, a new path planning module has to be implemented.
+The team will be competing at Formula Student events in Switzerland, organized by FSSwitzerland \cite{fsswitzerland}, Germany, organized by Formula Student Germany \cite{fs_germany}, and Croatia, organized by FS Alpe Adria \cite{fs_alpe_adria}.
+
+\section{Problem Definition / Objective / Requirements}
 \begin{itemize}
     \item Formuliert das Ziel der Arbeit
     \item Achtung: Ziel und Aufgabe sind nicht zwingend dasselbe! Bitte sauber trennen.
@@ -64,36 +61,11 @@ The \acrshort{amz} (\acrlong{amz}) from \acrshort{eth} (\acrlong{eth}) made Form
     Wenn ein Glossar (vgl. 6.2.) erstellt wird, erübrigt sich dieser Abschnitt.
 \end{itemize}
 
-\lipsum[1] \cite{quelle2}
+\subsection{Problem Definition}
+\acrlong{zur}, the university's racing team, have begun their work on its second generation race car since Fall 2021. With path planning being an integral part of an autonomous car, the research and implementation of a new path planning module as part of their new autonomous system is very important. See the official problem definition in the appendix.
 
-\subsection{Subsection}
-\lipsum[1] \cite{quelle1}
+\subsection{Objective}
+The objective of this thesis is the research and implementation of several path planning algorithms, which can be adapted on different tracks and driving scenarios. The end goal is to be able to compete in the \acrlong{dc} at various Formula Student events from July until August.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.4\columnwidth]{de-zhaw-init-rgb}
-\caption{Bildli}
-\label{fig:bildli1}
-\end{figure}
-
-
-\subsubsection{SubSubSection}
-\lipsum[1]
-\begin{table}[H]
-\centering
-\caption{Eine Tabelle}
-\label{tab:my-table}
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{A} & \textbf{B} & \textbf{C} \\ \hline
-1          & 2          & 3          \\ \hline
-4          & 5          & 6          \\ \hline
-\end{tabular}
-\end{table}
-
-\paragraph{Paragraph}
-\lipsum[1]
-
- 
-
-
+% TODO
+% Übersicht über die Arbeit: stellt die folgenden Teile der Arbeit kurz vor

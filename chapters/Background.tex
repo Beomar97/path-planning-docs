@@ -47,10 +47,37 @@ Services are based on a call-and-response model, versus topics’ publisher-subs
 Nodes have parameters to define their default configuration values. %https://docs.ros.org/en/foxy/Tutorials/Parameters/Understanding-ROS2-Parameters.html
 
 \subsubsection{Actions}
-Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow you to execute long-running tasks, provide regular feedback, and are cancelable. % https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Actions.html
+Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow you to execute long-running tasks, provide regular feedback, and are cancellable. % https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Actions.html
 
 \section{Path Planning Algorithms}
-\lipsum[1]
+Path planning algorithms are used in many environments for example in assembling a car with a robot arm, parking a car autonomously or finding a landmine with a robot in a military operation. 
+
+\subsection{Overview}
+A path can be if a human goes from A to B and follows certain signs for example when hiking on a mountain. Otherwise, a human can follow a path that is generated on a GPS system in a car. The difference lies by a manual plan versus a generated plan by a machine. This section addresses only the generated one.
+
+The planning consists of a state, time that is needed, actions, initial / goal state, criterion and a plan. The state is normally represented by a planning algorithm. Time is based on a sequence of decision that has to be made in a certain time. Actions manipulate the state and cover how the state should be changed. The initial and goal state defines where the planner should start and finish.
+The criterion defines the outcome and the boundaries of the planner. The type of the criterion is either based on the feasibility or optimality. Feasibility covers the arrival of the goal state without the concern of efficiency. Optimality finds a plan with an optimized performance in mind. The plan in general covers the strategy or behaviour on a decision maker.
+\cite{planning_algorithms_steven_m_lavalle}
+
+\subsection{Algorithms, Planners and Plans}
+An algorithm usually consists of a machine and environment where there are actuations from the machine to the environment and sensing from the environment to the machine. The problem in planning is often that the machine interacts with the physical world which has uncountable different influences on the plan that has to be calculated. This is why the environment is often an approximation of the real world since not every sensing mechanism from the environment to the machine can be processed.
+
+Planners are constructing plans. They are either a machine or a human. When the planner is a machine then it is usually a planning algorithm. If the planner is a human then the human itself is the algorithm which makes the decision.
+
+The plans can be used in three different ways: Execution, refinement or hierarchical inclusion. Execution runs the plan on a simulation or a robot which is connected to the real world. Refinement tries to find a better plan. The hierarchical inclusion gives the plan to a higher level plan that is consisting of sub plans.
+
+\cite{planning_algorithms_steven_m_lavalle}
+
+\subsection{Path Planning Algorithm Categories}
+A path planning algorithm can be categorized in one of the following groups:
+\begin{itemize}
+    \item Motion Planning
+    \item Decision-Theoretic Planning
+    \item Planning Under Differential Constraints
+\end{itemize}
+
+Motion planning is interested in planning in a continuous state spaces. This means that the space is not static and changes in relation to time. 
+
 
 \section{Hardware}
 

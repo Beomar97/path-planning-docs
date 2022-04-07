@@ -95,23 +95,37 @@ Motion planning is interested in planning in continuous state spaces. This means
 
 \textbf{Continuous $\rightarrow$ discrete} is the central theme in motion planning to transform models. Motion planning also covers combinatorial motion planning, which means with the input model the algorithm builds a representation of the original problem. There is also the field of sampling-based motion planning.
 
-\textbf{Geometric Representation and Transformation} to start defining a motion planning algorithm. It defines a body of a system in a space and how it transforms for example moves. There are also chains of movements of a body.
-\textbf{The Configuration Space} is needed for the motion planning algorithm to define the space in which is a set of possible transformations that could be applied to a robot.
-\textbf{Sampling-Based Motion Planning} is a field in motion planning that covers sampling-based algorithms. Sampling-based planning algorithm uses a collision detection as a "black box" which is separated to geometric and kinematic models motion planning.
-\textbf{Combinatorial Motion Planning} covers finding path in a continuous space without the restoration of approximations. 
-\textbf{Extensions of Basic Motion Planning} defines flavours of motion planning algorithms. There are for example the time-varying problems which defined in the planning formulation.
-\textbf{Feedback Motion Planning} describes a class of motion planning algorithms that are taking feedback for example from the real world into account.
+\begin{itemize}
+    \item \textbf{Geometric Representation and Transformation} to start defining a motion planning algorithm. It defines a body of a system in a space and how it transforms for example moves. Movements can be chained in a state.
+    \item \textbf{The Configuration Space} is needed for the motion planning algorithm to define the space in which is a set of possible transformations that could be applied to a robot.
+    \item \textbf{Sampling-Based Motion Planning} is a field in motion planning that covers sampling-based algorithms. Sampling-based planning algorithm are using a collision detection as a "black box" which is separated to geometric and kinematic models motion planning. There are two different types of algorithm models. First is the single-query algorithm which consists of a ($q_i,q_G$) pair as an input. $q_i$ defines the start and $q_G$ the end goal. In this strategy no precomputation is possible to make use of. A multi-query algorithm can have multiple initial goals, that is why it makes sense to precompute the models to run it more efficiently. An example of a single-query algorithm is the Rapidly Exploring Random Tree (RRT) which is a subset of the Rapidly Exploring Dense Tree (RDT) algorithm. It searches for the shortest path by creating random sequences that end up in a tree that holds multiple sequences which can be connected to each other. The goal of the multi-query  method is to create a roadmap for each $q_i$ and $q_G$ that is why the family of algorithm is called sampling-based roadmap.
+    \item \textbf{Combinatorial Motion Planning} covers finding a path in a continuous space without resorting to approximations. Cell decompositions and cylindrical algebraic decomposition are two different subcategories of combinatorial motion planning algorithms. Cell decompositions are based on a collection of cells that is called complex. The term cell decomposition describes a part of a complex which is a smaller number of cells in a space. In the 2D decomposition field there is the triangulation algorithm which is performed by vertical decomposition. The triangulation algorithm connects every build triangles with three nodes at a time. If you have 4 nodes then two triangles are made. In computational algebraic geometry the definition is very general that is why it can cover a lot of solution for problems but at the same time is challenging to implement.
+    \item \textbf{Extensions of Basic Motion Planning} defines flavours of motion planning algorithms. There are for example the time-varying problems which defined in the planning formulation.
+    \item \textbf{Feedback Motion Planning} describes a class of motion planning algorithms that are taking feedback for example from the real world into account.
+\end{itemize}
+
+\cite{planning_algorithms_steven_m_lavalle}
 
 \subsubsection{Decision-Theoretic Planning}
-\textbf{Basic Decision Theory}
-\textbf{Sequential Decision Theory}
-\textbf{Sensors and Information Spaces}
-\textbf{Planning Under Sensing Uncertainty}
+
+\begin{itemize}
+    \item \textbf{Basic Decision Theory}
+    \item \textbf{Sequential Decision Theory}
+    \item \textbf{Sensors and Information Spaces}
+    \item \textbf{Planning Under Sensing Uncertainty}
+\end{itemize}
+
+\cite{planning_algorithms_steven_m_lavalle}
 
 \subsubsection{Planning under Differential Constraints}
-\textbf{Differential Models}
-\textbf{Sampling-Based Planning Under Differential Constraints}
-\textbf{System Theory and Analytical Techniques}
+
+\begin{itemize}
+    \item \textbf{Differential Models}
+    \item \textbf{Sampling-Based Planning Under Differential Constraints}
+    \item \textbf{System Theory and Analytical Techniques}
+\end{itemize}
+
+\cite{planning_algorithms_steven_m_lavalle}
 
 \section{Hardware}
 

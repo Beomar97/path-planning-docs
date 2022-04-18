@@ -7,7 +7,7 @@
     \item (Nennt kurz den Industriepartner und/oder weitere Kooperationspartner und dessen/deren Interesse am Thema Fragestellung)
 \end{itemize}
 
-When it comes to path planning algorithms, a lot of research has already been done. In the following chapter, a limited list of implementations is presented, with these algorithms being distinguished between past theses, state-of-the-art implementations in robotics and in Formula Student teams all around the world. This chapter also introduces the reader to the \acrlong{zur} (\acrshort{zur}) association of the \acrlong{zhaw}.
+When it comes to path planning algorithms, a lot of research has already been done. In the following chapter, a limited list of implementations is presented, with these algorithms being distinguished between past theses, state-of-the-art implementations in robotics and in Formula Student teams all around the world. This chapter also introduces the reader to the Formula Student association of the \acrlong{zhaw} (\acrshort{zhaw}) called \acrlong{zur} (\acrshort{zur}).
 
 \subsection{Related Work}
 
@@ -27,7 +27,7 @@ The path planning algorithms differ from different approaches, dynamic window, b
 \cite{python_robotics}
 
 \subsubsection{Formula Student Implementations}
-The first student in the \acrshort{fszhaw} team to work on path planning was Jérôme Perdrizat. The implemented path planner consists of a middle line detection, path smoothening and a velocity / acceleration profile. The work was done as part of his master thesis. To evaluate the middle line of the track, Delaunay-Triangulation was used. An error rate was also mentioned in the thesis, e.g. when a cone wasn't detected. The thesis did not cover an algorithm which draws the optimum line in consideration of curves and speed.
+The first student in the team of \acrlong{zur} to work on path planning was Jérôme Perdrizat. The implemented path planner consists of a middle line detection, path smoothening and a velocity / acceleration profile. The work was done as part of his master thesis. To evaluate the middle line of the track, Delaunay-Triangulation was used. An error rate was also mentioned in the thesis, e.g. when a cone wasn't detected. The thesis did not cover an algorithm which draws the optimum line in consideration of curves and speed.
 \cite{autopilot_for_formula_student_jerome}
 
 The \acrshort{amz} (\acrlong{amz}) from \acrshort{eth} (\acrlong{eth}) made Formula Student driverless resources available in a public repository, which also includes implementations of path planning algorithms. Several algorithms are being mentioned, e.g. the \acrshort{rrt} algorithm for track exploration and a \acrlong{mpcc} (\acrshort{mpcc}) for autonomous racing. Furthermore, for easier software distribution, a skeleton for building and implementing driverless algorithms is provided.
@@ -41,8 +41,8 @@ In 1980, the idea of a combustion engine asphalt racing competition was born at 
 These competitions challenge teams of university students to build and participate with formula-style vehicles. They are held around the world and are one of the biggest student engineering competitions. As of today, there are approximately 600 teams. \cite{sae_student_events}
 
 \subsubsection{Zurich UAS Racing}
-\acrlong{zur} (\acrshort{zur}), formerly known as \acrlong{fszhaw} (\acrshort{fszhaw}), was launched back in 2019, with the first fully functional car finished in 2021. A new car is currently being built for the 2022 season, with more than 60 students involved. The new car has seen several improvements in aerodynamics, design, and most signifiant, with driverless capabilities. \cite{fszhaw_launch}
-Therefore, for the first time in the association's history, the team will compete in the \acrshort{dc} category.
+\acrlong{zur}, formerly known as \acrlong{fszhaw} (\acrshort{fszhaw}), was launched back in 2019, with the first fully functional car finished in 2021. A new car is currently being built for the 2022 season, with more than 60 students involved. The new car has seen several improvements in aerodynamics, design, and most signifiant, with driverless capabilities. \cite{fszhaw_launch}
+Therefore, for the first time in the association's history, the team will compete in the \acrlong{dc} (\acrshort{dc}) category.
 The ability to orientate itself in an unknown track and the ability to optimize a fully-known track are both critical components of a driverless race car. Therefore, it is imperative to research, implement and test various path planning algorithms. As part of the newly revised autonomous system, which also includes prediction, localization and controlling, a new path planning module has to be implemented.
 The team will be competing at Formula Student events in Switzerland, organized by FS Switzerland \cite{fsswitzerland}, Germany, organized by Formula Student Germany \cite{fs_germany}, and Croatia, organized by FS Alpe Adria \cite{fs_alpe_adria}.
 

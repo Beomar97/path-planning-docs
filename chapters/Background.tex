@@ -46,7 +46,22 @@ The dynamic events reveal the driving performance of the prototypes. Every disci
     \end{figure}
 \end{itemize}
 
-\section{FSZHAW Autonomous System}
+\section{Zurich UAS Racing Autonomous System}
+On a high-level view, the 'Autonomous System' is made up of five teams: 'Controls', which is responsible for the steering, breaking and acceleration of the car, 'Perception', which is responsible for the recognition of the track by perceiving the different types of cones the track is made up of, 'Localization and Mapping', which estimates the current position of the vehicle relative to the starting position and maps it into an absolute position on the track, 'Path Planning', which is responsible for the computation of the best possible path along the track, and 'Simulation', which is responsible for providing the rest of the team an adequate tool to simulate and test on.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{AS_Component_Diagram.png}
+    \caption{Autonomous System Component Diagram}
+    \label{fig:AS Component Diagram}
+\end{figure}
+
+Essential hardware components of the autonomous system are stored inside a box, which will be mounted on the vehicle itself. The connections coming into the box from the various components outside can be seen in the reference diagram \ref{fig:AS DV Box}. Data needed for 'Localization' is received from the \acrshort{gnss} sensor and antenna (a MIKROE GNSS 7 Click and a u-blox ANN-MB), while the inputs for 'Perception' are received from the stereo camera (a Stereolabs ZED 2) and Lidar sensor (a Velodyne Lidar Puck Hi-Res), which both are also needed for the 'Path Planning' module. Information for the 'Control' unit, are sent over to the engine control unit (ECU) (a dSPACE MicroAutoBox III). In the end, all critical data for the operation leads into the processing unit of the system, which is in this case a 'Jetson AGX Xavier' by NVIDIA. The Jetson is an AI computer which is made for autonomous machines in mind, delivering workstation performance in an embedded module under 30 Watts of power.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{AS_HW_Components.png}
+    \caption{Autonomous System Hardware Components}
+    \label{fig:AS HW Components}
+\end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{AS_DV_Box.png}
@@ -54,18 +69,12 @@ The dynamic events reveal the driving performance of the prototypes. Every disci
     \label{fig:AS DV Box}
 \end{figure}
 
+The processing unit is set up with an installation of Linux, which will run the software of the autonomous system on top of \acrshort{ros}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{AS_Deployment_Diagram.png}
     \caption{Autonomous System Deployment Diagram}
     \label{fig:AS Deployment Diagram}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{AS_Component_Diagram.png}
-    \caption{Autonomous System Component Diagram}
-    \label{fig:AS Component Diagram}
 \end{figure}
 
 \section{Robot Operating System (ROS)}

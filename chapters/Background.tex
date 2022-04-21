@@ -6,10 +6,16 @@
 The main idea of a Formula SAE competition is to conceive, design, fabricate, develop and compete with small, formula style, race cars.
 The competition is split into two classes: Internal Combustion Engine Vehicle (\acrshort{cv}) and Electric Vehicle (\acrshort{ev}).
 Additionally, a team can opt-in to take part in the Driverless Cup (\acrshort{dc}).
-After a series of technical inspections in regards for safety and rules compliance, the vehicles will then compete in a series of static and dynamic events. In the end, the team with the most overall points will win the competition for its class or the \acrlong{dc}, respectively.
+After a series of technical inspections in regards for safety and rules compliance, the vehicles will then compete in a series of static and dynamic events. In the end, the team with the most overall points will win the competition for its class or the \acrlong{dc}, respectively. \cite{fs_rules_2022_handbook}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{FS_SAE_Competition.jpeg}
+    \caption{Teams participating at Formula Student Germany ©FS Germany}
+    \label{fig:FS SAE Competition}
+\end{figure}
 
 \subsection{Static Events}
-The following static events are held: Business Plan Presentation, Cost and Manufacturing, and Engineering Design. In these events, the engineers have to present their car and their development processes to a panel of judges.
+The following static events are held: Business Plan Presentation, Cost and Manufacturing, and Engineering Design. In these events, the engineers have to present their car and their development processes to a panel of judges. \cite{fs_rules_2022_handbook}
 
 \begin{itemize}
     \item \textbf{Business Plan Presentation:} The team's ability to develop and deliver a comprehensive business model will be evaluated. The presentation should demonstrate how their self-developed race car could become a profitable business idea.
@@ -19,7 +25,7 @@ The following static events are held: Business Plan Presentation, Cost and Manuf
 
 \subsection{Dynamic Events}
 The following dynamic events are held: Skid Pad, Acceleration, Autocross, Endurance and Efficiency, and Trackdrive.
-The dynamic events reveal the driving performance of the prototypes. Every discipline puts different abilities of the cars to the test.
+The dynamic events reveal the driving performance of the prototypes. Every discipline puts different abilities of the cars to the test. \cite{fs_rules_2022_handbook}
 \begin{itemize}
     \item \textbf{Skid Pad:} The skid pad track consists of two pairs of concentric circles in the shape of an eight. This track will test the lateral grip of the car.
     \begin{figure}[H]
@@ -46,13 +52,41 @@ The dynamic events reveal the driving performance of the prototypes. Every disci
     \end{figure}
 \end{itemize}
 
-\section{Driverless}
-\lipsum[1]
+\section{Zurich UAS Racing Autonomous System}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{AS_Component_Diagram.png}
+    \caption{Autonomous System Component Diagram}
+    \label{fig:AS Component Diagram}
+\end{figure}
+On a high-level view, the 'Autonomous System' is made up of five domains: 'Controls', which is responsible for the steering, breaking and acceleration of the car, 'Perception', which is responsible for the recognition of the track by perceiving the different types of cones the track is made up of, 'Localization and Mapping', which estimates the current position of the vehicle relative to the starting position and maps it into an absolute position on the track, 'Path Planning', which is responsible for the computation of the best possible path along the track, and 'Simulation', which is responsible for providing the rest of the domains an adequate tool to simulate and test on.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{AS_DV_Box.png}
+    \caption{Autonomous System DV Box}
+    \label{fig:AS DV Box}
+\end{figure}
+
+Essential hardware components of the autonomous system are stored inside a box, which will be mounted on the vehicle itself. The connections coming into the box from the various components outside can be seen in the reference diagram \ref{fig:AS DV Box}. Data needed for 'Localization' is received from the \acrshort{gnss} sensor and antenna (a MIKROE GNSS 7 Click and a u-blox ANN-MB), while the inputs for 'Perception' are received from the stereo camera (a Stereolabs ZED 2) and Lidar sensor (a Velodyne Lidar Puck Hi-Res), which both are also needed for the 'Path Planning' module. Information for the 'Control' unit are sent over to the engine control unit (ECU) (a dSPACE MicroAutoBox III). In the end, all critical data for the operation leads into the processing unit of the system, which is in this case a 'Jetson AGX Xavier' by NVIDIA. The Jetson is an AI computer which is made for autonomous machines in mind, delivering workstation performance in an embedded module under 30 Watts of power.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{AS_HW_Components.png}
+    \caption{Autonomous System Hardware Components}
+    \label{fig:AS HW Components}
+\end{figure}
+
+The processing unit is set up with an installation of Linux, which will run the software of the autonomous system on top of \acrshort{ros}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{AS_Deployment_Diagram.png}
+    \caption{Autonomous System Deployment Diagram}
+    \label{fig:AS Deployment Diagram}
+\end{figure}
 
 \section{Robot Operating System (ROS)}
-The Robot Operating System (ROS) is not, like the name may suggest, a full-fledged operating system, but a set of software libraries and tools for the development of robot applications. The open-source robotics middleware comes shipped with capable developer tools, drivers and advanced algorithms. \cite{ros2_documentation}
+The \acrlong{ros} (\acrshort{ros}) is not, like the name may suggest, a full-fledged operating system, but a set of software libraries and tools for the development of robot applications. The open-source robotics middleware comes shipped with capable developer tools, drivers and advanced algorithms. \cite{ros2_documentation}
 
-There are currently two major versions of ROS which are seeing releases, ROS 1 and ROS 2. \cite{ros2_distributions} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_releases_and_target_platforms}
+There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_distributions} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_releases_and_target_platforms}
 
 The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_distributions}
 
@@ -76,19 +110,22 @@ The ROS graph is a network of ROS 2 elements which processes data simultaneously
 \end{figure}
 
 \subsubsection{Nodes}
-A node is a fundamental ROS 2 element that serves a single, modular purpose in a robotics system. % https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Nodes.html
+A node is a fundamental ROS 2 element that serves a single, modular purpose in a robotics system. \cite{ros2_tutorials_nodes}
 
 \subsubsection{Topics}
- Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. % https://docs.ros.org/en/foxy/Tutorials/Topics/Understanding-ROS2-Topics.html
+ Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_tutorials_topics}
 
 \subsubsection{Services}
-Services are based on a call-and-response model, versus topics’ publisher-subscriber model. Services only provide data when they are specifically called by a client. % https://docs.ros.org/en/foxy/Tutorials/Services/Understanding-ROS2-Services.html
+Services are based on a call-and-response model, versus topics’ publisher-subscriber model. Services only provide data when they are specifically called by a client. \cite{ros2_tutorials_services}
 
 \subsubsection{Parameters}
-Nodes have parameters to define their default configuration values. %https://docs.ros.org/en/foxy/Tutorials/Parameters/Understanding-ROS2-Parameters.html
+Nodes have parameters to define their default configuration values. \cite{ros2_tutorials_parameters}
 
 \subsubsection{Actions}
-Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow you to execute long-running tasks, provide regular feedback, and are cancellable. % https://docs.ros.org/en/foxy/Tutorials/Understanding-ROS2-Actions.html
+Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow you to execute long-running tasks, provide regular feedback, and are cancellable. \cite{ros2_tutorials_actions}
+
+\section{Driverless}
+\lipsum[1]
 
 \section{Path Planning Algorithms}
 Path planning algorithms are used in many environments for example in assembling a car with a robot arm, parking a car autonomously or finding a landmine with a robot in a military operation. 

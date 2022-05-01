@@ -135,16 +135,29 @@ A path can be if a human goes from A to B and follows certain signs for example 
 
 The planning consists of a state, time that is needed, actions, initial / goal state, criterion and a plan. The state is normally represented by a planning algorithm. Time is based on a sequence of decision that has to be made in a certain time. Actions manipulate the state and cover how the state should be changed. The initial and goal state defines where the planner should start and finish.
 The criterion defines the outcome and the boundaries of the planner. The type of the criterion is either based on the feasibility or optimality. Feasibility covers the arrival of the goal state without the concern of efficiency. Optimality finds a plan with an optimized performance in mind. The plan in general covers the strategy or behaviour on a decision maker.
-\cite{planning_algorithms_steven_m_lavalle}
+\cite{planning_algorithms_steven_m_lavalle_1_23}
 
 \subsection{Algorithms, Planners and Plans}
-An algorithm usually consists of a machine and environment where there are actuations from the machine to the environment and sensing from the environment to the machine. The problem in planning is often that the machine interacts with the physical world which has uncountable different influences on the plan that has to be calculated. This is why the environment is often an approximation of the real world since not every sensing mechanism from the environment to the machine can be processed.
+An algorithm usually consists of a machine and environment where there are actuations from the machine to the environment and sensing from the environment to the machine.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Machine_Environment.png}
+    \caption{Two different illustration to show what is the relationship between the machine and the environment. \cite{planning_algorithms_steven_m_lavalle_20}}
+    %\label{fig:ROS 2 main concepts}
+\end{figure}
+The problem in planning is often that the machine interacts with the physical world which has uncountable different influences on the plan that has to be calculated. This is why the environment is often an approximation of the real world since not every sensing mechanism from the environment to the machine can be processed.
 
 Planners are constructing plans. They are either a machine or a human. When the planner is a machine then it is usually a planning algorithm. If the planner is a human then the human itself is the algorithm which makes the decision.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Planner_Machine_Environment.png}
+    \caption{A planner executes the plan on the machine that actuates on the environment. \cite{planning_algorithms_steven_m_lavalle_22}}
+    %\label{fig:ROS 2 main concepts}
+\end{figure}
 
 The plans can be used in three different ways: Execution, refinement or hierarchical inclusion. Execution runs the plan on a simulation or a robot which is connected to the real world. Refinement tries to find a better plan. The hierarchical inclusion gives the plan to a higher level plan that is consisting of sub plans.
 
-\cite{planning_algorithms_steven_m_lavalle}
+\cite{planning_algorithms_steven_m_lavalle_1_23}
 
 \subsection{Path Planning Algorithm Categories}
 A path planning algorithm can be categorized in one of the following groups:
@@ -153,6 +166,8 @@ A path planning algorithm can be categorized in one of the following groups:
     \item Decision-Theoretic Planning
     \item Planning under Differential Constraints
 \end{itemize}
+
+\cite{planning_algorithms_steven_m_lavalle}
 
 \subsubsection{Motion Planning}
 
@@ -165,47 +180,92 @@ Motion planning is interested in planning in continuous state spaces. This means
 \begin{itemize}
     \item \textbf{Geometric Representation and Transformation} to start defining a motion planning algorithm. It defines a body of a system in a space and how it transforms for example moves. Movements can be chained in a state.
     \item \textbf{The Configuration Space} is needed for the motion planning algorithm to define the space in which is a set of possible transformations that could be applied to a robot.
-    \item \textbf{Sampling-Based Motion Planning} is a field in motion planning that covers sampling-based algorithms. Sampling-based planning algorithm are using a collision detection as a "black box" which is separated to geometric and kinematic models motion planning. There are two different types of algorithm models. First is the single-query algorithm which consists of a ($q_i,q_G$) pair as an input. $q_i$ defines the start and $q_G$ the end goal. In this strategy no precomputation is possible to make use of. A multi-query algorithm can have multiple initial goals, that is why it makes sense to precompute the models to run it more efficiently. An example of a single-query algorithm is the Rapidly Exploring Random Tree (RRT) which is a subset of the Rapidly Exploring Dense Tree (RDT) algorithm. It searches for the shortest path by creating random sequences that end up in a tree that holds multiple sequences which can be connected to each other. The goal of the multi-query  method is to create a roadmap for each $q_i$ and $q_G$ that is why the family of algorithm is called sampling-based roadmap.
-    \item \textbf{Combinatorial Motion Planning} covers finding a path in a continuous space without resorting to approximations. Cell decompositions and cylindrical algebraic decomposition are two different subcategories of combinatorial motion planning algorithms. Cell decompositions are based on a collection of cells that is called complex. The term cell decomposition describes a part of a complex which is a smaller number of cells in a space. In the 2D decomposition field there is the triangulation algorithm which is performed by vertical decomposition. The triangulation algorithm connects every build triangles with three nodes at a time. If you have 4 nodes then two triangles are made. In computational algebraic geometry the definition is very general that is why it can cover a lot of solution for problems but at the same time is challenging to implement. The definitions are described in tarski sentences. There are problems that can exist with this method the decision problem and the quantifier-elimination problem. To explain each problem would be out of scope. The Canny's roadmap algorithm a subset of computational algebraic geometry algorithm covers the avoidance of doubly exponentially cells in cylindrical algebraic. The result is that the algorithm can be run in polynomial time. The complexity of motion planning describes if it makes sense for an algorithm to be programmed more complexed or leave it as it is because timewise or storage wise it is not a drawback. Optimal motion planning is different to feasibility as it covers to find an optimal solution of the problem. It deals with finding an approximation of a continuous problem as a discrete problem.
+    \item \textbf{Sampling-Based Motion Planning} is a field in motion planning that covers sampling-based algorithms. Sampling-based planning algorithm are using a collision detection as a "black box" which is separated to geometric and kinematic models motion planning. There are two different types of algorithm models. First is the single-query algorithm which consists of a ($q_i,q_G$) pair as an input. $q_i$ defines the start and $q_G$ the end goal. In this strategy no precomputation is possible to make use of. 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\columnwidth]{Sampling-Based_Motion_Planning.png}
+        \caption{The geometric models will generate the input for the collision detection, that influences the discrete searching in the sampling-based motion planning algorithm. The C-space is the configuration space of the algorithm. \cite{planning_algorithms_steven_m_lavalle_185}}
+        %\label{fig:ROS 2 main concepts}
+    \end{figure}
+    A multi-query algorithm can have multiple initial goals, that is why it makes sense to precompute the models to run it more efficiently. An example of a single-query algorithm is the Rapidly Exploring Random Tree (RRT) which is a subset of the Rapidly Exploring Dense Tree (RDT) algorithm. It searches for the shortest path by creating random sequences that end up in a tree that holds multiple sequences which can be connected to each other. 
+    \begin{lstlisting}[mathescape=true, caption={The simple RDT computes a random tree with the nearest function. \cite{planning_algorithms_steven_m_lavalle_229}}]
+SIMPLE RDT($q_0$)
+    1 G.init($q_0$);
+    2 for i = 1 to k do
+    3 G.add vertex($\alpha(i)$);
+    4 $q_n \rightarrow$ nearest(S(G), $\alpha(i)$);
+    5 G.add edge($q_n$, $\alpha(i)$);
+    \end{lstlisting}
+    The goal of the multi-query  method is to create a roadmap for each $q_i$ and $q_G$ that is why the family of algorithm is called sampling-based roadmap.
+    \item \textbf{Combinatorial Motion Planning} covers finding a path in a continuous space without resorting to approximations. Cell decompositions and cylindrical algebraic decomposition are two different subcategories of combinatorial motion planning algorithms. Cell decompositions are based on a collection of cells that is called complex. The term cell decomposition describes a part of a complex which is a smaller number of cells in a space. In the 2D decomposition field there is the triangulation algorithm which is performed by vertical decomposition. The triangulation algorithm connects every build triangles with three nodes at a time. If you have 4 nodes then two triangles are made. 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\columnwidth]{Theorie_of_Triangulation.png}
+        \caption{The black lines represent the triangles which are computed. The red dots on the other hand represent the middle point of the edges and the triangle itself. The red lines have the red dots as a reference point and can build a path. \cite{planning_algorithms_steven_m_lavalle_268}}
+        %\label{fig:ROS 2 main concepts}
+    \end{figure}
+    In computational algebraic geometry the definition is very general that is why it can cover a lot of solution for problems but at the same time is challenging to implement. The definitions are described in tarski sentences. There are problems that can exist with this method the decision problem and the quantifier-elimination problem. To explain each problem would be out of scope. The Canny's roadmap algorithm a subset of computational algebraic geometry algorithm covers the avoidance of doubly exponentially cells in cylindrical algebraic. The result is that the algorithm can be run in polynomial time. The complexity of motion planning describes if it makes sense for an algorithm to be programmed more complexed or leave it as it is because timewise or storage wise it is not a drawback. Optimal motion planning is different to feasibility as it covers to find an optimal solution of the problem. It deals with finding an approximation of a continuous problem as a discrete problem.
     \item \textbf{Extensions of Basic Motion Planning} defines flavours of motion planning algorithms. There are for example the time-varying problems which are defined in a planning formulation. Time-varying problems consider time in the planning formulation. For example obstacles can change during time and the space would not be considered as static. Solutions for that are either sampling-based, combinatorial methods or bounded speed. Further more there can be multiple robots in a space. With multiple robots it is possible to combine the information of each robot so that one can benefit from the other. Otherwise, there is also the problem that the robots do not collide with each other. Euclidean shortest path algorithm gives a solution for solving a motion plan.
     \item \textbf{Feedback Motion Planning} describes a class of motion planning algorithms that are taking feedback for example from the real world into account. With the help of the Dijkstra algorithm an optimal navigation function can be programmed to work in a feedback motion planning environment with acceleration in consideration for example.
 \end{itemize}
 
-\cite{planning_algorithms_steven_m_lavalle}
+\cite{planning_algorithms_steven_m_lavalle_77_432}
 
 \subsubsection{Decision-Theoretic Planning}
 
 This chapter can also be called planning under uncertainty. Two aspects evolve under uncertainty: predictability and sensing. It could also mean that an algorithm has to interfere with another decision maker. Instead of making a plan in decision-making, the chapter covers strategies that for a decision maker. Nature can be a decision maker as well. While it is possible to predict certain things about nature the factors of the interference of nature is still too big. That is why while programming an algorithm the programmer has to concentrate on the earthly influence which has the biggest impact of the robot or so-called primary decision-maker.
 
 \begin{itemize}
-    \item \textbf{Basic Decision Theory}
-    \item \textbf{Sequential Decision Theory} deals with forward and backward projections. A forward projection predicts how the future route will look like and the backward projection. Forward projection is a method where several possible stages are computed before it decides which path to go. Back projection is the other way around. 
-    \item \textbf{Sensors and Information Spaces}
-    \item \textbf{Planning Under Sensing Uncertainty}
+    \item \textbf{Sequential Decision Theory} deals with forward and backward projections. A forward projection predicts how the future route will look like and the backward projection. Forward projection is a method where several possible stages are computed before it decides which path to go. Back projection is the other way around. With the help of graph search it is possible to have a more stable solution for calculating a path then with other methods like value iteration or policy iteration. With the help of the Dijkstra algorithm it is improved with less cost to calculate. Infinite-horizon problems can occur when dealing with algorithm under the sequential decision theory. Reinforcement Learning helps to solve the inifinite-horizon problem in combination with the optimal path in one algorithm.
+    \item \textbf{Sensors and Information Spaces} describes how the sensors act and the planning problem witch is described as an information space. There are discrete state spaces and derived information spaces. Sensors have two components, the observation space that defines possible states and a sensor mapping which is what the sensor reads.
+    \item \textbf{Planning Under Sensing Uncertainty} covers algorithms which can be used to plan under sensing uncertainty. Localization as a problem in robotics can be hard to accomplish. There is the passive localization and the active localization. In passive localization a robot acts upon different circumstances and derives its position from probabilistic approaches whereas active localization the focus is more on how the robot should move to be in that exact position. 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\columnwidth]{Localization_Example.png}
+        \caption{This example shows possible moves of a robot to which grids he could move to. \cite{planning_algorithms_steven_m_lavalle_641}}
+        %\label{fig:ROS 2 main concepts}
+    \end{figure}
+    
+    With combination of different sensors like compass and a camera it is possible to define a position. Further information on localization can be read in the mentioned book. The environment uncertainty and mapping topic focuses on how to define an environment when there is no map given. This means that the robot has to act upon sensors only.
 \end{itemize}
 
-\cite{planning_algorithms_steven_m_lavalle}
+\cite{planning_algorithms_steven_m_lavalle_433_710}
 
 \subsubsection{Planning under Differential Constraints}
+This chapter covers differential constraints. These for example local limitation like allowable velocities at each point. A weak differential constraint is for example smoothness. Global constraints are for example obstacles. Mostly differential constraints are from kinematics and dynamics.
 
 \begin{itemize}
-    \item \textbf{Differential Models}
-    \item \textbf{Sampling-Based Planning Under Differential Constraints}
-    \item \textbf{System Theory and Analytical Techniques}
+    \item \textbf{Differential Models} covers example of velocity constraints in a state space. There are two ways to of differential constraints the parametric and implicit. Implicit expresses prohibited velocities and are more general whereas parametric representation expresses allowed velocities. A simple car has three degrees of freedom:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\columnwidth]{Simple_Car_Velocity_Space.png}
+        \caption{This example shows possible moves of a robot to which grids he could move to. \cite{planning_algorithms_steven_m_lavalle_723}}
+        %\label{fig:ROS 2 main concepts}
+    \end{figure}
+    The velocity is two-dimensional on the other hand. This means that it has to be shrunken down from three dimensions to two. There are also concepts of multiple decision makers, which are not covered in this thesis.
+    \item \textbf{Sampling-Based Planning Under Differential Constraints} covers the satisfaction of differential constraints with an initial and goal state. Constraints like continuity or smoothness can be applied as well. Kinodynamic planning is a motion planning problem with velocity and accelerations bounds. Trajectory planning on the other hand deals with a velocity and path function. There can also be collision constraints with obstacles for example.
+    Reachable sets describe what has to be visited, there could also be time-limited reachable sets. A reachability graph can help to visualize which sets are already visited:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\columnwidth]{Reachability_Graph.png}
+        \caption{This figure shows how a reachability graph can be visualized. \cite{planning_algorithms_steven_m_lavalle_803}}
+        %\label{fig:ROS 2 main concepts}
+    \end{figure}
+    Local planning by the having smaller problems which can be solved locally to solve the bigger problem. The following pseudo-code snipped shows how the rapidly exploring dense tree (RRT) can be used for calculating a path under differential constraints:
+    \begin{lstlisting}[mathescape=true, caption={The local planning method computes $x_r$. A new vertex will be available: $x_r$.\cite{planning_algorithms_steven_m_lavalle_833}}]
+SIMPLE RDT WITH DIFFERENTIAL CONSTRAINTS($x_0$)
+    1 G.init($x_0$);
+    2 for i = 1 to k do
+    3 $x_n$ $\leftarrow$ nearest(S(G), \alpha(i));
+    4 ($\widetilde{u}^p$, $x_r$) $\leftarrow$ local planner($x_n$, $\alpha(i)$);
+    5 G.add vertex($x_r$);
+    6 G.add edge($\widetilde{u}^p$);
+    \end{lstlisting}
+    Randomized potential fields can also be a method for sampling-based planning under differential constraints, which is not covered in this thesis. Path constraints can narrow down the trajectory as well, like the turning angle.
+    \item \textbf{System Theory and Analytical Techniques} takes the physics of the robot into account. Since this thesis covers trajectory planning or path planning this section would be out of scope.
 \end{itemize}
 
-\cite{planning_algorithms_steven_m_lavalle}
-
-\section{Hardware}
-
-\subsection{Nvidia Jetson}
-\lipsum[1]
-
-\subsection{Lidar}
-\lipsum[1]
-
-\subsection{Stereo Camera}
-\lipsum[1]
+\cite{planning_algorithms_steven_m_lavalle_711_923}
 
 \section{Languages and Tools}
 

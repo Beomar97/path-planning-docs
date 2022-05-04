@@ -33,7 +33,14 @@ The first student in the team of \acrlong{zur} to work on path planning was Jér
 The \acrshort{amz} (\acrlong{amz}) from \acrshort{eth} (\acrlong{eth}) made Formula Student driverless resources available in a public repository, which also includes implementations of path planning algorithms. Several algorithms are being mentioned, e.g. the \acrshort{rrt} algorithm for track exploration and a \acrlong{mpcc} (\acrshort{mpcc}) for autonomous racing. Furthermore, for easier software distribution, a skeleton for building and implementing driverless algorithms is provided.
 \cite{amz_racing_github}
 
-% TODO Edinburgh and TUMFTM implementations
+\acrshort{eufs} (\acrlong{eufs}) is the formula student team from the University of Edinburgh. They have developed a simulation tool on the basis of \acrshort{ros} (\acrlong{ros}) with the help of Gazebo which is the simulation tool for \acrshort{ros}. The tool helps to simulate the real world race to a certain degree. The simulation was made to test path planning algorithms and other implementations regards to Formula Student. One of the feature helps to generate a racetrack based on an image. They also made premade CSV files which holds track information for the acceleration and skidpad track that is used in the Formula Student competition.
+\cite{eufs_sim_gitlab}
+
+The \acrshort{tum} (\acrlong{tum}) has a department that is named \acrshort{ftm} (\acrlong{ftm}). They have developed an optimization algorithm that calculates the best route. The algorithm takes the cones and the middle line as well as the distance to the cones as an input and creates a plot of the track. Additionally, an acceleration profile is generated and an output of every point on the middle line with the steering angle.
+\cite{tumftm_optimization_algoritm}
+
+\acrshort{fsds} (\acrlong{fsds}) is a community project where multiple students from different formula student teams have worked on a simulation tool to test driverless components. The simulation tool is based on Unreal Engine 4 \cite{unreal_engine} and has a \acrshort{ros} bridge to connect algorithm implementations to the simulation tool. Tracks like Acceleration and Skidpad for the Formula Student competition are already implemented. There are other tracks which where based on past competition and help to test the algorithms.
+\cite{fsds_github}
 
 \subsection{Formula SAE}
 In 1980, the idea of a combustion engine asphalt racing competition was born at the University of Texas by Ron Matthews. Initially called the SAE Mini Indy Competition, it was later renamed to \Gls{formula_sae}. Today, there are many events organized by local associations worldwide.

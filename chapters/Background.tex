@@ -101,9 +101,9 @@ The processing unit is set up with an installation of Ubuntu Linux 20.04, which 
 \section{Robot Operating System (ROS)}
 The \acrlong{ros} (\acrshort{ros}) is not, like the name may suggest, a full-fledged operating system, but a set of software libraries and tools for the development of robot applications. The open-source robotics middleware comes shipped with capable developer tools, drivers and advanced algorithms. \cite{ros2_documentation}
 
-There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_distributions} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_releases_and_target_platforms}
+There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_documentation} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_documentation}
 
-The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_distributions}
+The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_releases_and_target_platforms}
 
 \subsection{ROS Graph}
 There are 5 main concepts of ROS 2 that make up the ROS (2) graph:
@@ -125,19 +125,19 @@ The ROS graph is a network of ROS 2 elements which processes data simultaneously
 \end{figure}
 
 \subsubsection{Nodes}
-A node is a fundamental ROS 2 element that serves a single, modular purpose in a robotics system. \cite{ros2_tutorials_nodes}
+A node is a fundamental ROS 2 element that serves a single, modular purpose in a robotics system. \cite{ros2_documentation}
 
 \subsubsection{Topics}
- Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_tutorials_topics}
+ Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_documentation}
 
 \subsubsection{Services}
-Services are based on a call-and-response model, versus topics’ publisher-subscriber model. Services only provide data when they are specifically called by a client. \cite{ros2_tutorials_services}
+Services are based on a call-and-response model, versus topics’ publisher-subscriber model. Services only provide data when they are specifically called by a client. \cite{ros2_documentation}
 
 \subsubsection{Parameters}
-Nodes have parameters to define their default configuration values. \cite{ros2_tutorials_parameters}
+Nodes have parameters to define their default configuration values. \cite{ros2_documentation}
 
 \subsubsection{Actions}
-Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow you to execute long-running tasks, provide regular feedback, and are cancellable. \cite{ros2_tutorials_actions}
+Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow you to execute long-running tasks, provide regular feedback, and are cancellable. \cite{ros2_documentation}
 
 \section{Driverless}
 \lipsum[1]
@@ -219,9 +219,9 @@ The goal of the multi-query  method is to create a roadmap for each $q_i$ and $q
     \caption{The black lines represent the triangles which are computed. The red dots on the other hand represent the middle point of the edges and the triangle itself. The red lines have the red dots as a reference point and can build a path. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Theory of Triangulation}
 \end{figure}
-In computational algebraic geometry the definition is very general that is why it can cover a lot of solution for problems but at the same time is challenging to implement. The definitions are described in tarski sentences. There are problems that can exist with this method the decision problem and the quantifier-elimination problem. To explain each problem would be out of scope. The Canny's roadmap algorithm a subset of computational algebraic geometry algorithm covers the avoidance of doubly exponentially cells in cylindrical algebraic. The result is that the algorithm can be run in polynomial time. The complexity of motion planning describes if it makes sense for an algorithm to be programmed more complexed or leave it as it is because timewise or storage wise it is not a drawback. Optimal motion planning is different to feasibility as it covers to find an optimal solution of the problem. It deals with finding an approximation of a continuous problem as a discrete problem. \cite{planning_algorithms_steven_m_lavalle}
+In computational algebraic geometry the definition is very general that is why it can cover a lot of solution for problems but at the same time is challenging to implement. The definitions are described in tarski sentences. There are problems that can exist with this method the decision problem and the quantifier-elimination problem. To explain each problem would be out of scope. The Canny's roadmap algorithm a subset of computational algebraic geometry algorithm covers the avoidance of doubly exponentially cells in cylindrical algebraic. \cite{constructing_roadmaps_of_semi-algebraic_sets_I} The result is that the algorithm can be run in polynomial time. The complexity of motion planning describes if it makes sense for an algorithm to be programmed more complexed or leave it as it is because timewise or storage wise it is not a drawback. Optimal motion planning is different to feasibility as it covers to find an optimal solution of the problem. It deals with finding an approximation of a continuous problem as a discrete problem. \cite{planning_algorithms_steven_m_lavalle}
 
-\textbf{Extensions of Basic Motion Planning} defines flavours of motion planning algorithms. There are for example the time-varying problems which are defined in a planning formulation. Time-varying problems consider time in the planning formulation. For example obstacles can change during time and the space would not be considered as static. Solutions for that are either sampling-based, combinatorial methods or bounded speed. Further more there can be multiple robots in a space. With multiple robots it is possible to combine the information of each robot so that one can benefit from the other. Otherwise, there is also the problem that the robots do not collide with each other. Euclidean shortest path algorithm gives a solution for solving a motion plan. \cite{planning_algorithms_steven_m_lavalle}
+\textbf{Extensions of Basic Motion Planning} defines flavours of motion planning algorithms. There are for example the time-varying problems which are defined in a planning formulation. Time-varying problems consider time in the planning formulation. For example obstacles can change during time and the space would not be considered as static. Solutions for that are either sampling-based, combinatorial methods or bounded speed. Further more there can be multiple robots in a space. With multiple robots it is possible to combine the information of each robot so that one can benefit from the other. Otherwise, there is also the problem that the robots do not collide with each other. \cite{planning_algorithms_steven_m_lavalle} Euclidean shortest path algorithm gives a solution for solving a motion plan. \cite{efficient_computation_of_euclidean_shortest_paths_in_the_plane}
 
 \textbf{Feedback Motion Planning} describes a class of motion planning algorithms that are taking feedback for example from the real world into account. With the help of the Dijkstra algorithm an optimal navigation function can be programmed to work in a feedback motion planning environment with acceleration in consideration for example. \cite{planning_algorithms_steven_m_lavalle}
 

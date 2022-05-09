@@ -1,7 +1,7 @@
 \begin{itemize}
     \item In der Regel ist zumindest ein kurzes Theoriekapitel notwendig. Es nimmt Bezug auf das thematische Oberthema, aber natürlich nicht auf allgemeine theoretische Grundlagen etwa aus der Naturwissenschaft.
 \end{itemize}
-The background chapter describes the theory of the approach and method that was used in the thesis. The first section describes what the Formula SAE Competition is. Next is the introduction of \acrlong{zur}. After that driverless is introduced what it means and how it can be realized. Several path planning algorithms will be introduced later on and is followed by the languages and tools that have been used for the realization.
+The background chapter describes the theory of the approach and method that was used in the thesis. The first section describes what the Formula SAE Competition is. Next is the introduction of \acrlong{zur}. After that driverless is introduced what it means and how it can be realized. Several path planning algorithms will be introduced later on and is followed by the development environment for the realization.
 
 \section{Formula SAE Competitions}
 The main idea of a Formula SAE competition is to conceive, design, fabricate, develop and compete with small, formula style, race cars.
@@ -97,47 +97,6 @@ The processing unit is set up with an installation of Ubuntu Linux 20.04, which 
     \caption{The Autonomous System Deployment Diagram illustrates different sensors and how they are connected over a bus with the NVIDIA Jetson computer.}
     \label{fig:AS Deployment Diagram}
 \end{figure}
-
-\section{Robot Operating System (ROS)}
-The \acrlong{ros} (\acrshort{ros}) is not, like the name may suggest, a full-fledged operating system, but a set of software libraries and tools for the development of robot applications. The open-source robotics middleware comes shipped with capable developer tools, drivers and advanced algorithms. \cite{ros2_documentation}
-
-There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_documentation} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_documentation}
-
-The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_releases_and_target_platforms}
-
-\subsection{ROS Graph}
-There are 5 main concepts of ROS 2 that make up the ROS (2) graph:
-\begin{enumerate}
-    \item Nodes
-    \item Topics
-    \item Services
-    \item Parameters
-    \item Actions
-\end{enumerate}
-
-The ROS graph is a network of ROS 2 elements which processes data simultaneously. The graph encompasses all executables and the connections between them.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{ROS2_Main_Concepts.png}
-    \caption{The five main concepts of ROS 2 pictured as a network of nodes.}
-    \label{fig:ROS 2 main concepts}
-\end{figure}
-
-\subsubsection{Nodes}
-A node is a fundamental ROS 2 element that serves a single, modular purpose in a robotics system. \cite{ros2_documentation}
-
-\subsubsection{Topics}
- Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_documentation}
-
-\subsubsection{Services}
-Services are based on a call-and-response model, versus topics’ publisher-subscriber model. Services only provide data when they are specifically called by a client. \cite{ros2_documentation}
-
-\subsubsection{Parameters}
-Nodes have parameters to define their default configuration values. \cite{ros2_documentation}
-
-\subsubsection{Actions}
-Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow you to execute long-running tasks, provide regular feedback, and are cancellable. \cite{ros2_documentation}
 
 \section{Driverless}
 \lipsum[1]
@@ -277,7 +236,22 @@ Randomized potential fields can also be a method for sampling-based planning und
 
 \textbf{System Theory and Analytical Techniques} takes the physics of the robot into account. Since this thesis covers trajectory planning or path planning this section would be out of scope. \cite{planning_algorithms_steven_m_lavalle}
 
-\section{Languages and Tools}
+\section{Development Environment}
+
+The development environment is made up from different software to help the workflow of developing path planning algorithms for a robot like a self-driving racecar.
+
+\subsection{Hardware Abstraction}
+
+There are different methods to build a development environment. An easy way to get started is to build a relatively similar system like the one which is running on the NVIDIA Jetson computer. This computer will be used in the real car. A \acrlong{vm} (\acrshort{vm}) is a piece of software that can emulate hardware and encapsulates an operating system from the host operating system, that is running on hardware. Figure \ref{fig:Development Architecture} illustrates the architecture that is used for developing. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=2cm]{Development_Architecture.jpg}
+    \caption{The development architecture consists of various levels: the hardware, the host operating system, the \acrlong{vm}, the operating system on the \acrshort{vm} and the \acrlong{ros}.}
+    \label{fig:Development Architecture}
+\end{figure}
+
+On the NVIDIA Jetson computer an Ubuntu 20.04 operating system was installed. This is the reason why Ubuntu 20.04 is used on the development environment. An installation guide for how to install Ubuntu 20.04 in a \acrlong{vm} is found Cloud Linux Tech. \cite{cloudlinuxtech_install_ubuntu_2004}
 
 \begin{itemize}
     \item ROS 2
@@ -290,5 +264,46 @@ Randomized potential fields can also be a method for sampling-based planning und
     \item Simulation tools
     \item other tools
 \end{itemize}
+
+\subsection{Robot Operating System (ROS)}
+The \acrlong{ros} (\acrshort{ros}) is not, like the name may suggest, a full-fledged operating system, but a set of software libraries and tools for the development of robot applications. The open-source robotics middleware comes shipped with capable developer tools, drivers and advanced algorithms. \cite{ros2_documentation}
+
+There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_documentation} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_documentation}
+
+The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_releases_and_target_platforms}
+
+\subsubsection{ROS Graph}
+There are 5 main concepts of ROS 2 that make up the ROS (2) graph:
+\begin{enumerate}
+    \item Nodes
+    \item Topics
+    \item Services
+    \item Parameters
+    \item Actions
+\end{enumerate}
+
+The ROS graph is a network of ROS 2 elements which processes data simultaneously. The graph encompasses all executables and the connections between them.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{ROS2_Main_Concepts.png}
+    \caption{The five main concepts of ROS 2 pictured as a network of nodes.}
+    \label{fig:ROS 2 main concepts}
+\end{figure}
+
+\subsubsection{Nodes}
+A node is a fundamental ROS 2 element that serves a single, modular purpose in a robotics system. \cite{ros2_documentation}
+
+\subsubsection{Topics}
+ Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_documentation}
+
+\subsubsection{Services}
+Services are based on a call-and-response model, versus topics’ publisher-subscriber model. Services only provide data when they are specifically called by a client. \cite{ros2_documentation}
+
+\subsubsection{Parameters}
+Nodes have parameters to define their default configuration values. \cite{ros2_documentation}
+
+\subsubsection{Actions}
+Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow you to execute long-running tasks, provide regular feedback, and are cancellable. \cite{ros2_documentation}
 
 \lipsum[1]

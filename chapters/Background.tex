@@ -65,7 +65,7 @@ On a high-level view, the 'Autonomous System' is made up of five domains: the 'C
     \caption{The Autonomous System Component Diagram shows an illustration between the hardware layer and software layer. The autonomous system is on the software layer in which the 'Path Planning' domain lies.}
     \label{fig:AS Component Diagram}
 \end{figure}
-The five domains are described as followed: 
+The five domains are described as followed:
 \textbf{'Controls'} is responsible for the steering, breaking and acceleration of the car.
 \textbf{'Perception'} is recognizing the track by perceiving the different types of cones the track is made up of.
 \textbf{'Localization and Mapping'} estimates the current position of the vehicle relative to the starting position and maps it into an absolute position on the track.
@@ -73,7 +73,7 @@ The five domains are described as followed:
 \textbf{'Simulation'} which is responsible for providing the rest of the domains an adequate tool to simulate and test on.
 
 
-Essential hardware components of the autonomous system are stored inside a box, which will be mounted on the vehicle itself. The connections coming into the box from the various components outside can be seen in the reference figure \ref{fig:AS DV Box}. 
+Essential hardware components of the autonomous system are stored inside a box, which will be mounted on the vehicle itself. The connections coming into the box from the various components outside can be seen in the reference figure \ref{fig:AS DV Box}.
 
 \begin{figure}[H]
     \centering
@@ -102,7 +102,7 @@ The processing unit is set up with an installation of Ubuntu Linux 20.04, which 
 \lipsum[1]
 
 \section{Path Planning Algorithms}
-Path planning algorithms are used in many environments for example in assembling a car with a robot arm, parking a car autonomously or finding a landmine with a robot in a military operation. 
+Path planning algorithms are used in many environments for example in assembling a car with a robot arm, parking a car autonomously or finding a landmine with a robot in a military operation.
 
 \subsection{Overview}
 A path can be if a human goes from A to B and follows certain signs for example when hiking on a mountain. Otherwise, a human can follow a path that is generated on a GPS system in a car. The difference lies by a manual plan versus a generated plan by a machine. This section addresses only the generated one.
@@ -199,7 +199,7 @@ This chapter can also be called planning under uncertainty. Two aspects evolve u
     \caption{This example shows possible moves of a robot to which grids he could move to. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Localization Example}
 \end{figure}
-    
+
 With combination of different sensors like compass and a camera it is possible to define a position. Further information on localization can be read in the mentioned book. The environment uncertainty and mapping topic focuses on how to define an environment when there is no map given. This means that the robot has to act upon sensors only. \cite{planning_algorithms_steven_m_lavalle}
 
 \subsection{Planning under Differential Constraints}
@@ -242,7 +242,7 @@ The development environment is made up from different software to help the workf
 
 \subsection{Hardware Abstraction}
 
-There are different methods to build a development environment. An easy way to get started is to build a relatively similar system like the one which is running on the NVIDIA Jetson computer. This computer will be used in the real car. A \acrlong{vm} (\acrshort{vm}) is a piece of software that can emulate hardware and encapsulates an operating system from the host operating system, that is running on hardware. Figure \ref{fig:Development Architecture} illustrates the architecture that is used for developing. 
+There are different methods to build a development environment. An easy way to get started is to build a relatively similar system like the one which is running on the NVIDIA Jetson computer. This computer will be used in the real car. A \acrlong{vm} (\acrshort{vm}) is a piece of software that can emulate hardware and encapsulates an operating system from the host operating system, that is running on hardware. Figure \ref{fig:Development Architecture} illustrates the architecture that is used for developing.
 
 \begin{figure}[H]
     \centering
@@ -295,7 +295,7 @@ The ROS graph is a network of ROS 2 elements which processes data simultaneously
 A node is a fundamental ROS 2 element that serves a single, modular purpose in a robotics system. \cite{ros2_documentation}
 
 \subsubsection{Topics}
- Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_documentation}
+Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_documentation}
 
 \subsubsection{Services}
 Services are based on a call-and-response model, versus topics’ publisher-subscriber model. Services only provide data when they are specifically called by a client. \cite{ros2_documentation}

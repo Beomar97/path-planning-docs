@@ -13,7 +13,24 @@
     \item (Tests und Validierung)
 \end{itemize}
 
-This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack. 
+This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack.
+
+\section{Marco's Proposal}
+\begin{itemize}
+    \item Grundüberlegung => Path Planning Package in ROS, Prototyp Architektur zeigen, Explo und Opt Algos, erhaltet Input und sendet Input
+    \item Vorgehensmethode => Kanban und Scrum, maybe V-Model?
+    \item Setup? Weekly meetings, Review every other week, Mitarbeit mit anderen BA Teams in Driverless und gesamt Verein (Working Saturday, Hilfe im Workshop, Ausstellung Conecto ZHAW)
+    \item Setup technisch, lokale Linux VM, ROS Installation, VS Code als IDE, GitHub Repos, GitHub Actions CI/CD (maybe?), Deployment Architektur
+    \item Overview Architektur ROS und Code
+    \item Path Planner Node
+    \item Optimization Service Node
+    \item Messages (interfaces und fszhaw_msgs)
+    \item Exploration Algorithm
+    \item erste Überlegungen und Tests, alter path planner zhaw, dann densify und interpolate, rrt max hamburg, komplexer algo à la ultimate und dann jetzige implementation
+    \item Optimization Algorithm
+    \item zuerst was hat eth mit mpcc, dann global racetrajectory von tumftm
+    \item Testing mit Maps, Cone Publisher und Planned Trajectory Subscriber (mocks), utils wie track plotter, trackconfig
+\end{itemize}
 
 \section{Architecture Design}
 \begin{itemize}

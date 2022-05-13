@@ -17,19 +17,19 @@ This chapter describes which approaches and methods have been used to solve the 
 
 \section{Marco's Proposal}
 \begin{itemize}
-    \item Grundüberlegung => Path Planning Package in ROS, Prototyp Architektur zeigen, Explo und Opt Algos, erhaltet Input und sendet Input
+    \item Anfangs High Level Overview Mischung, Kapitel ersichtlich was kommt Flussdiagram (um dieses haben wir dann die Prozessmethoden)
     \item Vorgehensmethode => Kanban und Scrum, maybe V-Model?
-    \item Setup? Weekly meetings, Review every other week, Mitarbeit mit anderen BA Teams in Driverless und gesamt Verein (Working Saturday, Hilfe im Workshop, Ausstellung Conecto ZHAW)
     \item Setup technisch, lokale Linux VM, ROS Installation, VS Code als IDE, GitHub Repos, GitHub Actions CI/CD (maybe?), Deployment Architektur
-    \item Overview Architektur ROS und Code
+    \item Overview Architektur ROS und Code, Grundüberlegung => Path Planning Package in ROS, Prototyp Architektur zeigen, Explo und Opt Algos, erhaltet Input und sendet Input
+    \item Messages (interfaces und fszhaw msgs) (System aussen)
     \item Path Planner Node
-    \item Optimization Service Node
-    \item Messages (interfaces und fszhaw msgs)
     \item Exploration Algorithm
-    \item erste Überlegungen und Tests, alter path planner zhaw, dann densify und interpolate, rrt max hamburg, komplexer algo à la ultimate und dann jetzige implementation
+    \item Optimization Service Node
     \item Optimization Algorithm
-    \item zuerst was hat eth mit mpcc, dann global racetrajectory von tumftm
+    \item Verifikation und Validierungen (Code Reviews, Fehlerfälle: Cones gehen verloren, Cones andere Seite entdeckt, allg Fehlerannahmen)
     \item Testing mit Maps, Cone Publisher und Planned Trajectory Subscriber (mocks), utils wie track plotter, trackconfig
+    \item Setup eher im Projektanhang: Weekly meetings, Review every other week, Mitarbeit mit anderen BA Teams in Driverless und gesamt Verein (Working Saturday, Hilfe im Workshop, Ausstellung Conecto ZHAW)
+    \item In Resultate Kapitel, Vergleich erste Algorithmen und Versuche: erste Überlegungen und Tests, alter path planner zhaw, dann densify und interpolate, rrt max hamburg, komplexer algo à la ultimate und dann jetzige implementation, zuerst was hat eth mit mpcc, dann global racetrajectory von tumftm
 \end{itemize}
 
 \section{Architecture Design} \label{sec:Architecture Design}

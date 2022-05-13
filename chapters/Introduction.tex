@@ -1,4 +1,4 @@
-\section{Initial situation}
+\section{Initial situation} \label{sec:Initial situation}
 \begin{itemize}
     \item Nennt bestehende Arbeiten/Literatur zum Thema
     \item Stand der Technik: Bisherige Lösungen des Problems und deren Grenzen
@@ -7,23 +7,23 @@
 \end{itemize}
 Formula Student is a worldwide competition, where students from different universities are building a formula style race car, which is either powered by a combustion engine or an electric motor. There are several disciplines for the teams to compete against, with one of them being Driverless. Students must develop an autonomous system for the car, so it can drive fully autonomously, without a driver, on a given track. For the autonomous system to work properly, different components must be implemented. Path planning is one of those components, which challenges the software engineers to develop and implement an algorithm which can return the system a path to drive on. In the following chapter, a limited list of implementations is presented, with these algorithms being distinguished between past theses, state-of-the-art implementations in robotics and in Formula Student teams all around the world. This chapter also introduces the reader to the Formula Student association of the \acrlong{zhaw} (\acrshort{zhaw}) called \acrlong{zur} (\acrshort{zur}).
 
-\subsection{Related Work}
+\subsection{Related Work} \label{sec:Related Work}
 The Edinburgh University Formula Student team describe the path planning and control for an autonomous race car by a see-think-act cycle. "See" means what kind of information the sensors and cameras provide. With "think", the processing of the images, sensor data, mapping, localization, and path planning is meant. And "act" describes the mechanism to steer, accelerate and brake the vehicle.
 
 For path planning specifically, two algorithms have been used: The A* algorithm and the \acrlong{rrt} (\acrshort{rrt}) algorithm. In the DARPA Grand Challenge, all vehicles used a variety of the A* Graph Search Algorithm, with consideration of the kinematics. Furthermore, the incremental search algorithm \acrshort{rrt} was also used in the path in regarding to autonomous driving.
 To control the vehicle, another algorithm is used, the so-called \acrlong{mppi} (\acrshort{mppi}) algorithm.
 \cite{path_planning_and_control_georgiev}
 
-\subsection{State of the Art}
+\subsection{State of the Art} \label{sec:State of the Art}
 This section gives a brief overview of different implementation of path planning algorithms. We differ between raw Python implementations and implementations by other Formula Student teams.
 
-\subsubsection{Python Implementations}
+\subsubsection{Python Implementations} \label{sec:Python Implementations}
 PythonRobotics is a Python library hub for a wide range of different implementations in robotics. It varies between arm, aerial, car robotics and more.
 For these segments of robotics, it provides an overview of different algorithm implementations, including several path planning algorithms.
 The path planning algorithms differ from different approaches, dynamic window, breadth first search, Dijkstra algorithm, just to name a few. 
 \cite{python_robotics}
 
-\subsubsection{Formula Student Implementations}
+\subsubsection{Formula Student Implementations} \label{sec:Formula Student Implementations}
 The first implementation of a path planning algorithm in the team of \acrlong{zur} consisted of a middle line detection, path smoothening and a velocity / acceleration profile. To evaluate the middle line of the track, Delaunay-Triangulation was used. An error rate was considered e.g., when a cone wasn't detected. The implementation did not cover an algorithm which draws the optimum line in consideration of curves and speed. Therefore, research must be made in optimizing the path. Furthermore, the complexity of the code must be smaller so that future teams can improve on the work that was made.
 \cite{autopilot_for_formula_student_jerome}
 
@@ -44,13 +44,13 @@ In 1980, the idea of a combustion engine asphalt racing competition was born at 
 \cite{formula_sae}
 These competitions challenge teams of university students to build and participate with formula-style vehicles. They are held around the world and are one of the biggest student engineering competitions. As of today, there are approximately 600 teams. \cite{sae_student_events}
 
-\subsubsection{Zurich UAS Racing}
+\subsubsection{Zurich UAS Racing} \label{sec:Zurich UAS Racing}
 \acrlong{zur}, formerly known as \acrlong{fszhaw} (\acrshort{fszhaw}), was launched back in 2019, with the first fully functional car finished in 2021. A new car is currently being built for the 2022 season, with more than 60 students involved. The new car has seen several improvements in aerodynamics, design, and most significant, with driverless capabilities. \cite{fszhaw_launch}
 Therefore, for the first time in the association's history, the team will compete in the \acrlong{dc} (\acrshort{dc}) category.
 The ability to localize itself on an unknown track and the ability to optimize a fully known track are both critical components of a driverless race car. Therefore, it is important to research, implement and test various path planning algorithms. As part of the newly revised autonomous system, which also includes prediction, localization and controlling, a new path planning module must be implemented.
 The team will be competing at Formula Student events in Switzerland, organized by FS Switzerland \cite{fsswitzerland}, Germany, organized by Formula Student Germany \cite{fs_germany}, and Croatia, organized by FS Alpe Adria \cite{fs_alpe_adria}.
 
-\section{Problem Definition / Objective / Requirements}
+\section{Problem Definition / Objective / Requirements} \label{sec:Problem Definition / Objective / Requirements}
 \begin{itemize}
     \item Formuliert das Ziel der Arbeit
     \item Achtung: Ziel und Aufgabe sind nicht zwingend dasselbe! Bitte sauber trennen.
@@ -64,11 +64,11 @@ The team will be competing at Formula Student events in Switzerland, organized b
     \item Nur spezielle Fachbegriffe; man kann in der Regel von einem informierten Zielpublikum ausgehen.
     Wenn ein Glossar (vgl. 6.2.) erstellt wird, erübrigt sich dieser Abschnitt.
 \end{itemize}
-\subsection{Problem Definition}
+\subsection{Problem Definition} \label{sec:Problem Definition}
 \acrlong{zur}, the university's racing team, have begun their work on its second generation race car since Fall 2021. With path planning being an integral part of an autonomous car, the research and implementation of a new path planning module as part of their new autonomous system is very important. For further information, see the official problem definition in the appendix \ref{problem_definition}.
 
-\subsection{Objective}
+\subsection{Objective} \label{sec:Objective}
 The objective of this thesis is the research and implementation of several path planning algorithms, which can be adapted on different tracks and driving scenarios. With the end goal being able to compete in the \acrlong{dc} at various Formula Student events between July and August. While a path planner has previously been implemented in the team, the functionality and stability of the program is rather modest. Only an algorithm for the exploration of an unknown track is given, the optimization of a fully known track is not supported. The program was also implemented using ROS 1 and C++, while the new autonomous system will be using ROS 2 with primarily Python. Additionally, the application has been implemented with a model car in mind, and not with the real race car. Those are the reasons why a fully new system is needed.
 
-\subsection{Overview}
+\subsection{Overview} \label{sec:Overview}
 In the following chapter, required background knowledge to several topics will be conveyed. Topics include Formula SAE and its competitions, the Autonomous System of \acrlong{zur}, the \acrlong{ros} and the concept of driverless and path planning algorithms in general. During the Methods chapter, the design, implementation, verification, and approach while constructing the path planning system will be elaborated more precisely. A summary of the results will be given in the Results chapter, followed by the Discussion and Conclusion chapter, which will review the achieved results from the chapter before.

@@ -13,7 +13,7 @@
     \item (Tests und Validierung)
 \end{itemize}
 
-This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack.
+This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack. The V-Model was used to plan the overall project.
 
 \begin{figure}[H]
     \centering
@@ -43,8 +43,7 @@ This chapter describes which approaches and methods have been used to solve the 
 To accomplish complex tasks in a team or alone there has to be a certain plan. In modern Software Engineering the method Scrum is very common as an agile planning method. As for an overall plan the V-Model was used.
 
 \subsection{V-Model} \label{sec:Planning Method: V-Model}
-The V-Model consists of several stages as shown in figure \ref{fig:V-Model}. Starting with the concept of operation stage. In this stage the plan is made while having a deeper look how to do the operation and maintenance on the program. 
-
+The V-Model consists of several stages as shown in figure \ref{fig:V-Model}. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{V-Model.png}
@@ -52,7 +51,20 @@ The V-Model consists of several stages as shown in figure \ref{fig:V-Model}. Sta
     \label{fig:V-Model}
 \end{figure}
 
+Starting with the concept of operation stage. In this stage the plan is made and research is conducted. Second the requirements and architecture is decided. This covers the process of building a development system that is near to the production environment. In this project the production system is the NVIDIA Jetson and the development system the \acrlong{vm}. Splitting up the problem to find an optimum path into two smaller ones like the exploration and optimization algorithm helped to divide the workload and having the four eye principle on each other's code. The last part covers the implementation of the algorithms in the development environment and testing it. At the same time test definition on how to test the algorithms and how to verify a good one has to be done. The integration test and verification is covered in chapter \ref{ch:Results}. The concept of Operation process consists of the evaluation of the algorithms if they fit the criterions. Lastly the operation and maintenance phase deals with the integration of the algorithm into the production system. This is as well the combination of the exploration and optimization algorithm while using interfaces.
+
 \subsection{Scrum} \label{sec:Planning Method: Scrum}
+To ensure the communication between supervisors and developers Scrum was used. Weekly meetings where held with supervisors and biweekly meetings with the driverless team. In addition, the team itself held a meeting on a weekly basis as well. From the meeting notes user stories were created to translate the stories into code. Before the weekly meeting with the supervisors an e-mail is sent which covered the tasks that have been done in the past week, the task for the week after and problems the team faced during development.
+
+\subsubsection{Kanban Board} \label{sec:Kanban Board}
+The kanban board helps to organize the user stories and to prioritize the stories in the development process. In addition, another kanban board was made to write the thesis. As shown in figure \ref{fig:Kanban Board Path Planning} there are four columns. The ``To Do'' list with all the ideas and inputs from supervisors. The ``In progress'' list shows the current tasks and the ``Review in progress'' is for the other team member to review the code. Finally, the ``Done'' column illustrates the finished tasks.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Kanban_Board_Path_Planning.PNG}
+    \caption{The Kanban Board helps to organize the user stories to see who is working on which story.}
+    \label{fig:Kanban Board Path Planning}
+\end{figure}
+
 
 \section{Architecture Design} \label{sec:Architecture Design}
 \begin{itemize}
@@ -70,5 +82,10 @@ After the explore algorithm analysed the middle line of the track the board comp
 
 
 
-\section{V-Model}
-\lipsum[1]
+\section{Integration and Verification}
+
+\begin{itemize}
+    \item Tests
+    \item Integration (inkl. Switch)
+    \item Verifikation über Simulationstool (wie ist das setup aufgebaut, welche strecken wurden getestet)
+\end{itemize}

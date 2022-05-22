@@ -75,7 +75,7 @@ The kanban board helps to organize the user stories and to prioritize the storie
 \end{itemize}
 
 \section{Exploration Algorithm} \label{sec:Exploration Algorithm}
-To find the middle line an algorithm has to be used. The exploration algorithm finds the line on which the car should drive on the first round on the track. Exploration is possible with the help of the current position of the car and the cones which are recognized by the Lidar sensor and stereo camera while the car is moving along the track. The \acrshort{ros} Node ``/path\_planner'' subscribes on the ``cone'' and ``current\_position'' topic where it gets all the information needed to calculate the path. For the subscription of ``/current\_position'' a callback function named ``self.\_\_current\_position\_listener\_callback'' will save the position in a local variable. The ``cone'' subscription listens to new cones that will be published via the ``cone\_publisher'' Node.
+The exploration algorithm implementation is found in the ``src/path\_planning/path\_planning/algorithm/exploration/exploration.py'' Python file. 
 
 \section{Optimization Algorithm} \label{sec:Optimization Algorithm}
 After the explore algorithm analysed the middle line of the track the board computer switches to the optimization algorithm. For the base code of the algorithm we forked the code from \acrlong{tum} (\acrshort{tum}). \cite{tumftm_optimization_algoritm} 

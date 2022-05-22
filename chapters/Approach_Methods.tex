@@ -13,16 +13,7 @@
     \item (Tests und Validierung)
 \end{itemize}
 
-This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack. The V-Model was used to plan the overall project.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{High_Level_Project_Overview.png}
-    \caption{The high level project overview gives an illustration which approaches and methods have been used to realize the project.}
-    \label{fig:High Level Project Overview}
-\end{figure}
-
-\section{Marco's Proposal}
+\textbf{Marco's Proposal}
 \begin{itemize}
     \item Anfangs High Level Overview Mischung, Kapitel ersichtlich was kommt Flussdiagram (um dieses haben wir dann die Prozessmethoden)
     \item Vorgehensmethode => Kanban und Scrum, maybe V-Model?
@@ -39,6 +30,15 @@ This chapter describes which approaches and methods have been used to solve the 
     \item In Resultate Kapitel, Vergleich erste Algorithmen und Versuche: erste Überlegungen und Tests, alter path planner zhaw, dann densify und interpolate, rrt max hamburg, komplexer algo à la ultimate und dann jetzige implementation, zuerst was hat eth mit mpcc, dann global racetrajectory von tumftm
 \end{itemize}
 
+This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack. The V-Model was used to plan the overall project as shown in figure \ref{fig:High Level Project Overview}. Scrum was used for the meetings that were held with the supervisors and the driverless team to accomplish the planning of the sprints. Further explanation on the planning process is described in the section \ref{sec:Planning Methods}. After the planning section the architecture design in section \ref{sec:Architecture Design} is explained. The algorithms are explained in section \ref{sec:Exploration Algorithm} for the exploration and section \ref{sec:Optimization Algorithm} for the optimization algorithm. Lastly the integration and verification process is described in section \ref{sec:Integration and Verification}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{High_Level_Project_Overview.png}
+    \caption{The high level project overview gives an illustration which approaches and methods have been used to realize the project.}
+    \label{fig:High Level Project Overview}
+\end{figure}
+
 \section{Planning Methods} \label{sec:Planning Methods}
 To accomplish complex tasks in a team or alone there has to be a certain plan. In modern Software Engineering the method Scrum is very common as an agile planning method. As for an overall plan the V-Model was used.
 
@@ -51,10 +51,10 @@ The V-Model consists of several stages as shown in figure \ref{fig:V-Model}.
     \label{fig:V-Model}
 \end{figure}
 
-Starting with the concept of operation stage. In this stage the plan is made and research is conducted. Second the requirements and architecture is decided. This covers the process of building a development system that is near to the production environment. In this project the production system is the NVIDIA Jetson and the development system the \acrlong{vm}. Splitting up the problem to find an optimum path into two smaller ones like the exploration and optimization algorithm helped to divide the workload and having the four eye principle on each other's code. The last part covers the implementation of the algorithms in the development environment and testing it. At the same time test definition on how to test the algorithms and how to verify a good one has to be done. The integration test and verification is covered in chapter \ref{ch:Results}. The concept of Operation process consists of the evaluation of the algorithms if they fit the criterions. Lastly the operation and maintenance phase deals with the integration of the algorithm into the production system. This is as well the combination of the exploration and optimization algorithm while using interfaces.
+Starting with the concept of operation stage. In this stage the plan is made and research is conducted. Second the requirements and architecture is decided. This covers the process of building a development system that is near to the production environment. In this project the production system is the NVIDIA Jetson and the development system the \acrlong{vm}. Splitting up the problem to find an optimum path into two smaller ones like the exploration and optimization algorithm helped to divide the workload and having the four eye principle on each other's code. The last part covers the implementation of the algorithms in the development environment and testing it. At the same time test definition on how to test the algorithms and how to verify a good one has to be done. The integration test and verification is covered in chapter \ref{ch:Results}. The concept of Operation process consists of the evaluation of the algorithms if they fit the criterion. Lastly the operation and maintenance phase deals with the integration of the algorithm into the production system. This is as well the combination of the exploration and optimization algorithm while using interfaces.
 
 \subsection{Scrum} \label{sec:Planning Method: Scrum}
-To ensure the communication between supervisors and developers Scrum was used. Weekly meetings where held with supervisors and biweekly meetings with the driverless team. In addition, the team itself held a meeting on a weekly basis as well. From the meeting notes user stories were created to translate the stories into code. Before the weekly meeting with the supervisors an e-mail is sent which covered the tasks that have been done in the past week, the task for the week after and problems the team faced during development.
+To ensure the communication between supervisors and developers Scrum was used. To get a deeper understanding how Scrum works an explanation in the appendix under \ref{sec:Scrum}. Weekly meetings where held with supervisors and biweekly meetings with the driverless team. In addition, the team itself held a meeting on a weekly basis as well. From the meeting notes user stories were created to translate the stories into code. Before the weekly meeting with the supervisors an e-mail is sent which covered the tasks that have been done in the past week, the task for the week after and problems the team faced during development.
 
 \subsubsection{Kanban Board} \label{sec:Kanban Board}
 The kanban board helps to organize the user stories and to prioritize the stories in the development process. In addition, another kanban board was made to write the thesis. As shown in figure \ref{fig:Kanban Board Path Planning} there are four columns. The ``To Do'' list with all the ideas and inputs from supervisors. The ``In progress'' list shows the current tasks and the ``Review in progress'' is for the other team member to review the code. Finally, the ``Done'' column illustrates the finished tasks.
@@ -74,6 +74,43 @@ The kanban board helps to organize the user stories and to prioritize the storie
     \item Kommunikationsdiagramm (zwischen Algorithmen)
 \end{itemize}
 
+
+\subsection{Development Environment} \label{sec:Development Environment}
+
+\begin{itemize}
+    \item ROS 2
+    \item Python
+    \item LaTeX
+    \item Git
+    \item VS Code
+    \item Azure DevOps
+    \item GitHub
+    \item Simulation tools
+    \item other tools
+\end{itemize}
+
+
+There are different methods to build a development environment. An easy way to get started is to build a relatively similar system like the one which is running on the NVIDIA Jetson computer. This computer will be used in the real car. A \acrlong{vm} (\acrshort{vm}) is a piece of software that can emulate hardware and encapsulates an operating system from the host operating system, that is running on hardware. Figure \ref{fig:Development Architecture} illustrates the architecture that is used for developing.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=2cm]{Development_Architecture.jpg}
+    \caption{The development architecture consists of various levels: the hardware, the host operating system, the \acrlong{vm}, the operating system on the \acrshort{vm} and the \acrlong{ros}.}
+    \label{fig:Development Architecture}
+\end{figure}
+
+On the NVIDIA Jetson computer an Ubuntu 20.04 operating system was installed. This is the reason why Ubuntu 20.04 is used on the development environment. An installation guide for how to install Ubuntu 20.04 in a \acrlong{vm} is found Cloud Linux Tech. \cite{cloudlinuxtech_install_ubuntu_2004}
+
+\subsection{Robot Operating System (ROS)} \label{sec:Robot Operating System (ROS)}
+The \acrlong{ros} (\acrshort{ros}) is not, like the name may suggest, a full-fledged operating system, but a set of software libraries and tools for the development of robot applications. The open-source robotics middleware comes shipped with capable developer tools, drivers and advanced algorithms. \cite{ros2_documentation}
+
+There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_documentation} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_documentation}
+
+The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_releases_and_target_platforms}
+
+\subsection{Integrated Development Environment (IDE) and Version Control} \label{sec:Integrated Development Environment (IDE) and Version Control}
+For developing the \acrshort{ros} node an Integrated Development Environment (IDE) was used called Visual Studio Code. This IDE has the functionality to do syntax checking on the python and C++ code. Further on the IDE was used to write the thesis in Latex as an extension for building PDF files via Latex files can be installed. For both the code and the thesis a separate GIT Repository for version control was created. The version control system helps to develop in a software engineering team to follow changes on the code and in case of any problem it can be jumped back to an older code. The GIT server which was used is \href{https://github.zhaw.ch}{github.zhaw.ch}.
+
 \section{Exploration Algorithm} \label{sec:Exploration Algorithm}
 The exploration algorithm implementation is found in the ``src/path\_planning/path\_planning/algorithm/exploration/exploration.py'' Python file. 
 
@@ -82,7 +119,7 @@ After the explore algorithm analysed the middle line of the track the board comp
 
 
 
-\section{Integration and Verification}
+\section{Integration and Verification} \label{sec:Integration and Verification}
 
 \begin{itemize}
     \item Tests

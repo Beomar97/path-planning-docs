@@ -112,10 +112,35 @@ The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzro
 For developing the \acrshort{ros} node an Integrated Development Environment (IDE) was used called Visual Studio Code. This IDE has the functionality to do syntax checking on the python and C++ code. Further on the IDE was used to write the thesis in Latex as an extension for building PDF files via Latex files can be installed. For both the code and the thesis a separate GIT Repository for version control was created. The version control system helps to develop in a software engineering team to follow changes on the code and in case of any problem it can be jumped back to an older code. The GIT server which was used is \href{https://github.zhaw.ch}{github.zhaw.ch}.
 
 \section{Exploration Algorithm} \label{sec:Exploration Algorithm}
-The exploration algorithm implementation is found in the ``src/path\_planning/path\_planning/algorithm/exploration/exploration.py'' Python file. 
+The exploration algorithm implementation is found in the python file: ``src/path\_planning/path\_planning/algorithm/exploration/exploration.py''. The algorithm uses several steps to get the middle line out of the cones position and car position on the track. Figure \ref{fig:Algorithm Exploration Figure A} and \ref{fig:Algorithm Exploration Figure B} are illustrating the different steps of the algorithm. Starting of with the steps (a) to (e) from figure \ref{fig:Algorithm Exploration Figure A}. The algorithm starts when more than 2 cones have been received from the ``cone\_publisher''. Step (a) shows 5 cones that have been received so far, the current position of the car and the next cone. After having enough cones the algorithm calculates the distance from the car to the newly received cone and evaluates the distance based on a threshold which is defined in a track configuration file. If the distance is in the threshold then new distances are calculated from the new cone to the previously received ones as shown in step (c). This distance has a different threshold and evaluates if the previously received cones are good for triangulation. Then the triangulation between the cones in the threshold and the new cone are calculated. This is shown in step (d). After the calculation of the triangles simplices are evaluated between the cones (e). These simplices or triangles consist of several edges.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5cm]{Algorithm_Exploration_Figure_A.png}
+    \caption{The exploration algorithm covers the steps to find a middle line on the track. The first part of the algorithm describes the steps to find suitable cones for the triangulation algorithm (steps a to e).}
+    \label{fig:Algorithm Exploration Figure A}
+\end{figure}
+
+Figure \ref{fig:Algorithm Exploration Figure B} shows the second part of the algorithm. It starts of based on the information of the edges between the new cones and cones in the given threshold. Step (f) shows how useful edges are validated. Edges which do not have the same tag meaning the same cone color on each side are not usable. The second criterion is that the edge can not be too long which becomes especially relevant in a curve on the track. This process of evaluation is repeated for every simplices (g). The next step (h) is to build a path. Since the path is not smooth an interpolation algorithm is used to straighten the path (i). After that the densify algorithm helps to have a path with more coordinates which is preciser (j). This path will then be published, and the optimization algorithm can use the generated points.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6cm]{Algorithm_Exploration_Figure_B.png}
+    \caption{The second part of the exploration algorithm covers criteria of suitable edges in a simplex, smoothening the path and denisifying the smoothed path.}
+    \label{fig:Algorithm Exploration Figure B}
+\end{figure}
+
+Figure \ref{fig:Algorithm Exploration Pseudocode} shows the pseudocode of the exploration algorithm. Starting of with the distance from the current position of the car to the new cone the program checks if the distance is in the threshold. After that a list is created with all the past cones that are in a valid distance to the new cone. If the list is in the threshold of 3 or more cones than the triangulation is calculated. Further explanation is found in section \ref{sec:Motion Planning} under ``Combinatorial Motion Planning''. After the calculation of the simplices the edges were compared with each other so that no edges of the same ends are in the variable called ``edges''. After the comparison another loop is done to look if the cones on each edge do not have the same tag meaning the same color and are in a threshold. Each valid edge will be added to the ``pathOfMiddlepoints'' array. After the program knows the potential middle points a path smoothening algorithm is applied followed with a densify algorithm to add more middle points. The final result meaning the middle line as well as the track border is given to the optimization algorithm.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6cm]{Algorithm_Exploration_Pseudocode.png}
+    \caption{The exploration algorithm can be presented in a pseudocode program as well.}
+    \label{fig:Algorithm Exploration Pseudocode}
+\end{figure}
 
 \section{Optimization Algorithm} \label{sec:Optimization Algorithm}
-After the explore algorithm analysed the middle line of the track the board computer switches to the optimization algorithm. For the base code of the algorithm we forked the code from \acrlong{tum} (\acrshort{tum}). \cite{tumftm_optimization_algoritm} 
+After the explore algorithm analyzed the middle line of the track the board computer switches to the optimization algorithm. For the base code of the algorithm we forked the code from \acrlong{tum} (\acrshort{tum}). \cite{tumftm_optimization_algoritm} 
 
 
 
@@ -126,3 +151,15 @@ After the explore algorithm analysed the middle line of the track the board comp
     \item Integration (inkl. Switch)
     \item Verifikation über Simulationstool (wie ist das setup aufgebaut, welche strecken wurden getestet)
 \end{itemize}
+
+\subsection{Visual Test with Plots} \label{sec:Visual Test with Plots}
+Several test methods have been used to integrate and validate the algorithms. The first method was the visual testing of plots. Python has a library called ``matplotlib.pyplot'' which can plot points, graphs and other structures on a coordinate system. To get an idea what a good algorithm is CSV files were used for getting the track information and publish it with the ``cone\_publisher'' node. The first step was to plot the full track with the start position of the car, the yellow and blue cones and the finish line which is represented with the orange cones. The second step was to test the exploration algorithm by plotting the triangulation. After that the middle points of the edges in the simplices where calculated and plotted on the coordinate system as well. This helped to get a feeling of what a good exploration algorithm looks like. The test results are found in chapter \ref{ch:Results}. Further on the path smoothening algorithm was tested visually in the coordinate system.
+
+For the optimization algorithm a separate node was constructed which takes a CSV file with the middle line and the distance to the border of the track. Additionally, parameters of the physics of the car can be added to have an accurate perception of how fast the car should drive and what steering angle it should turn. The split of the logic of the algorithms was made to work separately on the code. The optimization algorithm has an output of the optimized track, an acceleration profile and steering angles on each point of the optimized path. The evaluation was done by plots. The same Python library was used to get an illustration of the result on a coordinate system.
+
+\subsection{Integration} \label{sec:Integration}
+The integration was done simultaneously since it is easy to integrate a python script into \acrshort{ros}. The first step is to define a type of node as described in section \ref{sec:ROS Nodes}. Then the python script has to be implemented via the ``import'' statement so that the class described in the algorithm Python script can be used in the \acrshort{ros} node. After that the node has to define a publisher statement which published the output of the algorithm. 
+
+\subsection{Verification with the Simulation Tool} \label{sec:Verification with the Simulation Tool}
+
+

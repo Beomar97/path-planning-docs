@@ -30,7 +30,7 @@
     \item In Resultate Kapitel, Vergleich erste Algorithmen und Versuche: erste Überlegungen und Tests, alter path planner zhaw, dann densify und interpolate, rrt max hamburg, komplexer algo à la ultimate und dann jetzige implementation, zuerst was hat eth mit mpcc, dann global racetrajectory von tumftm
 \end{itemize}
 
-This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack. The V-Model was used to plan the overall project as shown in figure \ref{fig:High Level Project Overview}. Scrum was used for the meetings that were held with the supervisors and the driverless team to accomplish the planning of the sprints. Further explanation on the planning process is described in the section \ref{sec:Planning Methods}. After the planning section the architecture design in section \ref{sec:Architecture Design} is explained. The algorithms are explained in section \ref{sec:Exploration Algorithm} for the exploration and section \ref{sec:Optimization Algorithm} for the optimization algorithm. Lastly the integration and verification process is described in section \ref{sec:Integration and Verification}.
+This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack. The V-Model was used to plan the overall project as shown in figure \ref{fig:High Level Project Overview}. Scrum was used for the meetings that were held with the supervisors and the driverless team to accomplish the planning of the sprints. Further explanation on the planning process is described in the section \ref{sec:Planning Methods}. After the planning section, the architecture design of the Path Planning component is explained in section \ref{sec:Path Planning Component Architecture}. The algorithms are explained in section \ref{sec:Exploration Algorithm} for the exploration and section \ref{sec:Optimization Algorithm} for the optimization algorithm. Lastly the integration and verification process is described in section \ref{sec:Integration and Verification}.
 
 \begin{figure}[H]
     \centering
@@ -43,7 +43,7 @@ This chapter describes which approaches and methods have been used to solve the 
 To accomplish complex tasks in a team or alone there has to be a certain plan. In modern Software Engineering the method Scrum is very common as an agile planning method. As for an overall plan the V-Model was used.
 
 \subsection{V-Model} \label{sec:Planning Method: V-Model}
-The V-Model consists of several stages as shown in figure \ref{fig:V-Model}. 
+The V-Model consists of several stages as shown in figure \ref{fig:V-Model}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{V-Model.png}
@@ -64,6 +64,41 @@ The kanban board helps to organize the user stories and to prioritize the storie
     \caption{The Kanban Board helps to organize the user stories to see who is working on which story.}
     \label{fig:Kanban Board Path Planning}
 \end{figure}
+
+\section{Development Environment} \label{sec:Development Environment}
+
+\begin{itemize}
+    \item ROS 2
+    \item Python
+    \item LaTeX
+    \item Git
+    \item VS Code
+    \item Azure DevOps
+    \item GitHub
+    \item Simulation tools
+    \item other tools
+\end{itemize}
+
+There are different methods to build a development environment. An easy way to get started is to build a relatively similar system like the one which is running on the NVIDIA Jetson computer. This computer will be used in the real car. A \acrlong{vm} (\acrshort{vm}) is a piece of software that can emulate hardware and encapsulates an operating system from the host operating system, that is running on hardware. Figure \ref{fig:Development Architecture} illustrates the architecture that is used for developing.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=2cm]{Development_Architecture.jpg}
+    \caption{The development architecture consists of various levels: the hardware, the host operating system, the \acrlong{vm}, the operating system on the \acrshort{vm} and the \acrlong{ros}.}
+    \label{fig:Development Architecture}
+\end{figure}
+
+On the NVIDIA Jetson computer an Ubuntu 20.04 operating system was installed. This is the reason why Ubuntu 20.04 is used on the development environment. An installation guide for how to install Ubuntu 20.04 in a \acrlong{vm} is found Cloud Linux Tech. \cite{cloudlinuxtech_install_ubuntu_2004}
+
+\subsection{Robot Operating System (ROS)} \label{sec:Robot Operating System (ROS)}
+The \acrlong{ros} (\acrshort{ros}) is not, like the name may suggest, a full-fledged operating system, but a set of software libraries and tools for the development of robot applications. The open-source robotics middleware comes shipped with capable developer tools, drivers and advanced algorithms. \cite{ros2_documentation}
+
+There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_documentation} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_documentation}
+
+The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_releases_and_target_platforms}
+
+\subsection{Integrated Development Environment (IDE) and Version Control} \label{sec:Integrated Development Environment (IDE) and Version Control}
+For developing the \acrshort{ros} node an Integrated Development Environment (IDE) was used called Visual Studio Code. This IDE has the functionality to do syntax checking on the python and C++ code. Further on the IDE was used to write the thesis in Latex as an extension for building PDF files via Latex files can be installed. For both the code and the thesis a separate GIT Repository for version control was created. The version control system helps to develop in a software engineering team to follow changes on the code and in case of any problem it can be jumped back to an older code. The GIT server which was used is \href{https://github.zhaw.ch}{github.zhaw.ch}.
 
 \section{Path Planning Component Architecture} \label{sec:Path Planning Component Architecture}
 In this section, an overview on the Path Planning component will be given. As seen in the component Autonomous System Component diagram \ref{fig:AS Component Diagram}, the Path Planner will receive it's inputs by Perception (detected cones) and Localization/Odometry (current position) via the Mapping, and send it's output (planned path) to the Autopilot component.
@@ -90,7 +125,7 @@ The base structure of the Autonomous System was already defined by the team (see
     \label{fig:Path Planning ROS Architecture Draft}
 \end{figure}
 
-\section{Custom ROS Messages} \label{sec:Custom ROS Messages}
+\subsection{Custom ROS Messages} \label{sec:Custom ROS Messages}
 As seen in section \ref{sec:Zurich UAS Racing Autonomous System}, for the Autonomous System to fully function, different components developed by different people will have to work together. To enable smooth communication between these different components via the \acrlong{ros}, a set of default \acrshort{ros} messages were defined by the team as seen in figure \ref{fig:Path Planning ROS Messages}. For \acrshort{ros} communication inside of the Path Planning component itself, another package containing \acrshort{ros} messages was created.
 \begin{figure}[H]
     \centering
@@ -100,7 +135,7 @@ As seen in section \ref{sec:Zurich UAS Racing Autonomous System}, for the Autono
 \end{figure}
 While the 'interfaces' package contains path planning internal ROS messages, the 'fszhaw\_msgs' package contains the messages for communication with the rest of the system. The 'OptimizePath.srv' message is used by the 'optimize\_path' service for the communication between the Path Planner and the Optimization Service, as seen in figure \ref{fig:Path Planning ROS Architecture}. From the 'fszhaw\_msgs' package, following messages are used in the Path Planning component: 'Cone.msg' for the 'cone' topic, 'CurrentPosition.msg' for the 'current\_position' topic, 'PlannedTrajectory.msg' for the 'planned\_trajectory' topic, and 'Track.msg' for the 'testing\_only/track' topic used in combination with the Simulation Tool.
 
-\section{Path Planner Node} \label{sec:Path Planner Node}
+\subsection{Path Planner Node} \label{sec:Path Planner Node}
 As seen in the component architecture of the Path Planning package in figure \ref{fig:Path Planning ROS Architecture}, the Path Planner node is the central processor of the whole package.
 While receiving the detected cones and current position by the subscribers, the 'Start Finish Detector' can discern if the vehicle has reached the start of the track again. If not, the planner will calculate the planned path using the Exploration Algorithm and output it via the publisher. If a full lap has been completed, the planner will send a request for optimization to the 'Optimization Service'. After receiving the optimized path, it will send that via the publisher instead of the path calculated by the Exploration Algorithm. An overview of the Path Planner Node can be seen in figure \ref{fig:Path Planning Path Planner Node}.
 \begin{figure}[H]
@@ -110,7 +145,7 @@ While receiving the detected cones and current position by the subscribers, the 
     \label{fig:Path Planning Path Planner Node}
 \end{figure}
 
-\section{Start Finish Detector} \label{sec:Start Finish Detector}
+\subsubsection{Start Finish Detector} \label{sec:Start Finish Detector}
 The 'Start Finish Detector' is responsible for realizing when the start or rather the end of the track has been reached. There are two different ways the detector detects such a finish: By comparing its current position with the initial starting position or by detecting several big orange cones, which mark the starting line of a lap.
 
 For events where the tracks are fully enclosed circuits, the end of a lap can be detected by just comparing the car's current position with the initial starting position at the beginning of the event. As illustrated in figure \ref{fig:Path Planner Start Finish Detector 1}.
@@ -150,43 +185,7 @@ After enough valid start/finish cones get added, e.g. two cones, will the detect
     \label{fig:Path Planner Start Finish Detector 5}
 \end{figure}
 
-\subsection{Development Environment} \label{sec:Development Environment}
-
-\begin{itemize}
-    \item ROS 2
-    \item Python
-    \item LaTeX
-    \item Git
-    \item VS Code
-    \item Azure DevOps
-    \item GitHub
-    \item Simulation tools
-    \item other tools
-\end{itemize}
-
-
-There are different methods to build a development environment. An easy way to get started is to build a relatively similar system like the one which is running on the NVIDIA Jetson computer. This computer will be used in the real car. A \acrlong{vm} (\acrshort{vm}) is a piece of software that can emulate hardware and encapsulates an operating system from the host operating system, that is running on hardware. Figure \ref{fig:Development Architecture} illustrates the architecture that is used for developing.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=2cm]{Development_Architecture.jpg}
-    \caption{The development architecture consists of various levels: the hardware, the host operating system, the \acrlong{vm}, the operating system on the \acrshort{vm} and the \acrlong{ros}.}
-    \label{fig:Development Architecture}
-\end{figure}
-
-On the NVIDIA Jetson computer an Ubuntu 20.04 operating system was installed. This is the reason why Ubuntu 20.04 is used on the development environment. An installation guide for how to install Ubuntu 20.04 in a \acrlong{vm} is found Cloud Linux Tech. \cite{cloudlinuxtech_install_ubuntu_2004}
-
-\subsection{Robot Operating System (ROS)} \label{sec:Robot Operating System (ROS)}
-The \acrlong{ros} (\acrshort{ros}) is not, like the name may suggest, a full-fledged operating system, but a set of software libraries and tools for the development of robot applications. The open-source robotics middleware comes shipped with capable developer tools, drivers and advanced algorithms. \cite{ros2_documentation}
-
-There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_documentation} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support) and will only be supported for 1.5 years, while new releases in even years are going to be long-term supported and will be supported for 5 years. \cite{ros2_documentation}
-
-The work done in this thesis have been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_releases_and_target_platforms}
-
-\subsection{Integrated Development Environment (IDE) and Version Control} \label{sec:Integrated Development Environment (IDE) and Version Control}
-For developing the \acrshort{ros} node an Integrated Development Environment (IDE) was used called Visual Studio Code. This IDE has the functionality to do syntax checking on the python and C++ code. Further on the IDE was used to write the thesis in Latex as an extension for building PDF files via Latex files can be installed. For both the code and the thesis a separate GIT Repository for version control was created. The version control system helps to develop in a software engineering team to follow changes on the code and in case of any problem it can be jumped back to an older code. The GIT server which was used is \href{https://github.zhaw.ch}{github.zhaw.ch}.
-
-\section{Exploration Algorithm} \label{sec:Exploration Algorithm}
+\subsubsection{Exploration Algorithm} \label{sec:Exploration Algorithm}
 The exploration algorithm implementation is found in the python file: ``src/path\_planning/path\_planning/algorithm/exploration/exploration.py''. The algorithm uses several steps to get the middle line out of the cones position and car position on the track. Figure \ref{fig:Algorithm Exploration Figure A} and \ref{fig:Algorithm Exploration Figure B} are illustrating the different steps of the algorithm. Starting of with the steps (a) to (e) from figure \ref{fig:Algorithm Exploration Figure A}. The algorithm starts when more than 2 cones have been received from the ``cone\_publisher''. Step (a) shows 5 cones that have been received so far, the current position of the car and the next cone. After having enough cones the algorithm calculates the distance from the car to the newly received cone and evaluates the distance based on a threshold which is defined in a track configuration file. If the distance is in the threshold then new distances are calculated from the new cone to the previously received ones as shown in step (c). This distance has a different threshold and evaluates if the previously received cones are good for triangulation. Then the triangulation between the cones in the threshold and the new cone are calculated. This is shown in step (d). After the calculation of the triangles simplices are evaluated between the cones (e). These simplices or triangles consist of several edges.
 
 \begin{figure}[H]
@@ -214,10 +213,10 @@ Figure \ref{fig:Algorithm Exploration Pseudocode} shows the pseudocode of the ex
     \label{fig:Algorithm Exploration Pseudocode}
 \end{figure}
 
-\section{Planned Path Filter} \label{sec:Planned Path Filter}
+\subsubsection{Planned Path Filter} \label{sec:Planned Path Filter}
 \lipsum[1]
 
-\section{Optimization Service Node} \label{sec:Optimization Service Node}
+\subsection{Optimization Service Node} \label{sec:Optimization Service Node}
 The Optimization Service Node is responsible for receiving the request for optimization by the Path Planner Node, preparing the input for optimization, optimizing the path, and then sending it back to the planner for further processing and publishing.
 
 The node is made up of two main components, the 'Optimization Input Transformer' and the 'Optimization Algorithm' itself. The node will receive all previously detected cones and a reference line of the driven track by the planner, e.g. the middle line. In this case, the reference line will be the calculated path by the 'Exploration Algorithm'. Because the 'Optimization Algorithm' expects a single reference line with its distances to the track's border as an input, a transformation of the received input is first needed, before it can be optimized by the algorithm. With the data from all the received cones and reference line, the 'Optimization Input Transformer' is able to map the input to a single list of reference points and the distances from each point to the track's border. The transformer will be explained further in section \ref{sec:Optimization Input Transformer}. With that list, the 'Optimization Algorithm' can optimize the path with regard to one of several objectives, e.g. the shortest path or minimum curvature. The algorithm will be explained in more detail in section \ref{sec:Optimization Algorithm}. The optimized path will then be sent back to the planner via the  \acrshort{ros} service.
@@ -228,7 +227,7 @@ The node is made up of two main components, the 'Optimization Input Transformer'
     \label{fig:Path Planning Optimization Service Node}
 \end{figure}
 
-\section{Optimization Input Transformer} \label{sec:Optimization Input Transformer}
+\subsubsection{Optimization Input Transformer} \label{sec:Optimization Input Transformer}
 As mentioned before in section \ref{sec:Optimization Service Node}, all previously detected cones (blue, yellow, orange and big orange cones) and a reference line, in this case the calculated path by the Exploration Algorithm, are used as the input. As the output, a newly created reference track consisting of reference points and their corresponding distance to the track's limits are received. An illustration can be seen in figure \ref{fig:Optimization Service Input Transformer 1}
 \begin{figure}[H]
     \centering
@@ -252,7 +251,7 @@ Secondly, for each reference point, its distance to the track limits are calcula
 \end{figure}
 Lastly, the developed list containing the reference track will then be returned as the output.
 
-\section{Optimization Algorithm} \label{sec:Optimization Algorithm}
+\subsubsection{Optimization Algorithm} \label{sec:Optimization Algorithm}
 The base code of the implementation was forked from the Institute of Automotive Technology at the \acrlong{tum}. \cite{tumftm_optimization_algoritm}
 The repository contains algorithms for determining an optimal racing line. It is possible to choose between several objectives:
 \begin{itemize}
@@ -276,7 +275,7 @@ Several test methods have been used to integrate and validate the algorithms. Th
 For the optimization algorithm a separate node was constructed which takes a CSV file with the middle line and the distance to the border of the track. Additionally, parameters of the physics of the car can be added to have an accurate perception of how fast the car should drive and what steering angle it should turn. The split of the logic of the algorithms was made to work separately on the code. The optimization algorithm has an output of the optimized track, an acceleration profile and steering angles on each point of the optimized path. The evaluation was done by plots. The same Python library was used to get an illustration of the result on a coordinate system.
 
 \subsection{Integration} \label{sec:Integration}
-The integration was done simultaneously since it is easy to integrate a python script into \acrshort{ros}. The first step is to define a type of node as described in section \ref{sec:ROS Nodes}. Then the python script has to be implemented via the ``import'' statement so that the class described in the algorithm Python script can be used in the \acrshort{ros} node. After that the node has to define a publisher statement which published the output of the algorithm. 
+The integration was done simultaneously since it is easy to integrate a python script into \acrshort{ros}. The first step is to define a type of node as described in section \ref{sec:ROS Nodes}. Then the python script has to be implemented via the ``import'' statement so that the class described in the algorithm Python script can be used in the \acrshort{ros} node. After that the node has to define a publisher statement which published the output of the algorithm.
 
 \subsection{Verification with the Simulation Tool} \label{sec:Verification with the Simulation Tool}
 

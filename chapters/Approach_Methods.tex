@@ -228,7 +228,7 @@ The node is made up of two main components, the 'Optimization Input Transformer'
 \end{figure}
 
 \subsubsection{Optimization Input Transformer} \label{sec:Optimization Input Transformer}
-As mentioned before in section \ref{sec:Optimization Service Node}, all previously detected cones (blue, yellow, orange and big orange cones) and a reference line, in this case the calculated path by the Exploration Algorithm, are used as the input. As the output, a newly created reference track consisting of reference points and their corresponding distance to the track's limits are received. An illustration can be seen in figure \ref{fig:Optimization Service Input Transformer 1}
+As mentioned before in section \ref{sec:Optimization Service Node}, all previously detected cones (blue, yellow, orange and big orange cones) and a reference line, in this case the calculated path by the Exploration Algorithm, are used as input by the Optimization Input Transformer. As the output, a newly created reference track consisting of reference points and their corresponding distances to the track's limits are received. An illustration can be seen in figure \ref{fig:Optimization Service Input Transformer 1}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Optimization_Service_Input_Transformer_1.png}
@@ -252,14 +252,53 @@ Secondly, for each reference point, its distance to the track limits are calcula
 Lastly, the developed list containing the reference track will then be returned as the output.
 
 \subsubsection{Optimization Algorithm} \label{sec:Optimization Algorithm}
-The base code of the implementation was forked from the Institute of Automotive Technology at the \acrlong{tum}. \cite{tumftm_optimization_algoritm}
-The repository contains algorithms for determining an optimal racing line. It is possible to choose between several objectives:
-\begin{itemize}
-    \item Shortest Path
-    \item Minimum Curvature (with or without iterative call)
-    \item Minimum Time (with or without powertrain behaviour consideration)
-\end{itemize}
-The racing line from the minimum curvature objective is quite near to a minimum time racing line in corners, but will differ as soon as the car's acceleration limits are not exploited. However, the minimum time optimization requires a lot more parameters and takes more computation time.
+The base code of the implementation was forked from the Institute of Automotive Technology at the \acrlong{tum}.
+The repository contains algorithms for determining an optimal racing line. It is possible to choose between several objectives: Shortest Path, Minimum Curvature (with or without iterative call) and Minimum Time (with or without powertrain behaviour consideration). \cite{tumftm_optimization_algoritm}
+
+The racing line from the minimum curvature objective is quite near to a minimum time racing line in corners, but will differ as soon as the car's acceleration limits are not exploited. However, the minimum time optimization requires a lot more parameters and takes more computation time. It was decided to primarily use the Minimum Curvature objective, as the time difference between Minimum Curvature and Minimum Time is too small to justify its use over the other algorithms (see chapter \ref{ch:Results}).
+
+At the center of the Optimization Algorithm is the main file called ``main\_globaltraj.py''. This file includes the ``optimize\_path()'' function used to optimize the path in the end.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_MainGlobalTraj.png}
+    \caption{Main Global Traj.}
+    \label{fig:Optimization Algorithm Module MainGlobalTraj}
+\end{figure}
+
+\textbf{Parameters}-wise, the main method receives everything it needs by the vehicle parameter file called ``racecar.ini''. This file holds general vehicle parameters like the maximum vehicle speed, the length, width and mass of the vehicle, its drag coefficient and its curvature limit. Additionally, the parameter file also holds several calculation options like the step size used for interpolations, smoothing options for spline regression and more.
+
+The vehicle parameter file will also loads additional information from a supplementary GGV diagram (``ggv.csv''), also known as the performance envelope, and from a complementary file called ``ax\_max\_machines.csv'', containing an array with the longitudinal acceleration limits by the electrical motors, as seen in figure \ref{fig:Optimization Algorithm Module Parameters}. If a GG diagram shows the acceleration a car can achieve at a given speed, then a GGV diagram would show the maximum acceleration a car can sustain in any horizontal direction when travelling at any speed. The task of the driver would then be to take the car to the boundaries of its performance envelope at every moment, while the task of the engineers would be to expand the performance envelope of the car by improving on its tyres, aerodynamics, powertrain and more. % ADD CITE
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_Parameters.png}
+    \caption{The vehicle parameter file, holding general vehicle parameters and several calculation options, receives additional data by the GGV diagram and the ax machines array.}
+    \label{fig:Optimization Algorithm Module Parameters}
+\end{figure}
+
+As for its \textbf{Inputs}, the main method receives the required reference track and additional user configurations, like the optimization type, minimum track width, number of laps to be driven and more, by the client. A supplementary friction map of the track can also be given, but is only relevant for Minimum Time solutions. In principle, they can also be considered within the velocity profile calculation of Minimum Curvature solutions. However, this is currently not supported by the implementation. % ADD CITE
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_Inputs.png}
+    \caption{The user input and reference track will be received by the client. The friction map is optional and currently only relevant for Minimum Time solutions.}
+    \label{fig:Optimization Algorithm Module Inputs}
+\end{figure}
+
+Contained in the ``frictionmap'' package of the project, functions related to the creation and handling of friction maps along the racetrack are provided.
+The script contained in ``main\_gen\_frictionmap.py'' can be used to create custom friction maps for any racetrack supplied. The explanation behind the friction map generation is out of scope in this thesis and can be read in ``A Concept for Estimation and Prediction of the Tire-Road Friction Potential for an Autonomous Racecar'' by L. Hermansdorfer, J. Betz and M. Lienkamp. \cite{friction_map_generation}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_FrictionMap.png}
+    \caption{Overview of the Friction Map package containing functions related to the handling and creation of friction maps.}
+    \label{fig:Optimization Algorithm Module Overview}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module.png}
+    \caption{For each selected reference point, its distance to the left and right track limits will be computed, by just evaluating its distance to the nearest blue cone or yellow cone respectively.}
+    \label{fig:Optimization Algorithm Module Overview}
+\end{figure}
 
 \section{Integration and Verification} \label{sec:Integration and Verification}
 

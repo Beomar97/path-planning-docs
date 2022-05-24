@@ -65,15 +65,90 @@ The kanban board helps to organize the user stories and to prioritize the storie
     \label{fig:Kanban Board Path Planning}
 \end{figure}
 
+\section{Path Planning Component Architecture} \label{sec:Path Planning Component Architecture}
+In this section, an overview on the Path Planning component will be given. As seen in the component Autonomous System Component diagram \ref{fig:AS Component Diagram}, the Path Planner will receive it's inputs by Perception (detected cones) and Localization/Odometry (current position) via the Mapping, and send it's output (planned path) to the Autopilot component.
 
-\section{Architecture Design} \label{sec:Architecture Design}
-\begin{itemize}
-    \item Beschreibt Architektur von ROS
-    \item UML Klassendiagram
-    \item Interfaces für Messages
-    \item Kommunikationsdiagramm (zwischen Algorithmen)
-\end{itemize}
+The path planning component primarily consists of two \acrshort{ros} nodes: The 'Path Planner' node and the 'Optimization Service' node, as seen in figure \ref{fig:Path Planning ROS Architecture}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planning_ROS_Architecture.png}
+    \caption{The high-level ROS overview of the path planning package, consisting of several nodes and takes advantage of topics and services.}
+    \label{fig:Path Planning ROS Architecture}
+\end{figure}
 
+The Path Planner node can be seen as the brain of the planner, as it handles both the flow of the data and the management of the different algorithms. It itself subscribes on the inputs and publishes the output via \acrshort{ros} topics. While the car's current position is received by the 'Current Position' topic, the latest detected cone is received by the 'Cone' topic, and the final planned path is then published via the 'Planned Trajectory' topic. The planner will calculate the path for the vehicle using the custom made 'Exploration Algorithm', which will be explained in more detail in section \ref{sec:Exploration Algorithm}. Furthermore, the node holds several configuration parameters regarding the algorithm mode, track configuration and more.
+
+The Path Planner requests the calculation of the optimized path to the Optimization Service. Communication with the service occurs through the 'Optimize Path' \acrshort{ros} service. While the Optimization Service calculates the optimized racing line for the given track, the Path Planner will still continue to calculate the path using the exploration algorithm. The Path Planner will switch to publishing the optimized path after it receives the response from the service.
+
+For testing the package locally in Python, two additional \acrshort{ros} nodes where created: The 'Cone Publisher', for mocking the publishing of cones, and the 'Planned Trajectory Subscriber', for receiving the published trajectories by the planner.
+
+The base structure of the Autonomous System was already defined by the team (see figure \ref{fig:AS Component Diagram}) before work on the thesis even began, hence it was clear on how the strcuture of the Path Planner would vaguely look like. Receiving detected cones from Perception and receiving the current position from Localization, calculating the path with that data, and then sending that to the next part of the system, an early draft of the planner can be seen in figure \ref{fig:Path Planning ROS Architecture Draft}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planning_ROS_Architecture_Draft.png}
+    \caption{An early draft of the ROS architecture of the path planner.}
+    \label{fig:Path Planning ROS Architecture Draft}
+\end{figure}
+
+\section{Custom ROS Messages} \label{sec:Custom ROS Messages}
+As seen in section \ref{sec:Zurich UAS Racing Autonomous System}, for the Autonomous System to fully function, different components developed by different people will have to work together. To enable smooth communication between these different components via the \acrlong{ros}, a set of default \acrshort{ros} messages were defined by the team as seen in figure \ref{fig:Path Planning ROS Messages}. For \acrshort{ros} communication inside of the Path Planning component itself, another package containing \acrshort{ros} messages was created.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planning_ROS_Messages.png}
+    \caption{While the custom \acrshort{ros} messages in the 'interfaces' package are only used in the path planning package internally, the messages in the 'fszhaw\_msgs' package are used to communicate with the other packages in the autonomous system.}
+    \label{fig:Path Planning ROS Messages}
+\end{figure}
+While the 'interfaces' package contains path planning internal ROS messages, the 'fszhaw\_msgs' package contains the messages for communication with the rest of the system. The 'OptimizePath.srv' message is used by the 'optimize\_path' service for the communication between the Path Planner and the Optimization Service, as seen in figure \ref{fig:Path Planning ROS Architecture}. From the 'fszhaw\_msgs' package, following messages are used in the Path Planning component: 'Cone.msg' for the 'cone' topic, 'CurrentPosition.msg' for the 'current\_position' topic, 'PlannedTrajectory.msg' for the 'planned\_trajectory' topic, and 'Track.msg' for the 'testing\_only/track' topic used in combination with the Simulation Tool.
+
+\section{Path Planner Node} \label{sec:Path Planner Node}
+As seen in the component architecture of the Path Planning package in figure \ref{fig:Path Planning ROS Architecture}, the Path Planner node is the central processor of the whole package.
+While receiving the detected cones and current position by the subscribers, the 'Start Finish Detector' can discern if the vehicle has reached the start of the track again. If not, the planner will calculate the planned path using the Exploration Algorithm and output it via the publisher. If a full lap has been completed, the planner will send a request for optimization to the 'Optimization Service'. After receiving the optimized path, it will send that via the publisher instead of the path calculated by the Exploration Algorithm. An overview of the Path Planner Node can be seen in figure \ref{fig:Path Planning Path Planner Node}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{Path_Planning_Path_Planner.png}
+    \caption{The Path Planner Node is made up of several components, a component for detecting the start of the track, the Exploration algorithm itself and the \acrshort{ros} subscriber, publisher and service client.}
+    \label{fig:Path Planning Path Planner Node}
+\end{figure}
+
+\section{Start Finish Detector} \label{sec:Start Finish Detector}
+The 'Start Finish Detector' is responsible for realizing when the start or rather the end of the track has been reached. There are two different ways the detector detects such a finish: By comparing its current position with the initial starting position or by detecting several big orange cones, which mark the starting line of a lap.
+
+For events where the tracks are fully enclosed circuits, the end of a lap can be detected by just comparing the car's current position with the initial starting position at the beginning of the event. As illustrated in figure \ref{fig:Path Planner Start Finish Detector 1}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Start_Finish_Detector_1.png}
+    \caption{Situation while the car hasn't reached the threshold of the initial starting position.}
+    \label{fig:Path Planner Start Finish Detector 1}
+\end{figure}
+The class will detect the completion of the lap as soon as the car reaches the threshold surrounding the initial starting position.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Start_Finish_Detector_2.png}
+    \caption{Situation if the car reaches the threshold surrounding the initial starting position.}
+    \label{fig:Path Planner Start Finish Detector 2}
+\end{figure}
+
+For events where the initial starting position isn't also the start respectively the end of a track, as with the Acceleration or Skidpad event, the starting line needs to be detected by encountering big orange cones, which mark the end of a track. These detected cones need to be close enough to be counted as a valid start/finish cone, or else they will be ignored, as seen in figure \ref{fig:Path Planner Start Finish Detector 3}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Start_Finish_Detector_3.png}
+    \caption{The cone will be disregarded, as it is outside the threshold distance.}
+    \label{fig:Path Planner Start Finish Detector 3}
+\end{figure}
+As soon as a big orange cone gets detected inside the threshold, it will be added as a valid start/finish cone, as illustrated in figure
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Start_Finish_Detector_4.png}
+    \caption{The cone will be added as a valid start/finish cone, as its distance is inside the threshold.}
+    \label{fig:Path Planner Start Finish Detector 4}
+\end{figure}
+After enough valid start/finish cones get added, e.g. two cones, will the detector check the distances between the added cones, to see if they are really in the same area. If so, will the class successfully detect the completion of the track. As illustrated in figure \ref{fig:Path Planner Start Finish Detector 5}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Start_Finish_Detector_5.png}
+    \caption{Two valid start/finish cones get added and the completion of the track is successfully detected.}
+    \label{fig:Path Planner Start Finish Detector 5}
+\end{figure}
 
 \subsection{Development Environment} \label{sec:Development Environment}
 
@@ -139,10 +214,53 @@ Figure \ref{fig:Algorithm Exploration Pseudocode} shows the pseudocode of the ex
     \label{fig:Algorithm Exploration Pseudocode}
 \end{figure}
 
+\section{Planned Path Filter} \label{sec:Planned Path Filter}
+\lipsum[1]
+
+\section{Optimization Service Node} \label{sec:Optimization Service Node}
+The Optimization Service Node is responsible for receiving the request for optimization by the Path Planner Node, preparing the input for optimization, optimizing the path, and then sending it back to the planner for further processing and publishing.
+
+The node is made up of two main components, the 'Optimization Input Transformer' and the 'Optimization Algorithm' itself. The node will receive all previously detected cones and a reference line of the driven track by the planner, e.g. the middle line. In this case, the reference line will be the calculated path by the 'Exploration Algorithm'. Because the 'Optimization Algorithm' expects a single reference line with its distances to the track's border as an input, a transformation of the received input is first needed, before it can be optimized by the algorithm. With the data from all the received cones and reference line, the 'Optimization Input Transformer' is able to map the input to a single list of reference points and the distances from each point to the track's border. The transformer will be explained further in section \ref{sec:Optimization Input Transformer}. With that list, the 'Optimization Algorithm' can optimize the path with regard to one of several objectives, e.g. the shortest path or minimum curvature. The algorithm will be explained in more detail in section \ref{sec:Optimization Algorithm}. The optimized path will then be sent back to the planner via the  \acrshort{ros} service.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{Path_Planning_Optimization_Service.png}
+    \caption{The Optimization Service Node is made up of two main components, a component for preparing the received input for optimization and the algorithm to optimize the path itself.}
+    \label{fig:Path Planning Optimization Service Node}
+\end{figure}
+
+\section{Optimization Input Transformer} \label{sec:Optimization Input Transformer}
+As mentioned before in section \ref{sec:Optimization Service Node}, all previously detected cones (blue, yellow, orange and big orange cones) and a reference line, in this case the calculated path by the Exploration Algorithm, are used as the input. As the output, a newly created reference track consisting of reference points and their corresponding distance to the track's limits are received. An illustration can be seen in figure \ref{fig:Optimization Service Input Transformer 1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Optimization_Service_Input_Transformer_1.png}
+    \caption{All previously received cones and a reference line are used as the input, while a reference track containing reference points and their distances to the track limits are received as the output.}
+    \label{fig:Optimization Service Input Transformer 1}
+\end{figure}
+Firstly, for each given yellow or blue cone, the closest point on the reference line will be calculated. For this step, the list with more cones in it will be chosen, the list with all yellow cones would be used if there are more yellow than blue cones. Depending on the position of the orange and big orange cones, they will be classified as a blue or as a yellow cone during this process.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Optimization_Service_Input_Transformer_2.png}
+    \caption{For each blue or yellow cone, its closest point on the reference line will be determined.}
+    \label{fig:Optimization Service Input Transformer 2}
+\end{figure}
+Secondly, for each reference point, its distance to the track limits are calculated. Because blue cones are always situated on the left side of the track and yellow cones always on the right side, the distance to the left track limit can be determined by computing the distance to its nearest blue cone. For the right track limit, it can be determined by computing the distance to its nearest yellow cone.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Optimization_Service_Input_Transformer_3.png}
+    \caption{For each selected reference point, its distance to the left and right track limits will be computed, by just evaluating its distance to the nearest blue cone or yellow cone respectively.}
+    \label{fig:Optimization Service Input Transformer 3}
+\end{figure}
+Lastly, the developed list containing the reference track will then be returned as the output.
+
 \section{Optimization Algorithm} \label{sec:Optimization Algorithm}
-After the explore algorithm analyzed the middle line of the track the board computer switches to the optimization algorithm. For the base code of the algorithm we forked the code from \acrlong{tum} (\acrshort{tum}). \cite{tumftm_optimization_algoritm} 
-
-
+The base code of the implementation was forked from the Institute of Automotive Technology at the \acrlong{tum}. \cite{tumftm_optimization_algoritm}
+The repository contains algorithms for determining an optimal racing line. It is possible to choose between several objectives:
+\begin{itemize}
+    \item Shortest Path
+    \item Minimum Curvature (with or without iterative call)
+    \item Minimum Time (with or without powertrain behaviour consideration)
+\end{itemize}
+The racing line from the minimum curvature objective is quite near to a minimum time racing line in corners, but will differ as soon as the car's acceleration limits are not exploited. However, the minimum time optimization requires a lot more parameters and takes more computation time.
 
 \section{Integration and Verification} \label{sec:Integration and Verification}
 

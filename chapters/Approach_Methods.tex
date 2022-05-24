@@ -30,7 +30,7 @@
     \item In Resultate Kapitel, Vergleich erste Algorithmen und Versuche: erste Überlegungen und Tests, alter path planner zhaw, dann densify und interpolate, rrt max hamburg, komplexer algo à la ultimate und dann jetzige implementation, zuerst was hat eth mit mpcc, dann global racetrajectory von tumftm
 \end{itemize}
 
-This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack. The V-Model was used to plan the overall project as shown in figure \ref{fig:High Level Project Overview}. Scrum was used for the meetings that were held with the supervisors and the driverless team to accomplish the planning of the sprints. Further explanation on the planning process is described in the section \ref{sec:Planning Methods}. After the planning section, the architecture design of the Path Planning component is explained in section \ref{sec:Path Planning Component Architecture}. The algorithms are explained in section \ref{sec:Exploration Algorithm} for the exploration and section \ref{sec:Optimization Algorithm} for the optimization algorithm. Lastly the integration and verification process is described in section \ref{sec:Integration and Verification}.
+This chapter describes which approaches and methods have been used to solve the problem to find algorithms which calculate the optimum path on a racetrack. The V-Model was used to plan the overall project as shown in figure \ref{fig:High Level Project Overview}. Scrum was used for the meetings that were held with the supervisors and the driverless team to accomplish the planning of the sprints. Further explanation on the planning process is described in the section \ref{sec:Planning Methods}. After the planning section, the development environment is described in section \ref{sec:Development Environment}. Then an introduction to the architecture design of the Path Planning component is explained in section \ref{sec:Path Planning Component Architecture}. The algorithms are explained in section \ref{sec:Exploration Algorithm} for the exploration and section \ref{sec:Optimization Algorithm} for the optimization algorithm. Lastly the integration and verification process is described in section \ref{sec:Integration and Verification}.
 
 \begin{figure}[H]
     \centering
@@ -66,18 +66,6 @@ The kanban board helps to organize the user stories and to prioritize the storie
 \end{figure}
 
 \section{Development Environment} \label{sec:Development Environment}
-
-\begin{itemize}
-    \item ROS 2
-    \item Python
-    \item LaTeX
-    \item Git
-    \item VS Code
-    \item Azure DevOps
-    \item GitHub
-    \item Simulation tools
-    \item other tools
-\end{itemize}
 
 There are different methods to build a development environment. An easy way to get started is to build a relatively similar system like the one which is running on the NVIDIA Jetson computer. This computer will be used in the real car. A \acrlong{vm} (\acrshort{vm}) is a piece of software that can emulate hardware and encapsulates an operating system from the host operating system, that is running on hardware. Figure \ref{fig:Development Architecture} illustrates the architecture that is used for developing.
 
@@ -117,7 +105,7 @@ The Path Planner requests the calculation of the optimized path to the Optimizat
 
 For testing the package locally in Python, two additional \acrshort{ros} nodes where created: The 'Cone Publisher', for mocking the publishing of cones, and the 'Planned Trajectory Subscriber', for receiving the published trajectories by the planner.
 
-The base structure of the Autonomous System was already defined by the team (see figure \ref{fig:AS Component Diagram}) before work on the thesis even began, hence it was clear on how the strcuture of the Path Planner would vaguely look like. Receiving detected cones from Perception and receiving the current position from Localization, calculating the path with that data, and then sending that to the next part of the system, an early draft of the planner can be seen in figure \ref{fig:Path Planning ROS Architecture Draft}.
+The base structure of the Autonomous System was already defined by the team (see figure \ref{fig:AS Component Diagram}) before work on the thesis even began, hence it was clear on how the structure of the Path Planner would vaguely look like. Receiving detected cones from Perception and receiving the current position from Localization, calculating the path with that data, and then sending that to the next part of the system, an early draft of the planner can be seen in figure \ref{fig:Path Planning ROS Architecture Draft}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Path_Planning_ROS_Architecture_Draft.png}
@@ -190,7 +178,7 @@ The exploration algorithm implementation is found in the python file: ``src/path
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=5cm]{Algorithm_Exploration_Figure_A.png}
+    \includegraphics[width=5.5cm]{Algorithm_Exploration_Figure_A.png}
     \caption{The exploration algorithm covers the steps to find a middle line on the track. The first part of the algorithm describes the steps to find suitable cones for the triangulation algorithm (steps a to e).}
     \label{fig:Algorithm Exploration Figure A}
 \end{figure}
@@ -199,7 +187,7 @@ Figure \ref{fig:Algorithm Exploration Figure B} shows the second part of the alg
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6cm]{Algorithm_Exploration_Figure_B.png}
+    \includegraphics[width=10cm]{Algorithm_Exploration_Figure_B.png}
     \caption{The second part of the exploration algorithm covers criteria of suitable edges in a simplex, smoothening the path and denisifying the smoothed path.}
     \label{fig:Algorithm Exploration Figure B}
 \end{figure}
@@ -208,7 +196,7 @@ Figure \ref{fig:Algorithm Exploration Pseudocode} shows the pseudocode of the ex
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6cm]{Algorithm_Exploration_Pseudocode.png}
+    \includegraphics[width=10cm]{Algorithm_Exploration_Pseudocode.png}
     \caption{The exploration algorithm can be presented in a pseudocode program as well.}
     \label{fig:Algorithm Exploration Pseudocode}
 \end{figure}
@@ -275,7 +263,8 @@ Several test methods have been used to integrate and validate the algorithms. Th
 For the optimization algorithm a separate node was constructed which takes a CSV file with the middle line and the distance to the border of the track. Additionally, parameters of the physics of the car can be added to have an accurate perception of how fast the car should drive and what steering angle it should turn. The split of the logic of the algorithms was made to work separately on the code. The optimization algorithm has an output of the optimized track, an acceleration profile and steering angles on each point of the optimized path. The evaluation was done by plots. The same Python library was used to get an illustration of the result on a coordinate system.
 
 \subsection{Integration} \label{sec:Integration}
-The integration was done simultaneously since it is easy to integrate a python script into \acrshort{ros}. The first step is to define a type of node as described in section \ref{sec:ROS Nodes}. Then the python script has to be implemented via the ``import'' statement so that the class described in the algorithm Python script can be used in the \acrshort{ros} node. After that the node has to define a publisher statement which published the output of the algorithm.
+The integration was done simultaneously since it is easy to integrate a python script into \acrshort{ros}. The first step is to define a type of node as described in section \ref{sec:ROS Nodes}. Then the python script has to be implemented via the ``import'' statement so that the class described in the algorithm Python script can be used in the \acrshort{ros} node. After that the node has to define a publisher statement which published the output of the algorithm. A detailed description is found in the section \ref{sec:Path Planning Component Architecture}.
+In the course of a race after the first round of using the exploration algorithm, the optimization algorithm calculates the optimum path. This is done by a switch between one to the other algorithm. Since the track has orange cones to mark the start and the end of the track this property is used to switch from one algorithm to the other. The detector of the finish line is described in section \ref{sec:Start Finish Detector}
 
 \subsection{Verification with the Simulation Tool} \label{sec:Verification with the Simulation Tool}
 

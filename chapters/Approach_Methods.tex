@@ -245,14 +245,17 @@ The repository contains algorithms for determining an optimal racing line. It is
 
 The racing line from the minimum curvature objective is quite near to a minimum time racing line in corners, but will differ as soon as the car's acceleration limits are not exploited. However, the minimum time optimization requires a lot more parameters and takes more computation time. It was decided to primarily use the Minimum Curvature objective, as the time difference between Minimum Curvature and Minimum Time is too small to justify its use over the other algorithms (see chapter \ref{ch:Results}).
 
-At the center of the Optimization Algorithm is the main file called ``main\_globaltraj.py''. This file includes the ``optimize\_path()'' function used to optimize the path in the end.
-
+At the center of the Optimization Algorithm is the main file called ``main\_globaltraj.py''. This file includes the ``optimize\_path()'' function used to optimize the path in the end. It imports various utility functions from the ``helper\_funcs\_glob'' package, it contains functions to import a reference track (``import\_track.py''), to prepare the imported reference track for optimization (``prep\_track.py'') or to plot resulting figures (``result\_plots.py'') just to name a few. As a Python dependency, additional helper functions are imported from the ``trajectory\_planning\_helpers'' repository provided by \acrshort{tumftm}. \cite{tumftm_trajectory_planning_helpers}
+These useful helper functions for path and trajectory planning are frequently used in the trajectory planning software stack at \acrshort{tumftm}.
+In the end, the most optimal race trajectory line will be outputted by the algorithm.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_MainGlobalTraj.png}
-    \caption{Main Global Traj.}
+    \caption{The main method of the project is located in main\_globaltraj.py and imports important and useful functions from the helper\_funcs\_glob package and the external trajectory\_planning\_helpers repository. The output will be the calculated race trajectory line.}
     \label{fig:Optimization Algorithm Module MainGlobalTraj}
 \end{figure}
+
+
 
 \textbf{Parameters}-wise, the main method receives everything it needs by the vehicle parameter file called ``racecar.ini''. This file holds general vehicle parameters like the maximum vehicle speed, the length, width and mass of the vehicle, its drag coefficient and its curvature limit. Additionally, the parameter file also holds several calculation options like the step size used for interpolations, smoothing options for spline regression and more.
 
@@ -264,7 +267,7 @@ The vehicle parameter file will also loads additional information from a supplem
     \label{fig:Optimization Algorithm Module Parameters}
 \end{figure}
 
-As for its \textbf{Inputs}, the main method receives the required reference track and additional user configurations, like the optimization type, minimum track width, number of laps to be driven and more, by the client. A supplementary friction map of the track can also be given, but is only relevant for Minimum Time solutions. In principle, they can also be considered within the velocity profile calculation of Minimum Curvature solutions. However, this is currently not supported by the implementation. % ADD CITE
+As for its \textbf{Inputs}, the main method receives the required reference track and additional user configurations, like the optimization type, minimum track width, number of laps to be driven and more, by the client. A supplementary friction map of the track can also be given, but is only relevant for Minimum Time solutions. In principle, they can also be considered within the velocity profile calculation of Minimum Curvature solutions. However, this is currently not supported in this implementation. % ADD CITE
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_Inputs.png}

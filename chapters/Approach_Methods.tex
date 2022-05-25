@@ -245,6 +245,15 @@ The repository contains algorithms for determining an optimal racing line. It is
 
 The racing line from the minimum curvature objective is quite near to a minimum time racing line in corners, but will differ as soon as the car's acceleration limits are not exploited. However, the minimum time optimization requires a lot more parameters and takes more computation time. It was decided to primarily use the Minimum Curvature objective, as the time difference between Minimum Curvature and Minimum Time is too small to justify its use over the other algorithms (see chapter \ref{ch:Results}).
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module.png}
+    \caption{The main method ``optimize\_path()'' imports parameters from the vehicle parameter file ``racecar.ini'' and receives its inputs, a reference track, an optional friction map and user configurations, by the client. In the end, an optimal race trajectory line will be outputted.}
+    \label{fig:Optimization Algorithm Module Overview}
+\end{figure}
+
+\textbf{Overview}
+
 At the center of the Optimization Algorithm is the main file called ``main\_globaltraj.py''. This file includes the ``optimize\_path()'' function used to optimize the path in the end. It imports various utility functions from the ``helper\_funcs\_glob'' package, it contains functions to import a reference track (``import\_track.py''), to prepare the imported reference track for optimization (``prep\_track.py'') or to plot resulting figures (``result\_plots.py'') just to name a few. As a Python dependency, additional helper functions are imported from the ``trajectory\_planning\_helpers'' repository provided by \acrshort{tumftm}. \cite{tumftm_trajectory_planning_helpers}
 These useful helper functions for path and trajectory planning are frequently used in the trajectory planning software stack at \acrshort{tumftm}.
 In the end, the most optimal race trajectory line will be outputted by the algorithm.
@@ -255,19 +264,9 @@ In the end, the most optimal race trajectory line will be outputted by the algor
     \label{fig:Optimization Algorithm Module MainGlobalTraj}
 \end{figure}
 
+\textbf{Inputs}
 
-
-\textbf{Parameters}-wise, the main method receives everything it needs by the vehicle parameter file called ``racecar.ini''. This file holds general vehicle parameters like the maximum vehicle speed, the length, width and mass of the vehicle, its drag coefficient and its curvature limit. Additionally, the parameter file also holds several calculation options like the step size used for interpolations, smoothing options for spline regression and more.
-
-The vehicle parameter file will also loads additional information from a supplementary GGV diagram (``ggv.csv''), also known as the performance envelope, and from a complementary file called ``ax\_max\_machines.csv'', containing an array with the longitudinal acceleration limits by the electrical motors, as seen in figure \ref{fig:Optimization Algorithm Module Parameters}. If a GG diagram shows the acceleration a car can achieve at a given speed, then a GGV diagram would show the maximum acceleration a car can sustain in any horizontal direction when travelling at any speed. The task of the driver would then be to take the car to the boundaries of its performance envelope at every moment, while the task of the engineers would be to expand the performance envelope of the car by improving on its tyres, aerodynamics, powertrain and more. % ADD CITE
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_Parameters.png}
-    \caption{The vehicle parameter file, holding general vehicle parameters and several calculation options, receives additional data by the GGV diagram and the ax machines array.}
-    \label{fig:Optimization Algorithm Module Parameters}
-\end{figure}
-
-As for its \textbf{Inputs}, the main method receives the required reference track and additional user configurations, like the optimization type, minimum track width, number of laps to be driven and more, by the client. A supplementary friction map of the track can also be given, but is only relevant for Minimum Time solutions. In principle, they can also be considered within the velocity profile calculation of Minimum Curvature solutions. However, this is currently not supported in this implementation. % ADD CITE
+As for its inputs, the main method receives the required reference track and additional user configurations, like the optimization type, minimum track width, number of laps to be driven and more, by the client. A supplementary friction map of the track can also be given, but is only relevant for Minimum Time solutions. In principle, they can also be considered within the velocity profile calculation of Minimum Curvature solutions. However, this is currently not supported in this implementation. % ADD CITE
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_Inputs.png}
@@ -284,12 +283,52 @@ The script contained in ``main\_gen\_frictionmap.py'' can be used to create cust
     \label{fig:Optimization Algorithm Module Overview}
 \end{figure}
 
+\textbf{Parameters}
+
+Parameter-wise, the main method receives everything it needs by the vehicle parameter file called ``racecar.ini''. This file holds general vehicle parameters like the maximum vehicle speed, the length, width and mass of the vehicle, its drag coefficient and its curvature limit. Additionally, the parameter file also holds several calculation options like the step size used for interpolations, smoothing options for spline regression and more.
+
+The vehicle parameter file also sets vehicle dynamics information to be loaded from several files, a supplementary GGV diagram (``ggv.csv''), also known as the performance envelope, and from a complementary file called ``ax\_max\_machines.csv'', containing an array with the longitudinal acceleration limits by the electrical motors, as seen in figure \ref{fig:Optimization Algorithm Module Parameters}. If a GG diagram shows the acceleration a car can achieve at a given speed, then a GGV diagram would show the maximum acceleration a car can sustain in any horizontal direction when travelling at any speed. The task of the driver would then be to take the car to the boundaries of its performance envelope at every moment, while the task of the engineers would be to expand the performance envelope of the car by improving on its tyres, aerodynamics, powertrain and more. The data from these two files will be imported by the ``import\_veh\_dyn\_info()'' helper function provided by the Trajectory Planning Helpers dependency.
+% ADD CITE
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module.png}
-    \caption{For each selected reference point, its distance to the left and right track limits will be computed, by just evaluating its distance to the nearest blue cone or yellow cone respectively.}
-    \label{fig:Optimization Algorithm Module Overview}
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_Parameters.png}
+    \caption{The vehicle parameter file, holding general vehicle parameters and several calculation options, receives additional data by the GGV diagram and the ax machines array.}
+    \label{fig:Optimization Algorithm Module Parameters}
 \end{figure}
+
+\textbf{Import and Initializations}
+
+The main method will first load, set and check the input provided by the user. After that, all required paths to the parameter file, output destinations and more will be initialized. Following this step, the vehicle dependent parameters can be imported. The helper function ``import\_track()'' then imports the track itself, with the input provided by the Optimization Input Transformer.
+
+\textbf{Prepare Track}
+
+At the next step, the imported track needs to be prepared for optimization by calling the ``prep\_track()'' utility function. Firstly, it interpolates the reference track by obtaining a smoothed track on the basis of a spline approximation. Secondly, it calculates the splines by solving for curvature continuous cubic splines between the given points. To ensure a solution is possible, the normal vectors (spline normals) are checked for crossing points. Finally, if no crossings are detected, the minimum track width set by the user is enforced by inflating tighter sections until the desired track width is reached.
+
+%The spline approximation results by firstly interpolating track points linearly to a new step size (Linear Interpolation). Secondly, by creating a closed track by finding the B-Spline representation of the inserted path and smoothing it in the process. This is achieved by using Scipy's ``interpolate.splrep()'' function, based on algorithms by Paul Dierckx. \cite{DIERCKX1975165} \cite{doi:10.1137/0719093} \cite{dierckx1981improved} \cite{dierckx1995curve}. Then it evaluates the B-Spline using the total length of the smooth approximating spline based on euclidean distance with points at every 0.25 m.
+
+\textbf{Call Optimization}
+
+As next, the selected optimization gets called: Shortest Path, Minimum Curvature or Minimum Time objective. For each objective, the solution vector $\alpha$ of the optimization problem containing the lateral shift in m for every point will be returned.
+
+For \textbf{Shortest Path} optimization, a QP solver is used to minimize the summed length of the path by moving the path points along their normal vectors within the track width. The algorithm is based on the paper ``Race Driver Model'' by F. Braghin, F. Cheli, S. Melzi and E. Sabbioni. %\cite{BRAGHIN20081503}
+
+For \textbf{Minimum Curvature} optimization, a QP solver is used to minimize the summed curvature of the path by moving the path points along their normal vectors within the track width. The algorithm can be used for closed and unclosed tracks. For unclosed tracks the heading $\psi_s$ and $\psi_e$ is enforced on the first and last point of the reference track. Furthermore, in case of an unclosed track, the first and last point of the track are not subject to optimization and stay untouched. %\cite{minimum_curvature_trajectory_planning}
+
+\textbf{Create Race Line}
+
+After the optimization call, the race line gets created on the basis of the reference line and the optimization result by interpolating the splines to small distances between the race line points.
+
+\textbf{Calculate Heading and Curvature}
+
+Thereafter, the analytical calculation of heading $\psi$ and curvature $\kappa$ at every point will be executed.
+
+\textbf{Calculate Velocity and Acceleration Profile}
+
+Then the velocity profile will be created taking the tire and motor limits in consideration as good as possible. The longitudinal acceleration profile will then be created for the just created velocity profile. With both profiles, an estimated lap time gets calculated within the temporal duration (time) profile for the given trajectory.
+
+\textbf{Data Post-processing}
+
+Lastly the data will be arranged into one trajectory and a closed race trajectory array will be created. The generated trajectory will be checked in regard to minimum distance to the boundaries and maximum curvature and accelerations. And the final trajectory gets returned and plot figures get created, if selected.
 
 \section{Integration and Verification} \label{sec:Integration and Verification}
 

@@ -1,20 +1,3 @@
-@inbook{quelle1,
-    author = "Autor",
-    title = {Titel},
-    year = "Jahr",
-    publisher = "Herausgeber", 
-    address="Ort",
-    pages = {Seitenzahl}
-}
-
-@online{quelle2,
-    author="Autor",
-    title="Titel",
-    url="URL",
-    year="Jahr",
-    note={[Stand: Datum]}
-}
-
 @online{formula_sae,
     title="Formula SAE",
     url="https://fsaeonline.com/page.aspx?pageid=c4c5195a-60c0-46aa-acbf-2958ef545b72",
@@ -149,7 +132,6 @@
   title           = "Constructing roadmaps of semi-algebraic sets I",
   pages           = "203--222",
   year            = "1988"
-
 }
 
 @inbook{efficient_computation_of_euclidean_shortest_paths_in_the_plane,
@@ -216,36 +198,40 @@ Formula Student Rules 2022 Handbook
   pages     = "1490-1495"
 }
 
-@article{BRAGHIN20081503,
-	abstract = {The best race driver is the one that, with a given vehicle, is able to drive on a given track in the shortest possible time. Thus, the only target is the lap time. A race driver model has to do the same. The first step towards this target is to decide which trajectory to follow. In fact, the optimal trajectory is the best compromise between the shortest track and the track that allows to achieve the highest speeds (least curvature track). Thus, the problem of trajectory planning is a bounded optimisation problem that has to take into account not only the geometry of the circuit but also the dynamics of the vehicle. A simplified vehicle dynamic model is used for this purpose. Due to the fact that the vehicle will be driven at its limit performances, although simplified, the model has to correctly reproduce the maximum possible acceleration, a function of the vehicle speed, the maximum possible deceleration, again a function of the vehicle speed, and the maximum lateral acceleration, a function of both the vehicle speed and the steering angle. Knowing the trajectory, the vehicle model allows to determine the lap time. Through an optimisation algorithm it is therefore possible to determine the best compromise between shortest track and track with the minimum curvature, i.e. the trajectory (in terms of track and speed profile) that allows to minimize the time lap. Once the best trajectory has been determined (both in terms of best track and best speed profile), it is necessary to identify the driver's inputs to follow the given trajectory. This task is carried out by considering the driver as a controller that acts on a nonlinear plant (the vehicle) in order to achieve the desired results. Thus, the driver converts the best trajectory into vehicle's inputs. The mutual interaction between plant and controller (the driver's inputs are not only a function of the best trajectory but also of the driver's reactions due to the vehicle's dynamics) is not taken into account in this paper.},
-	author = {F. Braghin and F. Cheli and S. Melzi and E. Sabbioni},
-	doi = {https://doi.org/10.1016/j.compstruc.2007.04.028},
-	issn = {0045-7949},
-	journal = {Computers & Structures},
-	keywords = {Race driver, Numerical model, Trajectory planning, Driver's inputs},
-	note = {Structural Optimization},
-	number = {13},
-	pages = {1503-1516},
-	title = {Race driver model},
-	url = {https://www.sciencedirect.com/science/article/pii/S0045794908000163},
-	volume = {86},
-	year = {2008},
-	Bdsk-Url-1 = {https://www.sciencedirect.com/science/article/pii/S0045794908000163},
-	Bdsk-Url-2 = {https://doi.org/10.1016/j.compstruc.2007.04.028}
+@article{shortest_path,
+  author   = "F. Braghin and F. Cheli and S. Melzi and E. Sabbioni",
+  title    = "Race driver model",
+  journal  = "Computers and Structures",
+  year     = 2008,
+  volume   = "86",
+  number   = "13",
+  pages    = "1503-1516",
 }
 
-
 @article{minimum_curvature_trajectory_planning,
-	author = {Alexander Heilmeier and Alexander Wischnewski and Leonhard Hermansdorfer and Johannes Betz and Markus Lienkamp and Boris Lohmann},
-	doi = {10.1080/00423114.2019.1631455},
-	eprint = {https://doi.org/10.1080/00423114.2019.1631455},
-	journal = {Vehicle System Dynamics},
-	number = {10},
-	pages = {1497-1527},
-	publisher = {Taylor & Francis},
-	title = {Minimum curvature trajectory planning and control for an autonomous race car},
-	url = {https://doi.org/10.1080/00423114.2019.1631455},
-	volume = {58},
-	year = {2020},
-	Bdsk-Url-1 = {https://doi.org/10.1080/00423114.2019.1631455}
+  author   = "Alexander Heilmeier and Alexander Wischnewski and Leonhard Hermansdorfer and Johannes Betz and Markus Lienkamp and Boris Lohmann",
+  title    = "Minimum curvature trajectory planning and control for an autonomous race car",
+  journal  = "Vehicle System Dynamics",
+  year     = 2020,
+  volume   = "58",
+  number   = "10",
+  pages    = "1497-1527",
+}
+
+@article{minimum_time_trajectory_planning,
+  author   = "Fabian Christ and Alexander Wischnewski and Alexander Heilmeier and Boris Lohmann",
+  title    = "Time-optimal trajectory planning for a race car considering variable tyre-road friction coefficients",
+  journal  = "Vehicle System Dynamics",
+  year     = 2021,
+  volume   = "59",
+  number   = "4",
+  pages    = "588-612",
+}
+
+@inproceedings{powertrain_behaviour,
+  author    = "Herrmann, Thomas and Passigato, Francesco and Betz, Johannes and Lienkamp, Markus",
+  title     = "Minimum Race-Time Planning-Strategy for an Autonomous Electric Racecar",
+  booktitle = "2020 IEEE 23rd International Conference on Intelligent Transportation Systems",
+  year      = 2020,
+  pages     = "1-6"
 }

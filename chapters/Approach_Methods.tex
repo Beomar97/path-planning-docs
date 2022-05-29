@@ -308,21 +308,21 @@ Firstly, it interpolates the reference track by obtaining a smoothed track on th
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Algorithm_Optimization_Prep_Track.png}
-    \caption{Side-by-side comparison of the original reference track and the prepared reference track after the spline approximation and calculation.}
+    \caption{Side-by-side comparison of the original reference track and the prepared reference track after the spline approximation and calculation for the ``Small Track'' test track.}
     \label{fig:Optimization Algorithm Prepare Track}
 \end{figure}
 To ensure a solution is possible, the normal vectors (spline normals) are checked for crossing points.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Algorithm_Optimization_Check_Splines.png}
-    \caption{Visualization of the prepared reference track and its spline normals.}
+    \caption{Checking of the spline normals for crossing points on the ``Small Track'' test track.}
     \label{fig:Optimization Algorithm Check Spline Normals for Crossing Points}
 \end{figure}
 Finally, if no crossings are detected, the minimum track width set by the user is enforced by inflating tighter sections until the desired track width is reached.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Algorithm_Optimization_Enforce_Min_Width.png}
-    \caption{Comparison of a track with no minimum track width set (left side), and the same track with an arbitrary high minimum track width set (right side).}
+    \caption{Comparison of the ``Small Track'' test track with no minimum track width set (left side), and the same track with an arbitrary high minimum track width set (right side).}
     \label{fig:Optimization Algorithm Check Spline Normals for Crossing Points}
 \end{figure}
 
@@ -330,9 +330,19 @@ Finally, if no crossings are detected, the minimum track width set by the user i
 
 As next, the selected optimization objective gets called: Shortest Path, Minimum Curvature or Minimum Time objective. For each objective, the solution vector $\alpha$ of the optimization problem containing the lateral shift in m for every point will be returned.
 
-For \textbf{Shortest Path} optimization, a QP solver is used to minimize the summed length of the path by moving the path points along their normal vectors within the track width. The algorithm is based on the paper ``Race Driver Model'' by F. Braghin, F. Cheli, S. Melzi and E. Sabbioni. %\cite{BRAGHIN20081503}
+For \textbf{Shortest Path} optimization, a QP solver is used to minimize the summed length of the path by moving the path points along their normal vectors within the track width. The algorithm is based on the paper ``Race Driver Model'' by F. Braghin, F. Cheli, S. Melzi and E. Sabbioni. \cite{shortest_path}
 
-For \textbf{Minimum Curvature} optimization, a QP solver is used to minimize the summed curvature of the path by moving the path points along their normal vectors within the track width. The algorithm can be used for closed and unclosed tracks. For unclosed tracks the heading $\psi_s$ and $\psi_e$ is enforced on the first and last point of the reference track. Furthermore, in case of an unclosed track, the first and last point of the track are not subject to optimization and stay untouched. %\cite{minimum_curvature_trajectory_planning}
+For \textbf{Minimum Curvature} optimization, a QP solver is used to minimize the summed curvature of the path by moving the path points along their normal vectors within the track width. The algorithm can be used for closed and unclosed tracks. For unclosed tracks the heading $\psi_s$ and $\psi_e$ is enforced on the first and last point of the reference track. Furthermore, in case of an unclosed track, the first and last point of the track are not subject to optimization and stay untouched. \cite{minimum_curvature_trajectory_planning}
+
+For \textbf{Minimum Time} optimization, the problem is described as an optimal control problem, converted to a nonlinear program using direct orthogonal Gauss-Legendre collocation and then solved by the interior-point method IPOPT. Reduced computing
+times are achieved using a curvilinear abscissa approach for track description, algorithmic differentiation using the software framework CasADi, and a smoothing of the track input data by approximate spline regression. The vehicles behaviour is approximated as a double track model with quasi-steady state tire load simplification and nonlinear tire model. \cite{minimum_time_trajectory_planning} \cite{powertrain_behaviour}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Comparison_Optimisations.png}
+    \caption{Comparison of the paths resulting from the shortest path optimization, minimum curvature optimization and minimum time optimization. \cite{minimum_curvature_trajectory_planning}}
+    \label{fig:Optimization Algorithm Comparing Different Optimisations}
+\end{figure}
 
 \textbf{4. Create Race Line}
 

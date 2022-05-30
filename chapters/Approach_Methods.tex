@@ -347,14 +347,32 @@ times are achieved using a curvilinear abscissa approach for track description, 
 \textbf{4. Create Race Line}
 
 After the optimization call, the race line gets created on the basis of the reference line and the optimization result by interpolating the splines to small distances between the race line points.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Create_Raceline.png}
+    \caption{The race line created after interpolating the splines to small distances between the race line points for the ``Small Track'' test track.}
+    \label{fig:Optimization Algorithm Created Race Line}
+\end{figure}
 
 \textbf{5. Calculate Heading and Curvature}
 
 Thereafter, the analytical calculation of heading $\psi$ and curvature $\kappa$ at every point will be executed.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Curv_Profile.png}
+    \caption{The curvature profile of the optimized path for the ``Small Track'' test track.}
+    \label{fig:Optimization Algorithm Curvature Profile}
+\end{figure}
 
 \textbf{6. Calculate Velocity and Acceleration Profile}
 
 Then the velocity profile will be created taking the tire and motor limits in consideration as good as possible. The longitudinal acceleration profile will then be created for the just created velocity profile. With both profiles, an estimated lap time gets calculated within the temporal duration (time) profile for the given trajectory.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Algorithm_Optimization_Vel_Ac_Profile.png}
+    \caption{The velocity and acceleration profile for the optimized path for the ``Small Track'' test track.}
+    \label{fig:Optimization Algorithm Velocity and Acceleration Profile}
+\end{figure}
 
 \textbf{7. Data Post-processing}
 

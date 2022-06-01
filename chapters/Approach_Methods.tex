@@ -381,16 +381,20 @@ Lastly, the data will be arranged into one trajectory, and a closed race traject
     \item Tests
     \item Integration (inkl. Switch)
     \item Verifikation über Simulationstool (wie ist das setup aufgebaut, welche strecken wurden getestet)
+    \item Verifikation und Validierungen (Code Reviews, Fehlerfälle: Cones gehen verloren, Cones andere Seite entdeckt, allg Fehlerannahmen)
+    \item Testing mit Maps, Cone Publisher und Planned Trajectory Subscriber (mocks), utils wie track plotter, trackconfig
 \end{itemize}
 
-\subsection{Visual Test with Plots} \label{sec:Visual Test with Plots}
+\subsection{Integration} \label{sec:Integration}
+The integration of the 'Exploration' part of the program with the 'Optimization' part was accomplished by the ``Start Finish Detector'' described in section \ref{sec:Start Finish Detector} and the ``Optimize Path'' service connecting them both as seen in figure \ref{fig:Path Planning ROS Architecture}. After the Exploration algorithm calculates the path for the first round, the ``Start Finish Detector'' switches to the Optimization algorithm by sending a request over the ``Optimize Path'' service to the Optimization algorithm. The Optimization algorithm then calculates the optimum path for the rest of the laps and returns them to the planner for publishing to the rest of the system.
+
+After implementing the Path Planner and all of its components, the planner had to be integrated with the rest of the autonomous system. 
+\acrshort{ros} nodes communicate with each other via the ROS graph using topics, services or actions, as described in section \ref{sec:ROS Graph}. As a result, the planner can be integrated into the rest of the autonomous system by just subscribing to the \acrshort{ros} topics for its inputs and creating a publisher for its output, as seen in figure \ref{fig:Path Planning ROS Architecture}.
+
+\subsection{Visual Verification with Plots} \label{sec:Visual Verification with Plots}
 Several test methods have been used to integrate and validate the algorithms. The first method was the visual testing of plots. Python has a library called ``matplotlib.pyplot'' which can plot points, graphs and other structures on a coordinate system. To get an idea of what the result of a suitable algorithm would produce, CSV files containing the track information were used and then published with the ``cone\_publisher'' node. The first step was to plot the entire track with the start position of the car, the yellow and blue cones and the finish line, which is represented by the orange cones. The second step was to test the exploration algorithm by plotting the triangulation. After that, the middle points of the edges in the simplices were calculated and plotted on the coordinate system. This helped the team feel what a good exploration algorithm looks like. Further on, the path smoothening was tested visually in the coordinate system. The test results are found in chapter \ref{ch:Results}.
 
 For the optimization algorithm, a separate node was constructed, which takes a CSV file with the middle line and the distance to the border of the track. Additionally, parameters of the physics of the car can be added to have an accurate perception of how fast the car should drive and what steering angle it should turn. The split of the logic of the algorithms was made to work separately on the code. The optimization algorithm has an output of the optimized track, an acceleration profile and steering angles on each point of the optimized path. Plots did the evaluation. The same Python library was used to get an illustration of the result on a coordinate system.
-
-\subsection{Integration} \label{sec:Integration}
-The integration was done simultaneously since it is easy to integrate a python script into \acrshort{ros}. The first step is to define a type of node as described in section \ref{sec:ROS Nodes}. Then the python script has to be implemented via the ``import'' statement so that the class described in the algorithm Python script can be used in the \acrshort{ros} node. After that, the node has to define a publisher statement that publishes the algorithm's output. A detailed description is found in the section \ref{sec:Path Planning Component Architecture}.
-After the first round of using the exploration algorithm, the optimization algorithm calculates the optimum path in the course of a race. This is done by switching between the Exploration Algorithm and the Optimization Algorithm. The detector of the finish line and hence the switch is described in section \ref{sec:Start Finish Detector}.
 
 \subsection{Verification with the Simulation Tool} \label{sec:Verification with the Simulation Tool}
 

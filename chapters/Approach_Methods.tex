@@ -94,7 +94,7 @@ The Path Planner node can be seen as the planner's brain, as it handles both the
 
 The Path Planner requests the calculation of the optimized path to the Optimization Service. Communication with the service occurs through the 'Optimize Path' \acrshort{ros} service. While the Optimization Service calculates the optimized racing line for the given track, the Path Planner will continue to calculate the path using the exploration algorithm. The Path Planner will switch to publishing the optimized path after receiving the service's response.
 
-For testing the package locally in Python, two additional \acrshort{ros} nodes were created: The 'Cone Publisher', for mocking the publishing of cones, and the 'Planned Trajectory Subscriber', for receiving the published trajectories by the planner.
+For testing the package locally in Python, two additional \acrshort{ros} nodes were created: The 'Cone Publisher', for mocking the publishing of cones, and the 'Planned Trajectory Subscriber', for receiving the published trajectories by the planner. The verification steps are later described in section \ref{sec:Verification}.
 
 \subsection{Custom ROS Messages} \label{sec:Custom ROS Messages}
 As seen in section \ref{sec:Zurich UAS Racing Autonomous System}, for the Autonomous System to fully function, different components developed by different people will have to work together. Smooth communication between these different components is achieved via a set of default \acrshort{ros} messages defined by the team as seen in figure \ref{fig:Path Planning ROS Messages}. For \acrshort{ros} communication inside the Path Planning component itself, another package containing \acrshort{ros} messages was created. These messages are used between the topics and services seen in figure \ref{fig:Path Planning ROS Architecture}.
@@ -388,14 +388,37 @@ Lastly, the data will be arranged into one trajectory, and a closed race traject
 \subsection{Integration} \label{sec:Integration}
 The integration of the 'Exploration' part of the program with the 'Optimization' part was accomplished by the ``Start Finish Detector'' described in section \ref{sec:Start Finish Detector} and the ``Optimize Path'' service connecting them both as seen in figure \ref{fig:Path Planning ROS Architecture}. After the Exploration algorithm calculates the path for the first round, the ``Start Finish Detector'' switches to the Optimization algorithm by sending a request over the ``Optimize Path'' service to the Optimization algorithm. The Optimization algorithm then calculates the optimum path for the rest of the laps and returns them to the planner for publishing to the rest of the system.
 
-After implementing the Path Planner and all of its components, the planner had to be integrated with the rest of the autonomous system. 
+After implementing the Path Planner and all of its components, the planner had to be integrated with the rest of the autonomous system.
 \acrshort{ros} nodes communicate with each other via the ROS graph using topics, services or actions, as described in section \ref{sec:ROS Graph}. As a result, the planner can be integrated into the rest of the autonomous system by just subscribing to the \acrshort{ros} topics for its inputs and creating a publisher for its output, as seen in figure \ref{fig:Path Planning ROS Architecture}.
 
-\subsection{Visual Verification with Plots} \label{sec:Visual Verification with Plots}
-Several test methods have been used to integrate and validate the algorithms. The first method was the visual testing of plots. Python has a library called ``matplotlib.pyplot'' which can plot points, graphs and other structures on a coordinate system. To get an idea of what the result of a suitable algorithm would produce, CSV files containing the track information were used and then published with the ``cone\_publisher'' node. The first step was to plot the entire track with the start position of the car, the yellow and blue cones and the finish line, which is represented by the orange cones. The second step was to test the exploration algorithm by plotting the triangulation. After that, the middle points of the edges in the simplices were calculated and plotted on the coordinate system. This helped the team feel what a good exploration algorithm looks like. Further on, the path smoothening was tested visually in the coordinate system. The test results are found in chapter \ref{ch:Results}.
+\subsection{Verification} \label{sec:Verification}
+For verification purposes, the mentioned mock nodes in section \ref{sec:Path Planning Component Architecture} are used. The 'Cone Publisher' publishes the corresponding cones of a given track in a fixed order, e.g. first publishing the start cones (big orange cones) and then alternating between a blue cone and a yellow cone. Via \acrshort{ros} parameters, one can select the track to publish, e.g. 'Small Track', 'Skidpad' or 'Acceleration', and the number of laps of a given track to publish in total. On the other hand, the 'Planned Trajectory Subscriber' receives the published trajectories by the Path Planner and logs them to the console. These nodes ensure that all required inputs are generated and dispatched and that the required output is published and acquired.
 
-For the optimization algorithm, a separate node was constructed, which takes a CSV file with the middle line and the distance to the border of the track. Additionally, parameters of the physics of the car can be added to have an accurate perception of how fast the car should drive and what steering angle it should turn. The split of the logic of the algorithms was made to work separately on the code. The optimization algorithm has an output of the optimized track, an acceleration profile and steering angles on each point of the optimized path. Plots did the evaluation. The same Python library was used to get an illustration of the result on a coordinate system.
+\subsubsection{Visual Verification with Plots} \label{sec:Visual Verification with Plots}
+Plots of the resulting paths and given tracks were created with the ``Matplotlib'' library for Python. The library can plot points, graphs and many other structures on a coordinate system. Verification has been done first and foremost visually with these plots in Python.
 
-\subsection{Verification with the Simulation Tool} \label{sec:Verification with the Simulation Tool}
+\textbf{Exploration Algorithm}
+
+During verification, every algorithm step is plotted on a ``Matplotlib'' figure: Each received cone by the publisher and the resulting triangles during the Delaunay triangulation and the resulting middle points. After implementing the path smoothening with spline interpolation, the resulting smoothed middle lines were plotted instead of the middle points. The test results are found in detail in chapter \ref{ch:Results}. An example of the plots with just the middle points and with the interpolated middle line is found in figure \ref{fig:Verification Visual Plots Exploration}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Verification_Visual_Plots_Exploration.png}
+    \caption{Figures (a) and (b) show a plot of the 'Small Track' with the middle points. The start cones (big orange cones) are red, blue cones are blue, yellow cones are yellow, the middle points are black, and the triangles from triangulation are a variety of colours. Figures (c) and (d) show the same with the interpolated middle line.}
+    \label{fig:Verification Visual Plots Exploration}
+\end{figure}
+
+\textbf{Optimization Algorithm}
+
+The optimization algorithm was first verified with hard-coded cones given by a track file and a reference line tracked by hand. The 'Optimization Input Transformer', as described in section \ref{sec:Optimization Input Transformer}, converted the inputs to the needed format before letting it optimized by the optimization algorithm. Additionally, the algorithm outputs a velocity and acceleration profile and a curvature profile for the given track. An example of a plot of the optimization algorithm is given in figure \ref{fig:Verification Visual Plots Optimization}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Verification_Visual_Plots_Optimization.png}
+    \caption{Figure (a) shows the 'Small Track' test track with a predefined reference line by hand. Figure (b) shows the resulting optimized path by the Optimization algorithm.}
+    \label{fig:Verification Visual Plots Optimization}
+\end{figure}
+
+\subsubsection{Verification with the Simulation Tool} \label{sec:Verification with the Simulation Tool}
 
 

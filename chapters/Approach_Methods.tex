@@ -1,35 +1,3 @@
-\begin{itemize}
-    \item Beschreibt die Grundüberlegungen der realisierten Lösung (Konstruktion/Entwurf) und die Realisierung als Simulation, als Prototyp oder als Software-Komponente etc.
-    \item Hier beschreiben Sie Ihre gemachte Arbeit. Dazu braucht es eine Beschreibung des Vorgehens, aller Arbeitsschritte usw.
-    \item (Definiert Messgrössen, beschreibt Mess- oder Versuchsaufbau, beschreibt und dokumentiert Durchführung der Messungen/Versuche)
-    \item Bildmaterial erleichtert das Verständnis.
-    \item (Experimente)
-    \item Immer mit Aufbau und Vorgehen; Bildmaterial erleichtert das Verständnis.
-    \item (Lösungsweg)
-    \item Inkl. theoretische Herleitung der Lösung
-    \item (Modell)
-    \item (Eingesetzte Software)
-    \item Die Funktionen von verwendeten Computerprogrammen zu Simulationszwecken, Berechnungen etc. sollen beschrieben werden. Dies soll aber in Worten, Formeln und geeigneten Darstellungen (z.B. Fluss- diagrammen) geschehen. Allfälliger Programmcode ist in einem Anhang zu dokumentieren.
-    \item (Tests und Validierung)
-\end{itemize}
-
-\textbf{Marco's Proposal}
-\begin{itemize}
-    \item Anfangs High Level Overview Mischung, Kapitel ersichtlich was kommt Flussdiagram (um dieses haben wir dann die Prozessmethoden)
-    \item Vorgehensmethode => Kanban und Scrum, maybe V-Model?
-    \item Setup technisch, lokale Linux VM, ROS Installation, VS Code als IDE, GitHub Repos, GitHub Actions CI/CD (maybe?), Deployment Architektur
-    \item Overview Architektur ROS und Code, Grundüberlegung => Path Planning Package in ROS, Prototyp Architektur zeigen, Explo und Opt Algos, erhaltet Input und sendet Input
-    \item Messages (interfaces und fszhaw msgs) (System aussen)
-    \item Path Planner Node
-    \item Exploration Algorithm
-    \item Optimization Service Node
-    \item Optimization Algorithm
-    \item Verifikation und Validierungen (Code Reviews, Fehlerfälle: Cones gehen verloren, Cones andere Seite entdeckt, allg Fehlerannahmen)
-    \item Testing mit Maps, Cone Publisher und Planned Trajectory Subscriber (mocks), utils wie track plotter, trackconfig
-    \item Setup eher im Projektanhang: Weekly meetings, Review every other week, Mitarbeit mit anderen BA Teams in Driverless und gesamt Verein (Working Saturday, Hilfe im Workshop, Ausstellung Conecto ZHAW)
-    \item In Resultate Kapitel, Vergleich erste Algorithmen und Versuche: erste Überlegungen und Tests, alter path planner zhaw, dann densify und interpolate, rrt max hamburg, komplexer algo à la ultimate und dann jetzige implementation, zuerst was hat eth mit mpcc, dann global racetrajectory von tumftm
-\end{itemize}
-
 This chapter describes the approaches and methods used to solve the problem of finding algorithms that calculate the optimum path on a race track. The V-Model was used to plan the overall project as shown in figure \ref{fig:High Level Project Overview}. Concepts of Scrum were used for the interdisciplinary work between the different Driverless teams and within the Path Planning team itself. Sprint planning and review meetings were held with the supervisors and the driverless teams. Further explanation of the planning process is described in the section \ref{sec:Planning Methods}. After the planning section, the development environment is described in section \ref{sec:Development Environment}. Then an introduction to the architecture design of the Path Planning component is explained in section \ref{sec:Path Planning Component Architecture}. The algorithms are explained in section \ref{sec:Exploration Algorithm} for the exploration and section \ref{sec:Optimization Algorithm} for the optimization algorithm. Lastly, the integration and verification process is described in section \ref{sec:Integration and Verification}.
 
 \begin{figure}[H]
@@ -376,14 +344,6 @@ Lastly, the data will be arranged into one trajectory, and a closed race traject
 
 \section{Integration and Verification} \label{sec:Integration and Verification}
 
-\begin{itemize}
-    \item Tests
-    \item Integration (inkl. Switch)
-    \item Verifikation über Simulationstool (wie ist das setup aufgebaut, welche strecken wurden getestet)
-    \item Verifikation und Validierungen (Code Reviews, Fehlerfälle: Cones gehen verloren, Cones andere Seite entdeckt, allg Fehlerannahmen)
-    \item Testing mit Maps, Cone Publisher und Planned Trajectory Subscriber (mocks), utils wie track plotter, trackconfig
-\end{itemize}
-
 \subsection{Integration} \label{sec:Integration}
 The integration of the 'Exploration' part of the program with the 'Optimization' part was accomplished by the ``Start Finish Detector'' described in section \ref{sec:Start Finish Detector} and the ``Optimize Path'' service connecting them both as seen in figure \ref{fig:Path Planning ROS Architecture}. After the Exploration algorithm calculates the path for the first round, the ``Start Finish Detector'' switches to the Optimization algorithm by sending a request over the ``Optimize Path'' service to the Optimization algorithm. The Optimization algorithm then calculates the optimum path for the rest of the laps and returns them to the planner for publishing to the rest of the system.
 
@@ -391,7 +351,13 @@ After implementing the Path Planner and all of its components, the planner had t
 \acrshort{ros} nodes communicate with each other via the ROS graph using topics, services or actions, as described in section \ref{sec:ROS Graph}. As a result, the planner can be integrated into the rest of the autonomous system by just subscribing to the \acrshort{ros} topics for its inputs and creating a publisher for its output, as seen in figure \ref{fig:Path Planning ROS Architecture}.
 
 \subsection{Verification} \label{sec:Verification}
-For verification purposes, the mentioned mock nodes in section \ref{sec:Path Planning Component Architecture} are used. The 'Cone Publisher' publishes the corresponding cones of a given track in a fixed order, e.g. first publishing the start cones (big orange cones) and then alternating between a blue cone and a yellow cone. Via \acrshort{ros} parameters, one can select the track to publish, e.g. 'Small Track', 'Skidpad' or 'Acceleration', and the number of laps of a given track to publish in total. On the other hand, the 'Planned Trajectory Subscriber' receives the published trajectories by the Path Planner and logs them to the console. These nodes ensure that all required inputs are generated and dispatched and that the required output is published and acquired.
+For verification purposes, the mentioned mock nodes in section \ref{sec:Path Planning Component Architecture} are used. The 'Cone Publisher' publishes the corresponding cones of a given track in a fixed order, e.g. first publishing the start cones (big orange cones) and then alternating between a blue cone and a yellow cone. Via \acrshort{ros} parameters, one can select the track to publish, e.g. 'Small Track', 'Skidpad' or 'Acceleration', and the number of laps of a given track to publish in total. On the other hand, the 'Planned Trajectory Subscriber' receives the published trajectories by the Path Planner and logs them to the console. These nodes ensure that all required inputs are generated and dispatched and that the required output is published and acquired. The tracks themselves can be plotted manually using the 'Track Plotter'.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{Verification_Track_Plotter.png}
+    \caption{The ``Rand'' track plotted by the Track Plotter.}
+    \label{fig:Verification Visual Plots Exploration}
+\end{figure}
 
 \subsubsection{Visual Verification with Plots} \label{sec:Visual Verification with Plots}
 Plots of the resulting paths and given tracks were created with the ``Matplotlib'' library for Python. The library can plot points, graphs and many other structures on a coordinate system. Verification has been done first and foremost visually with these plots in Python.

@@ -419,6 +419,21 @@ The optimization algorithm was first verified with hard-coded cones given by a t
     \label{fig:Verification Visual Plots Optimization}
 \end{figure}
 
-\subsubsection{Verification with the Simulation Tool} \label{sec:Verification with the Simulation Tool}
+\subsubsection{Verification with Simulation Tool} \label{sec:Verification with Simulation Tool}
+Additionally to visual verifications using Python plots, the algorithms were also verified using the Simulation Tool built on top of the \acrlong{fsds} mentioned in section \ref{sec:Formula Student Implementations}. The work done implementing the tool for the \acrlong{zur} team is documented in ``Evolving a software simulator for self-driving racing cars at the Formula Student Team ZHAW'' by A. Kamberi and G. Briner. \cite{zur_sim_tool}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Verification_Sim_Tool_Example.png}
+    \caption{Screenshot of the Simulation Tool while running. In the top left corner is the simulation itself. Various statistics and plots of the simulation run are displayed in the bottom left corner. The running Autopilot node is in the top right corner, while in the bottom right corner is the running ROS Bridge.}
+    \label{fig:Verification Sim Tool Example}
+\end{figure}
 
-
+Almost all elements of the Path Planning component, as seen in figure \ref{fig:Path Planning ROS Architecture} and described in section \ref{sec:Path Planning Component Architecture}, are used with the Simulation Tool. The only element not utilized is the 'Planned Trajectory Subscriber'. The planned path outputted by the Path Planner is now received by the Autopilot node, which sends the control commands for the car to the Simulation Tool over the 'Control Command' topic. The autopilot development is further described in ``Implementation of Driving Control Algorithms for an Autonomous Racing Vehicle'' by L. Miranda. \cite{zur_autopilot} Additional stub nodes are also required for the Autopilot and Path Planner nodes to work. Stubs nodes for Localization, Trajectory (Path Planning) and the Remote Emergency System (RES) exist. The Localization stub node receives the odometry information of the vehicle in the Simulation Tool via the ``testing\_only/odom'' topic; it then publishes the current position of the vehicle to the Path Planner and Autopilot via the 'Current Position' topic. The full track of the currently used track in the Simulation Tool is received over the ``testing\_only/track'' topic, which is received by the 'Cone Publisher' of the Path Planning package, mentioned in section \ref{sec:Path Planning Component Architecture}. The Trajectory stub node would normally send a pre-coded path by hand to the Autopilot but is unused in the case with the Path Planner. The \acrshort{res} sends the 'Go Signal' to the simulator to start the simulation.
+As the Simulation Tool itself is written with \acrshort{ros} 1, the ROS Bridge has to be used, which makes it possible for components developed in ROS 1 to work with components developed in ROS 2.
+An overview of all components used with the Path Planner and Simulation Tool is illustrated in figure \ref{fig:Verification Sim Tool Architecture}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Verification_Sim_Tool_Architecture.png}
+    \caption{Overview of all \acrshort{ros} components while using the Simulation Tool in combination with the Path Planner.}
+    \label{fig:Verification Sim Tool Architecture}
+\end{figure}

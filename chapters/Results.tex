@@ -4,60 +4,75 @@
           Bei grossen Datenmengen müssen die Rohdaten nicht zwingend publiziert werden.
 \end{itemize}
 
-This chapter provides the result of the different approaches that have been used during the evaluation phase. Starting off the exploration algorithm tests were made based on visual tests of the Python plots. Then the test results of the optimization algorithm will be presented along with the different output of the program. To round up the integration tests are presented with the test on the simulation tool.
+This chapter provides the results of the different approaches that have been used during the evaluation phase. First, the results of the Exploration Algorithm are presented. The test cases were all done visually using Python plots as described in section \ref{sec:Visual Verification with Plots}. Second, the results of the Optimization Algorithm are presented. Again, the test cases are outputted visually using Python plots as described in section \ref{sec:Visual Verification with Plots}. Additionally, each track's calculation times and estimated lap times were calculated. In the end, the integration tests with both algorithms are presented using the Simulation Tool.
 
 \section{Exploration Algorithm}
-The exploration algorithm test were made via the python plots. CSV files were used from the \acrlong{tum} to have track information like the position of the cones and the car in an abstract data format. \cite{tumftm_optimization_algoritm} 
+The exploration algorithm tests were done using Python plots. Track information like cone positions and the starting position of the car were loaded from the track files by the \acrlong{tum}. \cite{tumftm_optimization_algoritm}
 
 \subsection{Acceleration Track} \label{sec:Results Acceleration Track}
-Figure \ref{fig:Result acceleration} shows the first approach (top left image), the second (top right image) and the final approach (bottom image) side by side on the acceleration track which was mentioned in section \ref{sec:Dynamic Events}. Since the plot on the top left and right side does not plot the start cones and the end cones in orange it was just used as a basis for the final more usable algorithm implementation (bottom image). The second approach calculated middle points between the grouped 4 points that where used for the triangulation. In addition to the added points a line was drawn to smoothen the track.
-
+Figure \ref{fig:Result Acceleration First Approaches} shows the first approach (a) and the second (b) approach side by side on the acceleration track, which was described in section \ref{sec:Dynamic Events}. The second approach calculated the middle points between the grouped four points used for the triangulation. In addition to the added points, a line was drawn to smoothen the track. Since the plot on (a) and (b) do not plot the start and the end cones (orange cones), they were just used as a basis for the final, more usable algorithm implementation seen in figure \ref{fig:Result Acceleration Final}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.5cm]{Result_First_Delauney_Acceleration.png}\hfill
-    \includegraphics[width=6.5cm]{Result_First_Middle_Point_Acceleration.png}
-    \includegraphics[width=6.5cm]{Result_Acceleration_final.png}
-    \caption{The image on the top left shows the first approach on the acceleration track and the image on the top right the second, while drawing a middle line. The image on the bottom shows the final approach.}
-    \label{fig:Result acceleration}
+    \includegraphics[width=\columnwidth]{Result_Acceleration_First_Approaches.png}
+    \caption{Image (a) shows the first approach on the acceleration track, while image (b) shows the second while drawing a middle line.}
+    \label{fig:Result Acceleration First Approaches}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Result_Acceleration_final.png}
+    \caption{The image shows the final approach on the Acceleration track.}
+    \label{fig:Result Acceleration Final}
 \end{figure}
 
 \subsection{Small Track} \label{sec:Results Small Track}
-The second track that was used for comparison is one of the \acrlong{tum} team which is called ``Small Track''. \cite{tumftm_optimization_algoritm} This track helped to get an understanding how the algorithm works on corners with fewer cones on the inner side then on the outer side. Figure \ref{fig:Result small track} shows a progression of the improvements of the first implementation of the algorithm (top left image) to the second improved version (top right image) and the final version of the algorithm (bottom image). Again for the first and the second approach the implementation of publishing orange cones was not made already.
-
+The second track that was used for comparison is one of the \acrlong{tum} team, which is called ``Small Track''. \cite{tumftm_optimization_algoritm} This track helped to get an understanding of how the algorithm works on corners with fewer cones on the inner side than on the outer side. Figure \ref{fig:Result Small Track First Approaches} shows a progression of the improvements of the first implementation of the algorithm (a) to the second improved version (b) and the final version of the algorithm in figure \ref{fig:Result Small Track Final}. Again for the first and the second approach, the implementation of publishing the start and end cones (orange cones) was not made already.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.5cm]{Result_First_Delauney.png}\hfill
-    \includegraphics[width=6.5cm]{Result_First_Middle_Line_Approach.png}
-    \includegraphics[width=6.5cm]{Result_SmallTrack_final.png}
-    \caption{Progression of the improvement of the first implementation (top left image) to the second (top right image) and to the final implementation (bottom image).}
-    \label{fig:Result small track}
+    \includegraphics[width=\columnwidth]{Result_SmallTrack_First_Approaches.png}
+    \caption{The progression of the improvements of the first implementation (a) to the second implementation (b) is shown.}
+    \label{fig:Result Small Track First Approaches}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Result_SmallTrack_final.png}
+    \caption{The image shows the final approach on the Small Track.}
+    \label{fig:Result Small Track Final}
 \end{figure}
 
 \subsection{Rand Track} \label{sec:Results Rand Track}
-The next track which is showed in figure \ref{fig:Result final middle line rand track} that was used for testing the final implementation was the ``Rand'' track. It has more cones and curvature compared to the ``Small Track'' and shows an example of a track that could have been used for the third track in the competition. As described in the competition rules the track properties of ``Acceleration'' and ``Skidpad'' where given already. More information can be found in section \ref{sec:Dynamic Events}.
+The next track, which is shown in figure \ref{fig:Result Rand Final} that was used for testing the final implementation, was the ``Rand'' track. It has more cones and curvature than the ``Small Track'' and shows an example of a track that could have been used for the Track Drive event in the competition, as described in section \ref{sec:Dynamic Events}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=7cm]{Result_Rand_Triangulation_final.png}
-    \caption{The ``Rand'' track with the final algorithm implementation}
-    \label{fig:Result final middle line rand track}
+    \includegraphics[width=\columnwidth]{Result_Rand_final.png}
+    \caption{The ``Rand'' track with the final algorithm implementation.}
+    \label{fig:Result Rand Final}
 \end{figure}
 
 \subsection{Competition 2021 Track} \label{sec:Results Competition 2021 Track}
-Furthermore, a track which was used for the competition of 2021 is shown in figure \ref{fig:Result final middle line 2021 competition track} with the applied final exploration algorithm. The track consists of more corners than the ``Rand'' track.
+Furthermore, a track which was used for a competition in 2021 is shown in figure \ref{fig:Result Comp 2021 Final} with the applied final exploration algorithm. The track consists of more corners than the ``Rand'' track.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=7cm]{Result_Comp2021_middle_line_final.png}
+    \includegraphics[width=\columnwidth]{Result_Comp2021_final.png}
     \caption{The result of the final exploration algorithm applied on the competition track of 2021.}
-    \label{fig:Result final middle line 2021 competition track}
+    \label{fig:Result Comp 2021 Final}
+\end{figure}
+
+\subsection{Garden Light Track} \label{sec:Results Garden Light Track}
+Another track used for testing the final implementation was the ``Garden Light'' track. The track has some parts where the left track limits (blue cones) are very close. Additionally, the track has additional cones on its curves. The final result on this track can be seen in figure \ref{fig:Result Garden Light Final}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Result_GardenLight_final.png}
+    \caption{The result of the final exploration algorithm applied on the ``Garden Light`` track.}
+    \label{fig:Result Garden Light Final}
 \end{figure}
 
 \subsection{Skidpad Track} \label{sec:Results Skidpad Track}
-The last example in figure \ref{fig:Result final middle line skidpad track} shows that the algorithm can be applied on the ``Skidpad'' track.
+The last example in figure \ref{fig:Result Skidpad Final} shows that the algorithm can also be applied on the ``Skidpad'' track.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=7cm]{Result_Skidpad_final.png}
-    \caption{The first try to calculate the middle line with the }
-    \label{fig:Result final middle line skidpad track}
+    \includegraphics[width=\columnwidth]{Result_Skidpad_final.png}
+    \caption{The calculation of the middle line with the Skidpad track.}
+    \label{fig:Result Skidpad Final}
 \end{figure}
 
 \section{Optimization Algorithm}

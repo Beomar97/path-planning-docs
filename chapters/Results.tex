@@ -110,15 +110,15 @@ As it goes for the general vehicle parameters, the real specifications of the \a
     \centering
     \begin{tabular}{|l|l|l|}
         \hline
-        \textbf{Parameter} & \textbf{Value} & \textbf{Description}           \\ \hline
-        V Max              & 30.61 m/s      & Maximal Vehicle Speed          \\ \hline
-        Length             & 2.931 m        & Vehicle Length                 \\ \hline
-        Width              & 1.663 m        & Vehicle Width                  \\ \hline
-        Mass               & 255.0 kg       & Vehicle Mass                   \\ \hline
-        Drag Coeff         & 0.3 kg*m2/m3   & Drag Coefficient               \\ \hline
-        Curv Lim           & 0.33 rad/m     & Curvature Limit of the Vehicle \\ \hline
+        \textbf{Parameter}    & \textbf{Value} \\ \hline
+        Maximal Vehicle Speed & 30.61 m/s      \\ \hline
+        Vehicle Length        & 2.931 m        \\ \hline
+        Vehicle Width         & 1.663 m        \\ \hline
+        Vehicle Mass          & 255.0 kg       \\ \hline
+        Drag Coefficient      & 0.3 kg*m2/m3   \\ \hline
+        Curvature Limit       & 0.33 rad/m     \\ \hline
     \end{tabular}
-    \caption{The vehicle's specifications.}
+    \caption{The specifications of the vehicle.}
     \label{tab:ZUR Vehicle Specifications}
 \end{table}
 \begin{figure}[H]
@@ -128,17 +128,10 @@ As it goes for the general vehicle parameters, the real specifications of the \a
     \label{fig:ZUR Racecar 2}
 \end{figure}
 
-\section{Acceleration Track} \label{sec:Results Acceleration Track}
-Acceleration:
-Blue Cones: 14
-Yellow Cones: 14
-Orange Cones: 12
-Big Orange Cones: 6
-Exploration:
-time of exploration cycle
-0.0000s 0.0028s 0.0016s 43cycles 0.0671s
-59 reference points
+As mentioned in section \ref{sec:Optimization Algorithm}, it was decided to use the Minimum Curvature objective for the Optimization Algorithm primarily. Therefore, the algorithm was tested with the Minimum Curvature objective to calculate one, two, three, five and eight laps on a given track, the Fibonacci sequence until eight. Additionally, the Shortest Path objective and the Minimum Curvature objective with iterative call were tested with two laps on a given track. During each run, the total runtime of the algorithm, the estimated lap time with the used objective, and the generated reference points were measured.
 
+\section{Acceleration Track} \label{sec:Results Acceleration Track}
+An overview of the track is shown in figure \ref{fig:Results Acceleration Initial}. As mentioned in section \ref{sec:Dynamic Events}, the track is over 75 m in length and tests the car acceleration in a straight line. The track comprises 14 blue cones and 14 yellow cones marking the track limits, 12 orange cones marking the zone where the car should stop, and six big orange cones marking the start and end of the track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Acceleration_Initial.png}
@@ -146,7 +139,29 @@ time of exploration cycle
     \label{fig:Results Acceleration Initial}
 \end{figure}
 
-Figure \ref{fig:Result Acceleration First Approaches} shows the first approach (a) and the second (b) approach side by side on the acceleration track, which was described in section \ref{sec:Dynamic Events}. The second approach calculated the middle points between the grouped four points used for the triangulation. In addition to the added points, a line was drawn to smoothen the track. Since the plot on (a) and (b) do not plot the start and the end cones (big orange cones, represented in red), they were just used as a basis for the final, more usable algorithm implementation seen in figure \ref{fig:Result Acceleration Final}.
+As Acceleration is a point-to-point race, an optimization after a full lap is not possible in this case.
+
+\textbf{Exploration Algorithm}
+
+During the run with the Acceleration track, the algorithm did 43 cycles with a total computation time of 0.0671 seconds. The average cycle lasted 0.0016 seconds, with the fastest cycle taking under < 0.0000 seconds long and the slowest cycle taking 0.0028 seconds long. The algorithm created 59 reference points during the run. The results are listed in table \ref{tab:Results Acceleration Exploration}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Result}            & \textbf{Value} \\ \hline
+        Minimum Cycle Time         & < 0.0000 s     \\ \hline
+        Maximum Cycle Time         & 0.0028 s       \\ \hline
+        Average Cycle  Time        & 0.0016 s       \\ \hline
+        Total Cycle Time           & 0.0671 s       \\ \hline
+        Number of Cycles           & 43             \\ \hline
+        Generated Reference Points & 59             \\ \hline
+    \end{tabular}
+    \caption{Results of the Exploration Algorithm on Acceleration.}
+    \label{tab:Results Acceleration Exploration}
+\end{table}
+
+Figure \ref{fig:Result Acceleration First Approaches} shows the first approach (a) and the second (b) approach side by side on the acceleration track, which was described in section \ref{sec:Dynamic Events}. The second approach calculated the middle points between the grouped four points used for the triangulation. In addition to the added points, a line was drawn to smoothen the track. Since the plot on (a) and (b) do not plot the start and the end cones (orange cones), they were just used as a basis for the final, more usable algorithm implementation seen in figure \ref{fig:Result Acceleration Final}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Result_Acceleration_First_Approaches.png}
@@ -161,16 +176,7 @@ Figure \ref{fig:Result Acceleration First Approaches} shows the first approach (
 \end{figure}
 
 \section{Skidpad Track} \label{sec:Results Skidpad Track}
-Skidpad:
-Blue Cones: 30
-Yellow Cones: 30
-Orange Cones: 20
-Big Orange Cones: 4
-Exploration:
-time of exploration cycle
-0.0001s 0.0051s 0.0021s 103cycles 0.2169s
-859 reference points
-
+An overview of the track is shown in figure \ref{fig:Results Skidpad Initial}. As mentioned in section \ref{sec:Dynamic Events}, the track consists of two pairs of concentric circles in the shape of an eight and will test the lateral grip of the car. The track comprises 30 blue cones and 30 yellow cones marking the track limits, 20 orange cones marking the start and stopping zones, and four big orange cones marking the beginnings and ends of the concentric circles.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Skidpad_Initial.png}
@@ -178,33 +184,38 @@ time of exploration cycle
     \label{fig:Results Skidpad Initial}
 \end{figure}
 
-The last example in figure \ref{fig:Result Skidpad Final} shows that the algorithm can also be applied on the ``Skidpad'' track.
+As Skidpad is a point-to-point race, an optimization after a full lap is not possible in this case.
+
+\textbf{Exploration Algorithm}
+
+During the run with the Skidpad track, the algorithm did 103 cycles with a total computation time of 0.2169 seconds. The average cycle lasted 0.0021 seconds, with the fastest cycle taking 0.0001 seconds long and the slowest cycle taking 0.0051 seconds long. The algorithm created 859 reference points during the run. The results are listed in table \ref{tab:Results Skidpad Exploration}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Result}            & \textbf{Value} \\ \hline
+        Minimum Cycle Time         & 0.0001 s       \\ \hline
+        Maximum Cycle Time         & 0.0051 s       \\ \hline
+        Average Cycle  Time        & 0.0021 s       \\ \hline
+        Total Cycle Time           & 0.2169 s       \\ \hline
+        Number of Cycles           & 103            \\ \hline
+        Generated Reference Points & 859            \\ \hline
+    \end{tabular}
+    \caption{Results of the Exploration Algorithm on Skidpad.}
+    \label{tab:Results Skidpad Exploration}
+\end{table}
+
+Figure \ref{fig:Result Skidpad Final} shows the application of the algorithm on the Skidpad track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Result_Skidpad_final.png}
-    \caption{The calculation of the middle line with the Skidpad track.}
+    \caption{The calculation of the middle line on the Skidpad track.}
     \label{fig:Result Skidpad Final}
 \end{figure}
 
 \section{Small Track} \label{sec:Results Small Track}
-Small Track:
-Blue Cones: 37
-Yellow Cones: 30
-Orange Cones: 0
-Big Orange Cones: 4
-Exploration:
-time of exploration cycle
-0.0000s 0.0066s 0.0028s 71cycles 0.1974s
-865 reference points
-Optimization:
-mincurv laps 1 2 3 5 8
-reference points
-Runtime 0.04s 0.08s 0.12s 0.22s 0.48s
-lap time 9.17s 18.48s 28.24s 47.39s 78.44s
-points 52 102 152 253 404
-shortest 0.07s 20.60s 99p
-iqp 0.10s 17.88s 102p
-
+An overview of the track is shown in figure \ref{fig:Results Small Track Initial}. The track was created by the \acrshort{eufs} team and is called ``Small Track''. \cite{eufs_sim_gitlab} The track helped to get an understanding of how the algorithm works on corners with fewer cones on the inner side than on the outer side. The track consists of 37 blue cones and 30 yellow cones for the track limits, and 4 big orange cones for the start respectively the end of the track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Small_Track_Initial.png}
@@ -212,14 +223,27 @@ iqp 0.10s 17.88s 102p
     \label{fig:Results Small Track Initial}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_2.png}
-    \caption{Optimization on the Small Track for two laps.}
-    \label{fig:Results Small Track Laps 2}
-\end{figure}
+\textbf{Exploration Algorithm}
 
-The second track that was used for comparison is one of the \acrlong{tum} team, which is called ``Small Track''. \cite{tumftm_optimization_algoritm} This track helped to get an understanding of how the algorithm works on corners with fewer cones on the inner side than on the outer side. Figure \ref{fig:Result Small Track First Approaches} shows a progression of the improvements of the first implementation of the algorithm (a) to the second improved version (b) and the final version of the algorithm in figure \ref{fig:Result Small Track Final}. Again for the first and the second approach, the implementation of publishing the start and end cones (orange cones) was not made already.
+During the run with the ``Small Track'' track, the algorithm did 71 cycles with a total computation time of 0.1974 seconds. The average cycle lasted 0.0028 seconds, with the fastest cycle taking under < 0.0000 seconds long and the slowest cycle taking 0.0066 seconds long. The algorithm created 865 reference points during the run. The results are listed in table \ref{tab:Results Small Track Exploration}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Result}            & \textbf{Value} \\ \hline
+        Minimum Cycle Time         & < 0.0000 s     \\ \hline
+        Maximum Cycle Time         & 0.0066 s       \\ \hline
+        Average Cycle  Time        & 0.0028 s       \\ \hline
+        Total Cycle Time           & 0.1974 s       \\ \hline
+        Number of Cycles           & 71             \\ \hline
+        Generated Reference Points & 865            \\ \hline
+    \end{tabular}
+    \caption{Results of the Exploration Algorithm on Small Track.}
+    \label{tab:Results Small Track Exploration}
+\end{table}
+
+Figure \ref{fig:Result Small Track First Approaches} shows a progression of the improvements of the first implementation of the algorithm (a) to the second improved version (b) and the final version of the algorithm in figure \ref{fig:Result Small Track Final}. Again for the first and the second approach, the implementation of publishing the start and end cones (orange cones) was not made already.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Result_SmallTrack_First_Approaches.png}
@@ -233,25 +257,92 @@ The second track that was used for comparison is one of the \acrlong{tum} team, 
     \label{fig:Result Small Track Final}
 \end{figure}
 
-\section{Rand Track} \label{sec:Results Rand Track}
-Rand:
-Blue Cones: 99
-Yellow Cones: 109
-Orange Cones: 0
-Big Orange Cones: 4
-Exploration:
-time of exploration cycle
-0.0000s 0.0072s 0.0031s 215cycles 0.6730s
-2635 reference points
-Optimization:
-mincurv laps 1 2 3 5 8
-reference points
-Runtime 0.12s 0.37s 0.92s 3.41s 13.18s
-lap time 24.76s 49.83s 75.69s 129.65s 219.83s
-points 194 388 581 967 1546
-shortest 0.28s 60.84s 376p
-iqp 0.82s 47.80s 384p
+\textbf{Optimization Algorithm}
 
+A comparison of the different objectives on the Small Track is given in table \ref{tab:Results Small Track Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Small Track Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Small Track Laps 2 Minimum Curvature}, and the result with the Minimum Curvature objective with an iterative call is seen in figure \ref{fig:Results Small Track Laps 2 Minimum Curvature IQP}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Objective}    & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        Shortest Path         & 0.07 s           & 20.60 s                     & 99 Reference Points                 \\ \hline
+        Minimum Curvature     & 0.08 s           & 18.48 s                     & 102 Reference Points                \\ \hline
+        Minimum Curvature IQP & 0.10 s           & 17.88 s                     & 102 Reference Points                \\ \hline
+    \end{tabular}
+    \caption{Results of the different Optimization Algorithm objectives on Small Track for two laps.}
+    \label{tab:Results Small Track Optimization Objectives}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_2_Shortest_Path.png}
+    \caption{Optimization on the Small Track for two laps with the Shortest Path objective.}
+    \label{fig:Results Small Track Laps 2 Shortest Path}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_2.png}
+    \caption{Optimization on the Small Track for two laps with the Minimum Curvature objective.}
+    \label{fig:Results Small Track Laps 2 Minimum Curvature}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_2_Mincurv_IQP.png}
+    \caption{Optimization on the Small Track for two laps with the Minimum Curvature objective with iterative call.}
+    \label{fig:Results Small Track Laps 2 Minimum Curvature IQP}
+\end{figure}
+
+The results for the Optimization Algorithm with the Minimum Curvature objective for one lap, two laps, three laps, five laps and eight laps are detailed in table \ref{tab:Results Small Track Optimization Laps 1-8}. The visual comparison of the output between one lap, three laps, five laps and eight laps is shown in figure \ref{fig:Results Small Track Laps 1-8}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Laps} & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        1             & 0.04 s           & 9.17 s                      & 52 Reference Points                 \\ \hline
+        2             & 0.08 s           & 18.48 s                     & 102 Reference Points                \\ \hline
+        3             & 0.12 s           & 28.24 s                     & 152 Reference Points                \\ \hline
+        5             & 0.22 s           & 47.39 s                     & 253 Reference Points                \\ \hline
+        8             & 0.48 s           & 78.44 s                     & 404 Reference Points                \\ \hline
+    \end{tabular}
+    \caption{Results of the Optimization Algorithm with the Minimum Curvature objective on Small Track for one to eight laps.}
+    \label{tab:Results Small Track Optimization Laps 1-8}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_1-8.png}
+    \caption{Optimization on the Small Track with the Minimum Curvature objective for one lap (a), three laps (b), five laps (c), and eight laps (d).}
+    \label{fig:Results Small Track Laps 1-8}
+\end{figure}
+
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Small Track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Small Track Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Small Track Laps 2 Curv Profile}, the 3D Velocity Profile in figure \ref{fig:Results Small Track Laps 2 3D Vel Profile}, and the Spline Normals in figure \ref{fig:Results Small Track Laps 2 Spline Normals}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_2_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile on Small Track for two laps.}
+    \label{fig:Results Small Track Laps 2 VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_2_Curv_Profile.png}
+    \caption{The Curvature Profile on Small Track for two laps.}
+    \label{fig:Results Small Track Laps 2 Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_2_3D_Vel_Profile.png}
+    \caption{The 3D Velocity Profile on Small Track for two laps.}
+    \label{fig:Results Small Track Laps 2 3D Vel Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Small_Track_Laps_2_Spline_Normals.png}
+    \caption{The Spline Normals on Small Track for two laps.}
+    \label{fig:Results Small Track Laps 2 Spline Normals}
+\end{figure}
+
+\section{Rand Track} \label{sec:Results Rand Track}
+An overview of the track is shown in figure \ref{fig:Results Rand Initial}. The track was created by the \acrshort{eufs} team too and is called ``Rand''. \cite{eufs_sim_gitlab} It has more cones and curvature than the ``Small Track'' and shows an example of a track that could have been used for the Track Drive event in the competition, as described in section \ref{sec:Dynamic Events}. The track consists of 99 blue cones and 109 yellow cones for the track limits, and 4 big orange cones for the start respectively the end of the track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Rand_Initial.png}
@@ -259,14 +350,27 @@ iqp 0.82s 47.80s 384p
     \label{fig:Results Rand Initial}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_2.png}
-    \caption{Optimization on the Rand Track for two laps.}
-    \label{fig:Results Rand Laps 2}
-\end{figure}
+\textbf{Exploration Algorithm}
 
-The next track, which is shown in figure \ref{fig:Result Rand Final} that was used for testing the final implementation, was the ``Rand'' track. It has more cones and curvature than the ``Small Track'' and shows an example of a track that could have been used for the Track Drive event in the competition, as described in section \ref{sec:Dynamic Events}.
+During the run with the ``Rand'' track, the algorithm did 215 cycles with a total computation time of 0.6730 seconds. The average cycle lasted 0.0031 seconds, with the fastest cycle taking under < 0.0000 seconds long and the slowest cycle taking 0.0072 seconds long. The algorithm created 2635 reference points during the run. The results are listed in table \ref{tab:Results Rand Exploration}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Result}            & \textbf{Value} \\ \hline
+        Minimum Cycle Time         & < 0.0000 s     \\ \hline
+        Maximum Cycle Time         & 0.0072 s       \\ \hline
+        Average Cycle  Time        & 0.0031 s       \\ \hline
+        Total Cycle Time           & 0.6730 s       \\ \hline
+        Number of Cycles           & 215            \\ \hline
+        Generated Reference Points & 2635           \\ \hline
+    \end{tabular}
+    \caption{Results of the Exploration Algorithm on Rand.}
+    \label{tab:Results Rand Exploration}
+\end{table}
+
+Figure \ref{fig:Result Rand Final} shows the final version of the algorithm on the ``Rand'' track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Result_Rand_final.png}
@@ -274,25 +378,92 @@ The next track, which is shown in figure \ref{fig:Result Rand Final} that was us
     \label{fig:Result Rand Final}
 \end{figure}
 
-\section{Competition 2021 Track} \label{sec:Results Competition 2021 Track}
-Comp 2021:
-Blue Cones: 156
-Yellow Cones: 156
-Orange Cones: 0
-Big Orange Cones: 4
-Exploration:
-time of exploration cycle
-0.0000s 0.0069s 0.0021s 320cycles 0.6621s
-3425 reference points
-Optimization:
-mincurv laps 1 2 3 5 8
-reference points
-Runtime 0.12s 0.30s 0.57s 1.66s 5.37s
-lap time 29.37s 58.87s 90.06s 146.97s 234.88s
-points 130 259 386 642 1029
-shortest 0.25s 59.29s 248p
-iqp DNF
+\textbf{Optimization Algorithm}
 
+A comparison of the different objectives on the Rand track is given in table \ref{tab:Results Rand Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Rand Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Rand Laps 2 Minimum Curvature}, and the result with the Minimum Curvature objective with an iterative call is seen in figure \ref{fig:Results Rand Laps 2 Minimum Curvature IQP}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Objective}    & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        Shortest Path         & 0.28 s           & 60.84 s                     & 376 Reference Points                \\ \hline
+        Minimum Curvature     & 0.37 s           & 49.83 s                     & 388 Reference Points                \\ \hline
+        Minimum Curvature IQP & 0.82 s           & 47.80 s                     & 384 Reference Points                \\ \hline
+    \end{tabular}
+    \caption{Results of the different Optimization Algorithm objectives on Rand for two laps.}
+    \label{tab:Results Rand Optimization Objectives}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_2_Shortest_Path.png}
+    \caption{Optimization on the Rand track for two laps with the Shortest Path objective.}
+    \label{fig:Results Rand Laps 2 Shortest Path}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_2.png}
+    \caption{Optimization on the Rand track for two laps with the Minimum Curvature objective.}
+    \label{fig:Results Rand Laps 2 Minimum Curvature}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_2_Mincurv_IQP.png}
+    \caption{Optimization on the Rand track for two laps with the Minimum Curvature objective with iterative call.}
+    \label{fig:Results Rand Laps 2 Minimum Curvature IQP}
+\end{figure}
+
+The results for the Optimization Algorithm with the Minimum Curvature objective for one lap, two laps, three laps, five laps and eight laps are detailed in table \ref{tab:Results Rand Optimization Laps 1-8}. The visual comparison of the output between one lap, three laps, five laps and eight laps is shown in figure \ref{fig:Results Rand Laps 1-8}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Laps} & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        1             & 0.12 s           & 24.76 s                     & 194 Reference Points                \\ \hline
+        2             & 0.37 s           & 49.83 s                     & 388 Reference Points                \\ \hline
+        3             & 0.92 s           & 75.69 s                     & 581 Reference Points                \\ \hline
+        5             & 3.41 s           & 129.65 s                    & 967 Reference Points                \\ \hline
+        8             & 13.18 s          & 219.83 s                    & 1546 Reference Points               \\ \hline
+    \end{tabular}
+    \caption{Results of the Optimization Algorithm with the Minimum Curvature objective on Small Track for one to eight laps.}
+    \label{tab:Results Rand Optimization Laps 1-8}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_1-8.png}
+    \caption{Optimization on the Rand track with the Minimum Curvature objective for one lap (a), three laps (b), five laps (c), and eight laps (d).}
+    \label{fig:Results Rand Laps 1-8}
+\end{figure}
+
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Rand track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Rand Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Rand Laps 2 Curv Profile}, the 3D Velocity Profile in figure \ref{fig:Results Rand Laps 2 3D Vel Profile}, and the Spline Normals in figure \ref{fig:Results Rand Laps 2 Spline Normals}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_2_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile on Rand for two laps.}
+    \label{fig:Results Rand Laps 2 VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_2_Curv_Profile.png}
+    \caption{The Curvature Profile on Rand for two laps.}
+    \label{fig:Results Rand Laps 2 Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_2_3D_Vel_Profile.png}
+    \caption{The 3D Velocity Profile on Rand for two laps.}
+    \label{fig:Results Rand Laps 2 3D Vel Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rand_Laps_2_Spline_Normals.png}
+    \caption{The Spline Normals on Rand for two laps.}
+    \label{fig:Results Rand Laps 2 Spline Normals}
+\end{figure}
+
+\section{Competition 2021 Track} \label{sec:Results Competition 2021 Track}
+An overview of the track is shown in figure \ref{fig:Results Comp 2021 Initial}. The track was created by the \acrshort{eufs} team too and is called ``Comp 2021''. \cite{eufs_sim_gitlab} The track was used for a competition in 2021 and consists of more corners than the ``Rand'' track. The track consists of 156 blue cones and 156 yellow cones for the track limits, and 4 big orange cones for the start respectively the end of the track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Comp_2021_Initial.png}
@@ -300,40 +471,114 @@ iqp DNF
     \label{fig:Results Comp 2021 Initial}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_2.png}
-    \caption{Optimization on the Competition 2021 Track for two laps.}
-    \label{fig:Results Comp 2021 Laps 2}
-\end{figure}
+\textbf{Exploration Algorithm}
 
-Furthermore, a track which was used for a competition in 2021 is shown in figure \ref{fig:Result Comp 2021 Final} with the applied final exploration algorithm. The track consists of more corners than the ``Rand'' track.
+During the run with the ``Comp 2021'' track, the algorithm did 320 cycles with a total computation time of 0.6621 seconds. The average cycle lasted 0.0021 seconds, with the fastest cycle taking under < 0.0000 seconds long and the slowest cycle taking 0.0069 seconds long. The algorithm created 3425 reference points during the run. The results are listed in table \ref{tab:Results Comp 2021 Exploration}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Result}            & \textbf{Value} \\ \hline
+        Minimum Cycle Time         & < 0.0000 s     \\ \hline
+        Maximum Cycle Time         & 0.0072 s       \\ \hline
+        Average Cycle  Time        & 0.0031 s       \\ \hline
+        Total Cycle Time           & 0.6730 s       \\ \hline
+        Number of Cycles           & 215            \\ \hline
+        Generated Reference Points & 2635           \\ \hline
+    \end{tabular}
+    \caption{Results of the Exploration Algorithm on the Competition 2021 track.}
+    \label{tab:Results Comp 2021 Exploration}
+\end{table}
+
+Figure \ref{fig:Result Comp 2021 Final} shows the final version of the algorithm on the ``Comp 2021'' track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Result_Comp2021_final.png}
-    \caption{The result of the final exploration algorithm applied on the competition track of 2021.}
+    \caption{The ``Rand'' track with the final algorithm implementation.}
     \label{fig:Result Comp 2021 Final}
 \end{figure}
 
-\section{Garden Light Track} \label{sec:Results Garden Light Track}
-Garden Light:
-Blue Cones: 101
-Yellow Cones: 99
-Orange Cones: 0
-Big Orange Cones: 4
-Exploration:
-time of exploration cycle
-0.0000s 0.0076s 0.0029s 205cycles 0.5926s
-2631 reference points
-Optimization:
-mincurv laps 1 2 3 5 8
-reference points
-Runtime 0.07s 0.17s 0.29s 0.74s 2.03s
-lap time 25.20s 48.72s 71.59s 117.31s 190.31s
-points 88 173 258 428 682
-shortest 0.15s 47.39s 159p
-iqp DNF
+\textbf{Optimization Algorithm}
 
+A comparison of the different objectives on the Competition 2021 track is given in table \ref{tab:Results Comp 2021 Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Comp 2021 Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Comp 2021 Laps 2 Minimum Curvature}, and the calculation with the Minimum Curvature objective with an iterative call did not finish in a reasonable time.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Objective}    & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        Shortest Path         & 0.25 s           & 59.29 s                     & 248 Reference Points                \\ \hline
+        Minimum Curvature     & 0.30 s           & 58.87 s                     & 259 Reference Points                \\ \hline
+        Minimum Curvature IQP & DNF*             & DNF*                        & DNF*                                \\ \hline
+    \end{tabular}
+    \caption{Results of the different Optimization Algorithm objectives on the Competition 2021 track for two laps. (* Did not finish)}
+    \label{tab:Results Comp 2021 Optimization Objectives}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_2_Shortest_Path.png}
+    \caption{Optimization on the Competition 2021 track for two laps with the Shortest Path objective.}
+    \label{fig:Results Comp 2021 Laps 2 Shortest Path}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_2.png}
+    \caption{Optimization on the Competition 2021 track for two laps with the Minimum Curvature objective.}
+    \label{fig:Results Comp 2021 Laps 2 Minimum Curvature}
+\end{figure}
+
+The results for the Optimization Algorithm with the Minimum Curvature objective for one lap, two laps, three laps, five laps and eight laps are detailed in table \ref{tab:Results Comp 2021 Optimization Laps 1-8}. The visual comparison of the output between one lap, three laps, five laps and eight laps is shown in figure \ref{fig:Results Comp 2021 Laps 1-8}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Laps} & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        1             & 0.12 s           & 29.37 s                     & 130 Reference Points                \\ \hline
+        2             & 0.30 s           & 58.87 s                     & 259 Reference Points                \\ \hline
+        3             & 0.57 s           & 90.06 s                     & 386 Reference Points                \\ \hline
+        5             & 1.66 s           & 146.97 s                    & 642 Reference Points                \\ \hline
+        8             & 5.37 s           & 234.88 s                    & 1029 Reference Points               \\ \hline
+    \end{tabular}
+    \caption{Results of the Optimization Algorithm with the Minimum Curvature objective on the Competition 2021 track for one to eight laps.}
+    \label{tab:Results Comp 2021 Optimization Laps 1-8}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_1-8.png}
+    \caption{Optimization on the Competition 2021 track with the Minimum Curvature objective for one lap (a), three laps (b), five laps (c), and eight laps (d).}
+    \label{fig:Results Comp 2021 Laps 1-8}
+\end{figure}
+
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Competition 2021 track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Comp 2021 Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Comp 2021 Laps 2 Curv Profile}, the 3D Velocity Profile in figure \ref{fig:Results Comp 2021 Laps 2 3D Vel Profile}, and the Spline Normals in figure \ref{fig:Results Comp 2021 Laps 2 Spline Normals}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_2_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile on the Competition 2021 track for two laps.}
+    \label{fig:Results Comp 2021 Laps 2 VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_2_Curv_Profile.png}
+    \caption{The Curvature Profile on the Competition 2021 track for two laps.}
+    \label{fig:Results Comp 2021 Laps 2 Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_2_3D_Vel_Profile.png}
+    \caption{The 3D Velocity Profile on the Competition 2021 track for two laps.}
+    \label{fig:Results Comp 2021 Laps 2 3D Vel Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_2_Spline_Normals.png}
+    \caption{The Spline Normals on the Competition 2021 track for two laps.}
+    \label{fig:Results Comp 2021 Laps 2 Spline Normals}
+\end{figure}
+
+\section{Garden Light Track} \label{sec:Results Garden Light Track}
+An overview of the track is shown in figure \ref{fig:Results Garden Light Initial}. The track was created by the \acrshort{eufs} team too and is called ``Garden Light''. \cite{eufs_sim_gitlab} The track has some parts where the left track limits (blue cones) are very close. Additionally, the track has additional cones on its curves. The track consists of 101 blue cones and 99 yellow cones for the track limits, and 4 big orange cones for the start respectively the end of the track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Garden_Light_Initial.png}
@@ -341,84 +586,346 @@ iqp DNF
     \label{fig:Results Garden Light Initial}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{Results_Optimization_Garden_Light_Laps_2.png}
-    \caption{Optimization on the Garden Light Track for two laps.}
-    \label{fig:Results Garden Light Laps 2}
-\end{figure}
+\textbf{Exploration Algorithm}
 
-Another track used for testing the final implementation was the ``Garden Light'' track. The track has some parts where the left track limits (blue cones) are very close. Additionally, the track has additional cones on its curves. The final result on this track can be seen in figure \ref{fig:Result Garden Light Final}.
+During the run with the Garden Light track, the algorithm did 205 cycles with a total computation time of 0.5926 seconds. The average cycle lasted 0.0029 seconds, with the fastest cycle taking under < 0.0000 seconds long and the slowest cycle taking 0.0076 seconds long. The algorithm created 2631 reference points during the run. The results are listed in table \ref{tab:Results Garden Light Exploration}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Result}            & \textbf{Value} \\ \hline
+        Minimum Cycle Time         & < 0.0000 s     \\ \hline
+        Maximum Cycle Time         & 0.0076 s       \\ \hline
+        Average Cycle  Time        & 0.0029 s       \\ \hline
+        Total Cycle Time           & 0.5926 s       \\ \hline
+        Number of Cycles           & 205            \\ \hline
+        Generated Reference Points & 2631           \\ \hline
+    \end{tabular}
+    \caption{Results of the Exploration Algorithm on the Garden Light track.}
+    \label{tab:Results Garden Light Exploration}
+\end{table}
+
+Figure \ref{fig:Result Garden Light Final} shows the final version of the algorithm on the Garden Light track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Result_GardenLight_final.png}
-    \caption{The result of the final exploration algorithm applied on the ``Garden Light`` track.}
+    \caption{The Garden Light track with the final algorithm implementation.}
     \label{fig:Result Garden Light Final}
 \end{figure}
 
-\textbf{Following Tracks are Optimization only!}
+\textbf{Optimization Algorithm}
+
+A comparison of the different objectives on the Garden Light track is given in table \ref{tab:Results Garden Light Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Garden Light Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Garden Light Laps 2 Minimum Curvature}, and the calculation with the Minimum Curvature objective with an iterative call did not finish in a reasonable time.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Objective}    & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        Shortest Path         & 0.15 s           & 47.39 s                     & 159 Reference Points                \\ \hline
+        Minimum Curvature     & 0.17 s           & 48.72 s                     & 173 Reference Points                \\ \hline
+        Minimum Curvature IQP & DNF*             & DNF*                        & DNF*                                \\ \hline
+    \end{tabular}
+    \caption{Results of the different Optimization Algorithm objectives on the Garden Light track for two laps. (* Did not finish)}
+    \label{tab:Results Garden Light Optimization Objectives}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Garden_Light_Laps_2_Shortest_Path.png}
+    \caption{Optimization on the Garden Light track for two laps with the Shortest Path objective.}
+    \label{fig:Results Garden Light Laps 2 Shortest Path}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Garden_Light_Laps_2.png}
+    \caption{Optimization on the Garden Light track for two laps with the Minimum Curvature objective.}
+    \label{fig:Results Garden Light Laps 2 Minimum Curvature}
+\end{figure}
+
+The results for the Optimization Algorithm with the Minimum Curvature objective for one lap, two laps, three laps, five laps and eight laps are detailed in table \ref{tab:Results Garden Light Optimization Laps 1-8}. The visual comparison of the output between one lap, three laps, five laps and eight laps is shown in figure \ref{fig:Results Garden Light Laps 1-8}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Laps} & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        1             & 0.07 s           & 25.20 s                     & 88 Reference Points                 \\ \hline
+        2             & 0.17 s           & 48.72 s                     & 173 Reference Points                \\ \hline
+        3             & 0.29 s           & 71.59 s                     & 258 Reference Points                \\ \hline
+        5             & 0.74 s           & 117.31 s                    & 428 Reference Points                \\ \hline
+        8             & 2.03 s           & 190.31 s                    & 682 Reference Points                \\ \hline
+    \end{tabular}
+    \caption{Results of the Optimization Algorithm with the Minimum Curvature objective on the Garden Light track for one to eight laps.}
+    \label{tab:Results Garden Light Optimization Laps 1-8}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Garden_Light_Laps_1-8.png}
+    \caption{Optimization on the Garden Light track with the Minimum Curvature objective for one lap (a), three laps (b), five laps (c), and eight laps (d).}
+    \label{fig:Results Garden Light Laps 1-8}
+\end{figure}
+
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Garden Light track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Garden Light Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Garden Light Laps 2 Curv Profile}, the 3D Velocity Profile in figure \ref{fig:Results Garden Light Laps 2 3D Vel Profile}, and the Spline Normals in figure \ref{fig:Results Garden Light Laps 2 Spline Normals}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Garden_Light_Laps_2_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile on the Garden Light track for two laps.}
+    \label{fig:Results Garden Light Laps 2 VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Garden_Light_Laps_2_Curv_Profile.png}
+    \caption{The Curvature Profile on the Garden Light track for two laps.}
+    \label{fig:Results Garden Light Laps 2 Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Garden_Light_Laps_2_3D_Vel_Profile.png}
+    \caption{The 3D Velocity Profile on the Garden Light track for two laps.}
+    \label{fig:Results Garden Light Laps 2 3D Vel Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Garden_Light_Laps_2_Spline_Normals.png}
+    \caption{The Spline Normals on the Garden Light track for two laps.}
+    \label{fig:Results Garden Light Laps 2 Spline Normals}
+\end{figure}
 
 \section{Rounded Rectangle Track} \label{sec:Results Rounded Rectangle Track}
-Rounded Rectangle:
-mincurv 0.39s 36.18s 310p
-shortest 0.32s 38.39s 293p
-iqp 0.59s 31.28s 303p
+The track was created by \acrshort{tumftm} and was provided together with the ``global\_racetrajectory\_optimization'' repository. \cite{tumftm_optimization_algoritm}
+As the track information came already in the format which would be generated by the 'Optimization Input Transformer' described in section \ref{sec:Optimization Input Transformer}, the track could only be tested with the Optimization Algorithm, but not with the Exploration Algorithm.
 
+\textbf{Optimization Algorithm}
+
+A comparison of the different objectives on the Rounded Rectangle track is given in table \ref{tab:Results Rounded Rectangle Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Rounded Rectangle Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Rounded Rectangle Laps 2 Minimum Curvature}, and the result with the Minimum Curvature objective with an iterative call is seen in figure \ref{fig:Results Rounded Rectangle Laps 2 Minimum Curvature IQP}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Objective}    & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        Shortest Path         & 0.32 s           & 38.39 s                     & 293 Reference Points                \\ \hline
+        Minimum Curvature     & 0.39 s           & 36.18 s                     & 310 Reference Points                \\ \hline
+        Minimum Curvature IQP & 0.59 s           & 31.28 s                     & 303 Reference Points                \\ \hline
+    \end{tabular}
+    \caption{Results of the different Optimization Algorithm objectives on the Rounded Rectangle track for two laps.}
+    \label{tab:Results Rounded Rectangle Optimization Objectives}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rounded_Rectangle_Laps_2_Shortest_Path.png}
+    \caption{Optimization on the Rounded Rectangle track for two laps with the Shortest Path objective.}
+    \label{fig:Results Rounded Rectangle Laps 2 Shortest Path}
+\end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Optimization_Rounded_Rectangle_Laps_2.png}
-    \caption{Optimization on the Rounded Rectangle Track for two laps.}
-    \label{fig:Results Rounded Rectangle Laps 2}
+    \caption{Optimization on the Rounded Rectangle track for two laps with the Minimum Curvature objective.}
+    \label{fig:Results Rounded Rectangle Laps 2 Minimum Curvature}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rounded_Rectangle_Laps_2_Mincurv_IQP.png}
+    \caption{Optimization on the Rounded Rectangle track for two laps with the Minimum Curvature objective with iterative call.}
+    \label{fig:Results Rounded Rectangle Laps 2 Minimum Curvature IQP}
+\end{figure}
+
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Rounded Rectangle track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Rounded Rectangle Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Rounded Rectangle Laps 2 Curv Profile}, and the Spline Normals in figure \ref{fig:Results Rounded Rectangle Laps 2 Spline Normals}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rounded_Rectangle_Laps_2_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile on Rounded Rectangle track for two laps.}
+    \label{fig:Results Rounded Rectangle Laps 2 VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rounded_Rectangle_Laps_2_Curv_Profile.png}
+    \caption{The Curvature Profile on the Rounded Rectangle track for two laps.}
+    \label{fig:Results Rounded Rectangle Laps 2 Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Rounded_Rectangle_Laps_2_Spline_Normals.png}
+    \caption{The Spline Normals on the Rounded Rectangle track for two laps.}
+    \label{fig:Results Rounded Rectangle Laps 2 Spline Normals}
 \end{figure}
 
 \section{Handling Track} \label{sec:Results Handling Track}
-Handling Track:
-mincurv 1.72s 71.94s 582p
-shortest 1.15s 74.79s 563p
-iqp 3.59s 67.95s 587
+The track was created by \acrshort{tumftm} and was provided together with the ``global\_racetrajectory\_optimization'' repository. \cite{tumftm_optimization_algoritm}
+As the track information came already in the format which would be generated by the 'Optimization Input Transformer' described in section \ref{sec:Optimization Input Transformer}, the track could only be tested with the Optimization Algorithm, but not with the Exploration Algorithm.
 
+\textbf{Optimization Algorithm}
+
+A comparison of the different objectives on the Handling Track is given in table \ref{tab:Results Handling Track Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Handling Track Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Handling Track Laps 2 Minimum Curvature}, and the result with the Minimum Curvature objective with an iterative call is seen in figure \ref{fig:Results Handling Track Laps 2 Minimum Curvature IQP}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Objective}    & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        Shortest Path         & 1.15 s           & 74.79 s                     & 563 Reference Points                \\ \hline
+        Minimum Curvature     & 1.72 s           & 71.94 s                     & 582 Reference Points                \\ \hline
+        Minimum Curvature IQP & 3.59 s           & 67.95 s                     & 587 Reference Points                \\ \hline
+    \end{tabular}
+    \caption{Results of the different Optimization Algorithm objectives on the Handling Track for two laps.}
+    \label{tab:Results Handling Track Optimization Objectives}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Handling_Track_Laps_2_Shortest_Path.png}
+    \caption{Optimization on the Handling Track for two laps with the Shortest Path objective.}
+    \label{fig:Results Handling Track Laps 2 Shortest Path}
+\end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Optimization_Handling_Track_Laps_2.png}
-    \caption{Optimization on the Handling Track for two laps.}
-    \label{fig:Results Handling Track Laps 2}
+    \caption{Optimization on the Handling Track for two laps with the Minimum Curvature objective.}
+    \label{fig:Results Handling Track Laps 2 Minimum Curvature}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Handling_Track_Laps_2_Mincurv_IQP.png}
+    \caption{Optimization on the Handling Track for two laps with the Minimum Curvature objective with iterative call.}
+    \label{fig:Results Handling Track Laps 2 Minimum Curvature IQP}
+\end{figure}
+
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Handling Track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Handling Track Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Handling Track Laps 2 Curv Profile}, and the Spline Normals in figure \ref{fig:Results Handling Track Laps 2 Spline Normals}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Handling_Track_Laps_2_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile on the Handling Track for two laps.}
+    \label{fig:Results Handling Track Laps 2 VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Handling_Track_Laps_2_Curv_Profile.png}
+    \caption{The Curvature Profile on the Handling Track for two laps.}
+    \label{fig:Results Handling Track Laps 2 Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Handling_Track_Laps_2_Spline_Normals.png}
+    \caption{The Spline Normals on the Handling Track for two laps.}
+    \label{fig:Results Handling Track Laps 2 Spline Normals}
 \end{figure}
 
 \section{Berlin 2018 Track} \label{sec:Results Berlin 2018 Track}
-All 2 Laps
-Berlin 2018:
-mincurv 38.30s 186.15s 2325p
-shortest 23.03s 196.57s 2272p
-iqp 102.86s 184.00s 2322p
+The track was created by \acrshort{tumftm} and was provided together with the ``global\_racetrajectory\_optimization'' repository. \cite{tumftm_optimization_algoritm}
+As the track information came already in the format which would be generated by the 'Optimization Input Transformer' described in section \ref{sec:Optimization Input Transformer}, the track could only be tested with the Optimization Algorithm, but not with the Exploration Algorithm. The track is a recreation of the 2018 Berlin ePrix in Formula E. \cite{formula_e_berlin_eprix}
 
+\textbf{Optimization Algorithm}
+
+A comparison of the different objectives on the Berlin 2018 track is given in table \ref{tab:Results Berlin 2018 Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Berlin 2018 Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Berlin 2018 Laps 2 Minimum Curvature}, and the result with the Minimum Curvature objective with an iterative call is seen in figure \ref{fig:Results Berlin 2018 Laps 2 Minimum Curvature IQP}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Objective}    & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        Shortest Path         & 23.03 s          & 196.57 s                    & 2272 Reference Points               \\ \hline
+        Minimum Curvature     & 38.30 s          & 186.15 s                    & 2325 Reference Points               \\ \hline
+        Minimum Curvature IQP & 102.86 s         & 184.00 s                    & 2322 Reference Points               \\ \hline
+    \end{tabular}
+    \caption{Results of the different Optimization Algorithm objectives on the Berlin 2018 track for two laps.}
+    \label{tab:Results Berlin 2018 Optimization Objectives}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Berlin_2018_Laps_2_Shortest_Path.png}
+    \caption{Optimization on the Berlin 2018 track for two laps with the Shortest Path objective.}
+    \label{fig:Results Berlin 2018 Laps 2 Shortest Path}
+\end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Optimization_Berlin_2018_Laps_2.png}
-    \caption{Optimization on the Berlin 2018 Track for two laps.}
-    \label{fig:Results Berlin 2018 Laps 2}
+    \caption{Optimization on the Berlin 2018 track for two laps with the Minimum Curvature objective.}
+    \label{fig:Results Berlin 2018 Laps 2 Minimum Curvature}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Berlin_2018_Laps_2_Mincurv_IQP.png}
+    \caption{Optimization on the Berlin 2018 track for two laps with the Minimum Curvature objective with iterative call.}
+    \label{fig:Results Berlin 2018 Laps 2 Minimum Curvature IQP}
 \end{figure}
 
-Optimization times for berlin\_2018
-shortest\_path = 16.72s
-Estimated lap time: 89.12s
-mincurv = 44.40s
-Estimated lap time: 82.46s
-mincurv\_iqp = 127.69s
-Estimated lap time: 81.06s
-mintime = 92.00s
-Estimated lap time: 85.77s
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Berlin 2018 track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Berlin 2018 Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Berlin 2018 Laps 2 Curv Profile}, and the Spline Normals in figure \ref{fig:Results Berlin 2018 Laps 2 Spline Normals}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Berlin_2018_Laps_2_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile on Berlin 2018 track for two laps.}
+    \label{fig:Results Berlin 2018 Laps 2 VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Berlin_2018_Laps_2_Curv_Profile.png}
+    \caption{The Curvature Profile on the Berlin 2018 track for two laps.}
+    \label{fig:Results Berlin 2018 Laps 2 Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Berlin_2018_Laps_2_Spline_Normals.png}
+    \caption{The Spline Normals on the Berlin 2018 track for two laps.}
+    \label{fig:Results Berlin 2018 Laps 2 Spline Normals}
+\end{figure}
 
 \section{Modena 2019 Track} \label{sec:Results Modena 2019 Track}
-Modena 2019:
-mincurv 26.00s 171.20s 1998p
-shortest 14.51s 184.03s 1946p
-iqp 69.75s 169.11s 1998p
+The track was created by \acrshort{tumftm} and was provided together with the ``global\_racetrajectory\_optimization'' repository. \cite{tumftm_optimization_algoritm}
+As the track information came already in the format which would be generated by the 'Optimization Input Transformer' described in section \ref{sec:Optimization Input Transformer}, the track could only be tested with the Optimization Algorithm, but not with the Exploration Algorithm. The track is a recreation of the Autodromo di Modena race track. \cite{modena_race_track}
 
+\textbf{Optimization Algorithm}
+
+A comparison of the different objectives on the Modena 2019 track is given in table \ref{tab:Results Modena 2019 Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Modena 2019 Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Modena 2019 Laps 2 Minimum Curvature}, and the result with the Minimum Curvature objective with an iterative call is seen in figure \ref{fig:Results Modena 2019 Laps 2 Minimum Curvature IQP}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Objective}    & \textbf{Runtime} & \textbf{Estimated Lap Time} & \textbf{Generated Reference Points} \\ \hline
+        Shortest Path         & 14.51 s          & 184.03 s                    & 1946 Reference Points               \\ \hline
+        Minimum Curvature     & 26.00 s          & 171.20 s                    & 1998 Reference Points               \\ \hline
+        Minimum Curvature IQP & 69.75 s          & 169.11 s                    & 1998 Reference Points               \\ \hline
+    \end{tabular}
+    \caption{Results of the different Optimization Algorithm objectives on the Modena 2019 track for two laps.}
+    \label{tab:Results Modena 2019 Optimization Objectives}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Modena_2019_Laps_2_Shortest_Path.png}
+    \caption{Optimization on the Modena 2019 track for two laps with the Shortest Path objective.}
+    \label{fig:Results Modena 2019 Laps 2 Shortest Path}
+\end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Optimization_Modena_2019_Laps_2.png}
-    \caption{Optimization on the Modena 2019 Track for two laps.}
-    \label{fig:Results Modena 2019 Laps 2}
+    \caption{Optimization on the Modena 2019 track for two laps with the Minimum Curvature objective.}
+    \label{fig:Results Modena 2019 Laps 2 Minimum Curvature}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Modena_2019_Laps_2_Mincurv_IQP.png}
+    \caption{Optimization on the Modena 2019 track for two laps with the Minimum Curvature objective with iterative call.}
+    \label{fig:Results Modena 2019 Laps 2 Minimum Curvature IQP}
+\end{figure}
+
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Modena 2019 track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Modena 2019 Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Modena 2019 Laps 2 Curv Profile}, and the Spline Normals in figure \ref{fig:Results Modena 2019 Laps 2 Spline Normals}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Modena_2019_Laps_2_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile on the Modena 2019 track for two laps.}
+    \label{fig:Results Modena 2019 Laps 2 VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Modena_2019_Laps_2_Curv_Profile.png}
+    \caption{The Curvature Profile on the Modena 2019 track for two laps.}
+    \label{fig:Results Modena 2019 Laps 2 Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Optimization_Modena_2019_Laps_2_Spline_Normals.png}
+    \caption{The Spline Normals on the Modena 2019 track for two laps.}
+    \label{fig:Results Modena 2019 Laps 2 Spline Normals}
 \end{figure}
 
 \section{Integration}

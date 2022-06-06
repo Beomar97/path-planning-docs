@@ -15,7 +15,7 @@
 \usepackage{graphicx} % for including graphics
 \graphicspath{ {img/} } % root directory for graphics
 \usepackage{subcaption} % figures inside figures (e.g. for side by side figures)
-\usepackage{float} % required for positioning figures with [H] (and lots of other stuff)
+\usepackage{float} % required for positioning figures with [H] and more
 \usepackage{wrapfig} % floating figures
 
 % Import PDFs
@@ -36,7 +36,7 @@
 \setlength{\headheight}{14.5pt}
 \setlength{\marginparwidth}{2cm}
 
-% Paragraph so fertigmachen, dass er als Titel angezeigt werden kann
+% Change paragraphs, so that they can be displayed as title
 \makeatletter
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
   {-2.5ex\@plus -1ex \@minus -.25ex}%
@@ -44,7 +44,7 @@
   {\normalfont\normalsize\itshape\bfseries}}
 \makeatother
 
-% Package um Todo Notizen einzufügen und farblich hervorzuheben
+% Todo notes
 \usepackage[ngerman,linecolor=gray,bordercolor=gray,backgroundcolor=yellow]{todonotes}
 
 % Code Highlighting
@@ -71,7 +71,7 @@
 \hypersetup{%
   pdftitle={Formula Student - Path Planning Algorithm},
   % Use \plainauthor for final version.
-  pdfauthor={Marco Forster und Dan Hochstrasser},
+  pdfauthor={Marco Forster and Dan Hochstrasser},
   pdfdisplaydoctitle=true, % For Accessibility
   bookmarksnumbered,
   pdfstartview={FitH}
@@ -87,7 +87,7 @@
 \usepackage{sfmath}
 \usetikzlibrary{patterns}
 
-% Entfernt den Blocksatz beim Literaturverzeichnis und formatiert schöner als nur \raggedright
+% Removes Justification in bibliography and formats better than \raggedright
 \usepackage{ragged2e}
 
 % Glossaries

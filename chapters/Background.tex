@@ -1,4 +1,4 @@
-The background chapter describes the theory of the approach and methods used in the thesis. In the first sections, the Formula SAE Competition, the \acrlong{ros}, and the autonomous system of \acrlong{zur} are introduced. After those sections, driverless as a concept will be explained. In the end, several path planning algorithms are described.
+Fundamental background information lays the foundation for the approach and methods that have been used which are explained later. In the first sections, the Formula SAE Competition, the \acrlong{ros}, the autonomous system of \acrlong{zur} and the meaning of driverless are introduced. After that driverless as a concept will be explained. To round up, several path planning algorithms are described.
 
 \section{Formula SAE Competitions} \label{sec:Formula SAE Competitions}
 The main idea of a Formula SAE competition is to conceive, design, fabricate, develop and compete with small, formula-style race cars.
@@ -161,7 +161,7 @@ In March 2021, Honda became the first manufacturer to provide a legally approved
 Path planning algorithms are used in many environments, e.g. in the assembly of a car with a robot arm, in the autonomous parking of a car, or in finding a landmine with a robot during a military operation.
 
 \subsection{Overview} \label{sec:Overview Path Planning Algorithms}
-A human follows a path if it goes from point A to point B while following certain signalization, e.g. on hiking trails. It also follows a path if it follows one predetermined for them by a GPS. The difference lies between a manual plan and a machine-generated plan. This section addresses the latter one.
+A human follows a path if it goes from point A to point B while following certain signalization, e.g. on hiking trails. It also follows a path if it follows one predetermined for them by a GPS. The difference lies between a manual plan and a machine-generated plan. Only the latter one is addressed.
 
 The planning of a path consists of a state, the time needed, actions, an initial / goal state, a criterion, and a plan. A planning algorithm represents the state typically. Time is based on a sequence of decisions that must be made at a particular time. Actions manipulate the state and cover how the state should be changed. The initial and goal state define where the planner should start and finish.
 The criterion defines the outcome and the boundaries of the planner. The type of criterion is either based on feasibility or optimality. Feasibility covers the arrival of the goal state without the concern for efficiency. Optimality finds a plan with optimized performance in mind. The plan, in general, covers the strategy or behavior of a decision-maker. \cite{planning_algorithms_steven_m_lavalle}
@@ -258,7 +258,7 @@ Decision-Theoretic Planning is also known as planning under uncertainty. Two asp
 With different sensors like a compass and a camera, it is possible to define a position. Further information on localization can be read in the mentioned book. The environment uncertainty and mapping topic focus on how to define an environment when there is no map given so that the robot has to act upon sensors only. \cite{planning_algorithms_steven_m_lavalle}
 
 \subsection{Planning under Differential Constraints} \label{sec:Planning under Differential Constraints}
-This section covers differential constraints—local limitations like allowable velocities at each point. Differential constraints are mostly from kinematics and dynamics. Smoothness is a weak differential constraint, while obstacles are global constraints.
+Allowable velocities at each point are examples of differential constraints—local limitations. Differential constraints are mostly from kinematics and dynamics. Smoothness is a weak differential constraint, while obstacles are global constraints.
 
 \textbf{Differential Models} covers examples of velocity constraints in state space. There are two ways of differential constraints: parametric and implicit. Implicit expresses prohibited velocities and are more general, whereas parametric representation expresses allowed velocities. A simple car has three degrees of freedom, as shown in figure \ref{fig:Simple Car Velocity Space}.
 \begin{figure}[H]

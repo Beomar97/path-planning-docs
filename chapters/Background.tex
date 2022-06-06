@@ -1,4 +1,4 @@
-Fundamental background information lays the foundation for the approach and methods that have been used which are explained later. In the first sections, the Formula SAE Competition, the \acrlong{ros}, the autonomous system of \acrlong{zur} and the meaning of driverless are introduced. After that driverless as a concept will be explained. To round up, several path planning algorithms are described.
+Essential background information lays the foundation for the used approaches and methods described later in chapter \ref{ch:Approach / Methods}. In the first section, the Formula SAE Competitions, the goal of every Formula Student team, are explained in more detail. The \acrlong{ros}, the foundation of many robotic and autonomous systems, will be explained further. With these foundations, the autonomous system of \acrlong{zur} can be introduced. After all that, the concept of driverless will be explained. To conclude, several categories of path planning algorithms and their peculiarities are described.
 
 \section{Formula SAE Competitions} \label{sec:Formula SAE Competitions}
 The main idea of a Formula SAE competition is to conceive, design, fabricate, develop and compete with small, formula-style race cars.
@@ -94,7 +94,7 @@ Nodes have parameters to define their default configuration values. \cite{ros2_d
 Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow someone to execute long-running tasks, provide regular feedback, and are cancellable. \cite{ros2_documentation}
 
 \section{Zurich UAS Racing Autonomous System} \label{sec:Zurich UAS Racing Autonomous System}
-On a high-level view, the 'Autonomous System' is made up of five domains: the 'Controls', 'Perception', 'Localization and Mapping', 'Path planning' as well as 'Simulation'. Figure \ref{fig:AS Component Diagram} shows an abstraction of how the different components interact with each other. The design of the autonomous system is further described in ``Autonomous Driving Framework - Designing a Driverless System for an Electric Race Vehicle'' by L. Miranda. \cite{zur_autonomous_driving_framework} %TODO Bild mehr beschreiben
+On a high-level view, the 'Autonomous System' is made up of five domains: the 'Controls', 'Perception', 'Localization and Mapping', 'Path planning' as well as 'Simulation'. Figure \ref{fig:AS Component Diagram} shows an abstraction of how the different components interact with each other. The design of the autonomous system is further described in ``Autonomous Driving Framework - Designing a Driverless System for an Electric Race Vehicle'' by L. Miranda. \cite{zur_autonomous_driving_framework} \todo{Explain image in more detail}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{AS_Component_Diagram.png}
@@ -108,7 +108,7 @@ The five domains are described as follows:
 \textbf{'Path Planning'} computes the best possible path along the track.
 \textbf{'Simulation'} is responsible for providing the rest of the domains with an adequate tool to simulate and test on.
 
-Essential hardware components of the autonomous system are stored inside a box, which will be mounted on the vehicle itself. The connections coming into the box from the various components outside can be seen in the reference figure \ref{fig:AS DV Box}. %TODO Bild mehr beschreiben
+Essential hardware components of the autonomous system are stored inside a box, which will be mounted on the vehicle itself. The connections coming into the box from the various components outside can be seen in the reference figure \ref{fig:AS DV Box}. \todo{Explain image in more detail}
 
 \begin{figure}[H]
     \centering
@@ -192,8 +192,7 @@ These plans can be used in three ways: Execution, refinement, or hierarchical in
 \subsection{Motion Planning} \label{sec:Motion Planning}
 Motion planning is interested in the planning in continuous state spaces. This means that space is not static and will have changes with time. Motion planning is also referred to as planning in continuous state spaces. \cite{planning_algorithms_steven_m_lavalle}
 
-\textbf{Implicit Representation} of state space in motion planning must be dealt with in planning algorithms. Implicit representations become more important in motion planning as the state space is uncountable infinite. It also tries to define 2D and 3D geometric models and transform them. The state spaces arise from these problems. \cite{planning_algorithms_steven_m_lavalle}
-%TODO werden die verwendeten Begriffe wieder erwähnt?
+\textbf{Implicit Representation} of state space in motion planning must be dealt with in planning algorithms. Implicit representations become more important in motion planning as the state space is uncountable infinite. It also tries to define 2D and 3D geometric models and transform them. The state spaces arise from these problems. \cite{planning_algorithms_steven_m_lavalle} \todo{werden die verwendeten Begriffe wieder erwähnt?}
 
 \textbf{Continuous $\rightarrow$ discrete} is the central theme in motion planning to transform models. Motion planning also covers combinatorial motion planning, where the algorithm builds a representation of the original problem with an input model. Additionally, there exists the field of sampling-based motion planning. \cite{planning_algorithms_steven_m_lavalle}
 

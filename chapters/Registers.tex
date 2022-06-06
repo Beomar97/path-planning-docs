@@ -1,14 +1,18 @@
 % Bibliography
 \begin{RaggedRight}
-\bibliography{main}
-\bibliographystyle{deIEEEzhaw}
+    \bibliography{main}
+    \bibliographystyle{deIEEEzhaw}
+    \addcontentsline{toc}{section}{Bibliography}
 \end{RaggedRight}
+\pagebreak
 
 % Glossary
-\printnoidxglossaries
+\printnoidxglossary[title=List of Terms]
 
 % List of Figures
+\addcontentsline{toc}{section}{List of Figures}
 \listoffigures
 
 % List of Tables
+\addcontentsline{toc}{section}{List of Tables}
 \listoftables

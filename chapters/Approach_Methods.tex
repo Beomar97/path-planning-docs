@@ -1,4 +1,4 @@
-This chapter describes the approaches and methods used to solve the problem of finding algorithms that calculate the optimum path on a race track. The V-Model was used to plan the overall project as shown in figure \ref{fig:High Level Project Overview}. Concepts of Scrum were used for the interdisciplinary work between the different Driverless teams and within the Path Planning team itself. Sprint planning and review meetings were held with the supervisors and the driverless teams. Further explanation of the planning process is described in the section \ref{sec:Planning Methods}. After the planning section, the development environment is described in section \ref{sec:Development Environment}. Then an introduction to the architecture design of the Path Planning component is explained in section \ref{sec:Path Planning Component Architecture}. The algorithms are explained in section \ref{sec:Exploration Algorithm} for the exploration and section \ref{sec:Optimization Algorithm} for the optimization algorithm. Lastly, the integration and verification process is described in section \ref{sec:Integration and Verification}.
+This chapter describes the approaches and methods used to solve the problem of finding algorithms that calculate the optimum path on a racetrack. The V-Model was used to plan the overall project as shown in figure \ref{fig:High Level Project Overview}. Concepts of Scrum were used for the interdisciplinary work between the different Driverless teams and within the Path Planning team itself. Sprint planning and review meetings were held with the supervisors and the driverless teams. Further explanation of the planning process is described in the section \ref{sec:Planning Methods}. After the planning section, the development environment is described in section \ref{sec:Development Environment}. Then an introduction to the architecture design of the Path Planning component is explained in section \ref{sec:Path Planning Component Architecture}. The algorithms are explained in section \ref{sec:Exploration Algorithm} for the exploration and section \ref{sec:Optimization Algorithm} for the optimization algorithm. Lastly, the integration and verification process is described in section \ref{sec:Integration and Verification}.
 
 \begin{figure}[H]
     \centering
@@ -29,13 +29,13 @@ A kanban board helps organize the user stories and prioritize the stories in the
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Kanban_Board_Path_Planning.PNG}
-    \caption{The Kanban Board directly integrated into GitHub used for the bachelor thesis.}
+    \caption{The Kanban Board from the GitHub feature integration was used for the bachelor thesis.}
     \label{fig:Kanban Board Path Planning}
 \end{figure}
 
 \section{Development Environment} \label{sec:Development Environment}
 An easy way to get started with an environment was to build a relatively similar system like the one which will be running on the NVIDIA Jetson computer, as previously seen in figure \ref{fig:AS Deployment Diagram}. As mentioned in the planning methods section \ref{sec:Planning Methods}, the Jetson will be used in the real car.
-For the local development, the underlying hardware differs from user to user; this can be a desktop PC at home or a portable notebook. On top of the hardware runs the user's operating system, which can be running a standard Windows installation, macOS or even a Linux installation. Inside the host's operating system, a \acrlong{vm} is used to emulate the hardware and to encapsulate the operating system from the host operating system that is running on the actual hardware. As with the NVIDIA Jetson computer, an Ubuntu 20.04 operating system was installed. An installation guide for how to install Ubuntu 20.04 in a \acrshort{vm} can be found at Cloud Linux Tech. \cite{cloudlinuxtech_install_ubuntu_2004} The work done in this thesis has been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported till the end of May 2023. \cite{ros2_releases_and_target_platforms}
+For the local development, the underlying hardware differs from user to user; this can be a desktop PC at home or a portable notebook. On top of the hardware runs the user's operating system, which can be running a standard Windows installation, macOS or even a Linux installation. Inside the host's operating system, a \acrlong{vm} is used to emulate the hardware and to encapsulate the operating system from the host operating system that is running on the actual hardware. As with the NVIDIA Jetson computer, an Ubuntu 20.04 operating system was installed. An installation guide for how to install Ubuntu 20.04 in a \acrshort{vm} can be found at Cloud Linux Tech. \cite{cloudlinuxtech_install_ubuntu_2004} The work done in this thesis has been done using the ROS 2 release 'Foxy Fitzroy', released on June 5th, 2020. This release will be supported until the end of May 2023. \cite{ros2_releases_and_target_platforms}
 Figure \ref{fig:Development Environment} shows the overall environment that is used for development.
 \begin{figure}[H]
     \centering
@@ -44,10 +44,10 @@ Figure \ref{fig:Development Environment} shows the overall environment that is u
     \label{fig:Development Environment}
 \end{figure}
 
-An Integrated Development Environment (IDE), in this case Visual Studio Code, and Version Control were used to develop the Path Planner. The IDE provides functionalities like syntax checking on Python and C++ code. Furthermore, the IDE was used to write the thesis in Latex. An extension inside Visual Studio Code can be installed to generate PDF files via Latex. A separate Git Repository for version control was created for both the code and the thesis. The version control system helps a software engineering team follow changes in the code, and in case of any problem, it can be jumped back to an older version of the code. The Git server hosted by the \acrshort{zhaw} was used to store the repositories (\href{https://github.zhaw.ch}{github.zhaw.ch}).
+An Integrated Development Environment (IDE), in this case Visual Studio Code, and Version Control were used to develop the Path Planner. The IDE provides functionalities like syntax checking on Python and C++ code. Furthermore, the IDE was used to write the thesis in Latex. An extension inside Visual Studio Code can be installed to generate PDF files via Latex. A separate Git Repository for version control was created for both the code and the thesis. The version control system helps a software engineering team to follow changes in the code, and in case of any problem, it can be jumped back to an older version of the code. The Git server hosted by the \acrshort{zhaw} was used to store the repositories (\href{https://github.zhaw.ch}{github.zhaw.ch}).
 
 \section{Path Planning Component Architecture} \label{sec:Path Planning Component Architecture}
-This section will give an overview of the Path Planning component as seen in the component Autonomous System Component diagram \ref{fig:AS Component Diagram}. The Path Planner will receive its inputs by Perception (detected cones) and Localization/Odometry (current position) via the Mapping and send its output (planned path) to the Autopilot component.
+This section will give an overview of the Path Planning component as seen in the component Autonomous System Component diagram \ref{fig:AS Component Diagram}. The Path Planner will receive its inputs by Perception (detected cones) and Localization/Odometry (current position) via the Mapping and sends its output (planned path) to the Autopilot component.
 
 The path planning component primarily consists of two \acrshort{ros} nodes: The 'Path Planner' node and the 'Optimization Service' node, as seen in figure \ref{fig:Path Planning ROS Architecture}.
 \begin{figure}[H]
@@ -57,7 +57,7 @@ The path planning component primarily consists of two \acrshort{ros} nodes: The 
     \label{fig:Path Planning ROS Architecture}
 \end{figure}
 
-The Path Planner node can be seen as the planner's brain, as it handles both the flow of the data and the management of the different algorithms. It subscribes to the inputs and publishes the output via \acrshort{ros} topics. While the 'Current Position' topic receives the car's current position, the 'Cone' topic receives the latest detected cone. The final planned path is then published via the 'Planned Trajectory' topic. The planner will calculate the path for the vehicle using the custom made 'Exploration Algorithm', which will be explained in more detail in section \ref{sec:Exploration Algorithm}. Furthermore, the node holds several configuration parameters regarding the algorithm mode, track configuration, and more.
+The Path Planner node can be seen as the planner's brain, as it handles both the flow of the data and the management of the different algorithms. It subscribes to the inputs and publishes the output via the \acrshort{ros} topics. While the 'Current Position' topic receives the car's current position, the 'Cone' topic receives the latest detected cone. The final planned path is then published via the 'Planned Trajectory' topic. The planner will calculate the path for the vehicle using a custom-made 'Exploration Algorithm', which will be explained in more detail in section \ref{sec:Exploration Algorithm}. Furthermore, the node holds several configuration parameters regarding the algorithm mode, track configuration, and more.
 
 The Path Planner requests the calculation of the optimized path to the Optimization Service. Communication with the service occurs through the 'Optimize Path' \acrshort{ros} service. While the Optimization Service calculates the optimized racing line for the given track, the Path Planner will continue to calculate the path using the exploration algorithm. The Path Planner will switch to publishing the optimized path after receiving the service's response.
 
@@ -66,7 +66,7 @@ For testing the package locally in Python, two additional \acrshort{ros} nodes w
 \subsection{Custom ROS Messages} \label{sec:Custom ROS Messages}
 As seen in section \ref{sec:Zurich UAS Racing Autonomous System}, for the Autonomous System to fully function, different components developed by different people will have to work together. Smooth communication between these different components is achieved via a set of default \acrshort{ros} messages defined by the team as seen in figure \ref{fig:Path Planning ROS Messages}. For \acrshort{ros} communication inside the Path Planning component itself, another package containing \acrshort{ros} messages was created. These messages are used between the topics and services seen in figure \ref{fig:Path Planning ROS Architecture}.
 
-While the 'interfaces' package contains path planning internal ROS messages, the 'fszhaw\_msgs' package contains the messages for communication with the rest of the system. The 'OptimizePath.srv' message is used by the 'optimize\_path' service for the communication between the Path Planner and the Optimization Service, as seen in figure \ref{fig:Path Planning ROS Architecture}. From the 'fszhaw\_msgs' package, following messages are used in the Path Planning component: 'Cone.msg' for the 'cone' topic, 'CurrentPosition.msg' for the 'current\_position' topic, 'PlannedTrajectory.msg' for the 'planned\_trajectory' topic, and 'Track.msg' for the 'testing\_only/track' topic used in combination with the Simulation Tool.
+While the 'interfaces' package contains path planning internal ROS messages, the 'fszhaw\_msgs' package contains the messages for communication with the rest of the system. The 'OptimizePath.srv' message is used by the 'optimize\_path' service for the communication between the Path Planner and the Optimization Service, as seen in figure \ref{fig:Path Planning ROS Architecture}. From the 'fszhaw\_msgs' package, the following messages are used in the Path Planning component in combination with the Simulation Tool: 'Cone.msg' for the 'cone' topic, 'CurrentPosition.msg' for the 'current\_position' topic, 'PlannedTrajectory.msg' for the 'planned\_trajectory' topic, and 'Track.msg' for the 'testing\_only/track' topic.
 
 \begin{figure}[H]
     \centering
@@ -77,7 +77,7 @@ While the 'interfaces' package contains path planning internal ROS messages, the
 
 \subsection{Path Planner Node} \label{sec:Path Planner Node}
 As seen in the component architecture of the Path Planning package in figure \ref{fig:Path Planning ROS Architecture}, the Path Planner node is the central processor of the whole package.
-While receiving the detected cones and current position by the subscribers, the 'Start Finish Detector' can discern if the vehicle has reached the start of the track again. If not, the planner will calculate the planned path using the Exploration Algorithm and output it via the publisher. If a full lap has been completed, the planner will send a request for optimization to the 'Optimization Service'. After receiving the optimized path, it will send that via the publisher instead of the path calculated by the Exploration Algorithm. An overview of the Path Planner Node can be seen in figure \ref{fig:Path Planning Path Planner Node}.
+While receiving the detected cones and current position by the subscribers, the 'Start Finish Detector' can discern if the vehicle has reached the start of the track again. If not, the planner will calculate the planned path using the Exploration Algorithm and outputs it via the publisher. If a full lap has been completed, the planner will send a request for optimization to the 'Optimization Service'. After receiving the optimized path, it will send that via the publisher instead of the path calculated by the Exploration Algorithm. An overview of the Path Planner Node can be seen in figure \ref{fig:Path Planning Path Planner Node}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Path_Planning_Path_Planner.png}
@@ -118,8 +118,8 @@ After enough valid start/finish cones get added, e.g. two cones, will the detect
     \label{fig:Path Planner Start Finish Detector 5}
 \end{figure}
 
-\subsubsection{Exploration Algorithm} \label{sec:Exploration Algorithm} %TODO Zusammenhang mit Theorieteil?
-The implementation of the exploration algorithm is found in the python file ``exploration/exploration.py'' inside the ``algorithm'' package. The algorithm uses several steps to get the middle line out of the cone's position and the car's position on the track. Figures \ref{fig:Algorithm Exploration Figure A} until \ref{fig:Algorithm Exploration Figure I, J and K} showcase the different steps of the algorithm. The algorithm only starts after two or more cones have been received from the ``cone\_publisher''. Step (a) in figure \ref{fig:Algorithm Exploration Figure A} shows five previously received cones, the current position of the car and the following received cone.
+\subsubsection{Exploration Algorithm} \label{sec:Exploration Algorithm}
+The implementation of the exploration algorithm is found in the python file ``exploration/exploration.py'' inside the ``algorithm'' package. The algorithm uses several steps to get the middle line out of the cone's position and the car's position on the track. Since the algorithm deals with differential constraints covered in \ref{sec:Planning under Differential Constraints} an explanation of every step has to be made. Figures \ref{fig:Algorithm Exploration Figure A} until \ref{fig:Algorithm Exploration Figure I, J and K} showcase the different steps of the algorithm. The algorithm only starts after two or more cones have been received from the ``cone\_publisher''. Step (a) in figure \ref{fig:Algorithm Exploration Figure A} shows five previously received cones, the current position of the car and the following received cone.
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{Algorithm_Exploration_Figure_A.png}
@@ -127,7 +127,7 @@ The implementation of the exploration algorithm is found in the python file ``ex
     \label{fig:Algorithm Exploration Figure A}
 \end{figure}
 
-After having enough cones, the algorithm calculates the distance from the car to the newly received cone. It evaluates the distance based on a threshold which is defined in a track configuration file as shown in step (b) in figure \ref{fig:Algorithm Exploration Figure B and C}. If the distance is in the threshold, then new distances are calculated from the new cone to the previously received cones as shown in step (c) in figure \ref{fig:Algorithm Exploration Figure B and C}. These distances have a different threshold and evaluate if the previously received cones are suitable for triangulation.
+After having enough cones, the algorithm calculates the distance from the car to the newly received cone. It evaluates the distance based on a threshold which is defined in a track configuration file as shown in step (b) in figure \ref{fig:Algorithm Exploration Figure B and C}. If the distance is in the threshold, then new distances are calculated from the new cone to the previously received cones as shown in step (c) in figure \ref{fig:Algorithm Exploration Figure B and C}. These distances have a different threshold and evaluate if the previously received cones are suitable for triangulation. Further explanation on triangulation can be found in section \ref{sec:Motion Planning} under Combinatorial Motion Planning.
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{Algorithm_Exploration_Figure_B_C.png}
@@ -143,23 +143,23 @@ Then the triangulation between the cones in the threshold and the new cone is ca
     \label{fig:Algorithm Exploration Figure D and E}
 \end{figure}
 
-Based on the information on the edges between the new cones and cones in the given threshold, step (f) and (g) in figure \ref{fig:Algorithm Exploration Figure F, G and H} shows how valuable edges are validated. Edges with cones of the same colour are not usable. The second criterion is that the edge can not be too long, which becomes especially relevant in a curve on the track. This process of evaluation is repeated for every simplicy as shown in step (h) in figure \ref{fig:Algorithm Exploration Figure F, G and H}.
+Based on the information on the edges between the new cones and cones in the given threshold, step (f) and (g) in figure \ref{fig:Algorithm Exploration Figure F, G and H} shows how valuable edges are validated. Edges with cones of the same color are not usable. The second criterion is that the edge can not be too long, which becomes especially relevant in a curve on the track. This process of evaluation is repeated for every simplex as shown in step (h) in figure \ref{fig:Algorithm Exploration Figure F, G and H}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{Algorithm_Exploration_Figure_F_G_H.png}
-    \caption{Step (f) shows that edges with cones of the same colour are not used for the calculation of middle points. Step (g) shows that edges with a distance too long are also not considered for the calculation of middle points. In step (h), these checks will be made for every single simplicy created during triangulation.}
+    \caption{Step (f) shows that edges with cones of the same color are not used for the calculation of middle points. Step (g) shows that edges with a distance too long are also not considered for the calculation of middle points. In step (h), these checks will be made for every single simplex created during triangulation.}
     \label{fig:Algorithm Exploration Figure F, G and H}
 \end{figure}
 
-The next step (i) is to build a path. Since the path is not smooth, spline interpolation is used to straighten the path in step (j), as seen in figure \ref{fig:Algorithm Exploration Figure I, J and K}. During Interpolation, the path will be densified, meaning the path will be added additional coordinates inside the interpolated path, as seen in step (k) in figure \ref{fig:Algorithm Exploration Figure I, J and K}. This path will then be published, and the optimization algorithm can use the generated points.
+The next step (i) is to build a path. Since the path is not smooth, spline interpolation is used to straighten the path in step (j), as seen in figure \ref{fig:Algorithm Exploration Figure I, J and K} as a differential constraint mentioned in section \ref{sec:Planning under Differential Constraints}. During Interpolation, the path will be densified, meaning the path will be added additional coordinates inside the interpolated path, as seen in step (k) in figure \ref{fig:Algorithm Exploration Figure I, J and K}. This path will then be published, and the optimization algorithm can use the generated points.
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{Algorithm_Exploration_Figure_I_J_K.png}
-    \caption{Step (i) connects all processed middle points to a single path. Step (j) smooths that path using interpolation. Step (k) densifies the path during interpolation with additional path points.}
+    \caption{Step (i) connects all processed middle points to a single path. Interpolation smoths the path as shown in step (j). Step (k) densifies the path during interpolation with additional path points.}
     \label{fig:Algorithm Exploration Figure I, J and K}
 \end{figure}
 
-The pseudocode of the exploration algorithm is shown in figure \ref{fig:Algorithm Exploration Pseudocode}. It starts with the distance from the car's current position to the new cone; the program checks if the distance is within the threshold. A list is created with all past cones at a reasonable distance to the new cone. The triangulation is calculated if the list is within the threshold of three or more cones. Further explanation is found in section \ref{sec:Motion Planning} under ``Combinatorial Motion Planning''. After the calculation of the simplices, the edges will be compared to each other so that no edges of the same ends are stored. After the comparison, another loop is undertaken to check if the cones on each edge do not have the same colour and are within the threshold. Each right edge will be added to the ``pathOfMiddlepoints'' array. After the program knows the potential middle points, a smoothening path algorithm is applied, followed by a densify algorithm to add more middle points. The algorithm then returns the final result containing the middle line.
+The pseudocode of the exploration algorithm is shown in figure \ref{fig:Algorithm Exploration Pseudocode}. It starts with the distance from the car's current position to the new cone; the program checks if the distance is within the threshold. A list is created with all past cones at a reasonable distance to the new cone. The triangulation is calculated if the list is within the threshold of three or more cones. Further explanation is found in section \ref{sec:Motion Planning} under ``Combinatorial Motion Planning''. After the calculation of the simplices, the edges will be compared to each other so that no edges of the same ends are stored. After the comparison, another loop is undertaken to check if the cones on each edge do not have the same color and are within the threshold. Each valid edge will be added to the ``pathOfMiddlepoints'' array. After the program knows the potential middle points, a smoothening path algorithm is applied, followed by a densify algorithm to add more middle points. The algorithm then returns the final result containing the middle line.
 
 \begin{figure}[H]
     \centering
@@ -172,9 +172,9 @@ The pseudocode of the exploration algorithm is shown in figure \ref{fig:Algorith
 \lipsum[1]
 
 \subsection{Optimization Service Node} \label{sec:Optimization Service Node}
-As seen in the component architecture of the Path Planning package in figure \ref{fig:Path Planning ROS Architecture}, the Optimization Service Node is responsible for receiving the request for optimization by the Path Planner Node, preparing the input for optimization, optimizing the path, and then sending it back to the planner for further processing and publishing.
+As seen in the component architecture of the Path Planning package in figure \ref{fig:Path Planning ROS Architecture}, the Optimization Service Node is responsible for receiving the request for optimization by the Path Planner Node. The Service Node prepares the input for optimization, optimizes the path, and then sends it back to the planner for further processing and publishing.
 
-The node comprises two main components, the 'Optimization Input Transformer' and the 'Optimization Algorithm' itself. The node will receive all previously detected cones and a reference line of the driven track by the planner, e.g. the middle line. In this case, the reference line will be the calculated path by the 'Exploration Algorithm'. Because the 'Optimization Algorithm' expects a single reference line with its distances to the track's border as an input, a transformation of the received input is first needed before the algorithm can optimize it. With the data from all the received cones and reference line, the 'Optimization Input Transformer' can map the input to a single list of reference points and the distances from each point to the track's border. The transformer will be explained further in section \ref{sec:Optimization Input Transformer}. With that list, the 'Optimization Algorithm' can optimize the path concerning one of several objectives, e.g. the shortest path or minimum curvature. The algorithm will be explained in more detail in section \ref{sec:Optimization Algorithm}. The optimized path will then be sent back to the planner via the  \acrshort{ros} service.
+The node comprises two main components, the 'Optimization Input Transformer' and the 'Optimization Algorithm' itself. The node will receive all previously detected cones and a reference line of the driven track by the planner, e.g. the middle line. In this case, the reference line will be the calculated path by the 'Exploration Algorithm'. Because the 'Optimization Algorithm' expects a single reference line with its distances to the track's border as an input, a transformation of the received input is first needed before the algorithm can optimize it. With the data from all the received cones and reference line, the 'Optimization Input Transformer' can map the input to a single list of reference points and the distances from each point to the track's border. The transformer will be explained further in section \ref{sec:Optimization Input Transformer}. With that list, the 'Optimization Algorithm' can optimize the path concerning one of several objectives, e.g. the shortest path or minimum curvature. The algorithm will be explained in more detail in section \ref{sec:Optimization Algorithm}. The optimized path will then be sent back to the planner via the \acrshort{ros} service.
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Path_Planning_Optimization_Service.png}
@@ -208,7 +208,7 @@ Lastly, the developed list containing the reference track will be returned as th
 
 \subsubsection{Optimization Algorithm} \label{sec:Optimization Algorithm}
 The base code of the implementation was forked from the Institute of Automotive Technology at the \acrlong{tum}.
-The repository contains algorithms for determining an optimal racing line. It is possible to choose between several objectives: Shortest Path, Minimum Curvature (with or without iterative call) and Minimum Time (with or without powertrain behaviour consideration). \cite{tumftm_optimization_algoritm}
+The repository contains algorithms for determining an optimal racing line. It is possible to choose between several objectives: Shortest Path, Minimum Curvature (with or without iterative call) and Minimum Time (with or without powertrain behavior consideration). \cite{tumftm_optimization_algoritm}
 
 The racing line from the minimum curvature objective is quite near to a minimum time racing line in corners. However, it will differ when the car's acceleration limits are not exploited. However, the minimum time optimization requires more parameters and takes more computation time. It was decided to use the Minimum Curvature objective primarily, as the time difference between Minimum Curvature and Minimum Time is too small to justify its use over the other algorithms (see chapter \ref{ch:Results}). An overview of the whole optimization module is shown in figure \ref{fig:Optimization Algorithm Module Overview}.
 \begin{figure}[H]
@@ -222,7 +222,7 @@ The racing line from the minimum curvature objective is quite near to a minimum 
 
 At the centre of the Optimization Algorithm is the main file called ``main\_globaltraj.py'', as it can be seen in figure \ref{fig:Optimization Algorithm Module Overview} (outlined green). A figure zoomed into the centre of the module can be seen in figure \ref{fig:Optimization Algorithm Module MainGlobalTraj}. This file includes the ``optimize\_path()'' function used to optimize the path. It imports various utility functions from the ``helper\_funcs\_glob'' package, it contains functions to import a reference track (``import\_track()''), to prepare the imported reference track for optimization (``prep\_track()'') or to plot resulting figures (``result\_plots()''), just to name a few. As a Python dependency, additional helper functions are imported from the ``trajectory\_planning\_helpers'' repository provided by \acrshort{tumftm}. \cite{tumftm_trajectory_planning_helpers}
 These helpful helper functions for path and trajectory planning are frequently used in the trajectory planning software stack at \acrshort{tumftm}.
-In the end, the most optimal race trajectory line will be outputted by the algorithm.
+In the end, the most optimal race trajectory line will be outputted by the algorithm.%TODO Reference to external repo
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_MainGlobalTraj.png}
@@ -236,7 +236,7 @@ As for its inputs, the main method receives the required reference track and add
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Algorithm_Optimization_Module_Inputs.png}
-    \caption{The client will receive the user input and reference track. The inputs are the same as seen in figure \ref{fig:Optimization Algorithm Module Overview} but centred horizontally here for better display. The friction map is optional and currently only relevant for Minimum Time solutions.}
+    \caption{The client will receive the user input and reference track. The inputs are the same as seen in figure \ref{fig:Optimization Algorithm Module Overview} but centered horizontally here for better display. The friction map is optional and currently only relevant for Minimum Time solutions.}
     \label{fig:Optimization Algorithm Module Inputs}
 \end{figure}
 
@@ -260,7 +260,7 @@ The vehicle parameter file also sets vehicle dynamics information to be loaded f
     \label{fig:Optimization Algorithm Module Parameters}
 \end{figure}
 
-\textbf{1. Import and Initializations}
+\textbf{1. Import and Initialization}
 
 The primary method will first load, set and check the input provided by the user. After that, all critical paths to the parameter file, output destinations and more will be initialized. Furthermore, the vehicle dependent parameters can be imported from the ``racecar.ini'' file. The additional vehicle dynamics data will be imported by the ``import\_veh\_dyn\_info()'' helper function. The helper function ``import\_track()'' then imports the track itself, with the input provided by the Optimization Input Transformer.
 
@@ -299,7 +299,7 @@ For \textbf{Shortest Path} optimization, a QP solver is used to minimize the sum
 For \textbf{Minimum Curvature} optimization, a QP solver is used to minimize the summed curvature of the path by moving the path points along their normal vectors within the track width. The algorithm can be used for closed and unclosed tracks. For unclosed tracks, the headings $\psi_s$ and $\psi_e$ are enforced on the first and last point of the reference track. Furthermore, in the case of an unclosed track, the first and last points of the track are not subject to optimization and stay untouched. \cite{minimum_curvature_trajectory_planning}
 
 For \textbf{Minimum Time} optimization, the problem is described as an optimal control problem, converted to a nonlinear program using direct orthogonal Gauss-Legendre collocation and then solved by the interior-point method IPOPT. Reduced computing
-times are achieved using a curvilinear abscissa approach for track description, algorithmic differentiation using the software framework CasADi, and the track input data smoothing by approximate spline regression. The vehicle's behaviour is approximated as a double-track model with quasi-steady state tire load simplification and a nonlinear tire model. \cite{minimum_time_trajectory_planning} \cite{powertrain_behaviour}
+times are achieved using a curvilinear abscissa approach for track description, algorithmic differentiation using the software framework CasADi, and the track input data smoothing by approximate spline regression. The vehicle's behavior is approximated as a double-track model with quasi-steady state tire load simplification and a nonlinear tire model. \cite{minimum_time_trajectory_planning} \cite{powertrain_behaviour}
 
 \begin{figure}[H]
     \centering
@@ -351,12 +351,12 @@ After implementing the Path Planner and all of its components, the planner had t
 \acrshort{ros} nodes communicate with each other via the ROS graph using topics, services or actions, as described in section \ref{sec:ROS Graph}. As a result, the planner can be integrated into the rest of the autonomous system by just subscribing to the \acrshort{ros} topics for its inputs and creating a publisher for its output, as seen in figure \ref{fig:Path Planning ROS Architecture}.
 
 \subsection{Verification} \label{sec:Verification}
-For verification purposes, the mentioned mock nodes in section \ref{sec:Path Planning Component Architecture} are used. The 'Cone Publisher' publishes the corresponding cones of a given track in a fixed order, e.g. first publishing the start cones (big orange cones) and then alternating between a blue cone and a yellow cone. Via \acrshort{ros} parameters, one can select the track to publish, e.g. 'Small Track', 'Skidpad' or 'Acceleration', and the number of laps of a given track to publish in total. On the other hand, the 'Planned Trajectory Subscriber' receives the published trajectories by the Path Planner and logs them to the console. These nodes ensure that all required inputs are generated and dispatched and that the required output is published and acquired. The tracks themselves can be plotted manually using the 'Track Plotter'.
+For verification purposes, the mentioned mock nodes in section \ref{sec:Path Planning Component Architecture} are used. The 'Cone Publisher' publishes the corresponding cones of a given track in a fixed order, e.g. first publishing the start cones (big orange cones) and then alternating between a blue cone and a yellow cone. Via the \acrshort{ros} parameters, one can select the track to publish, e.g. 'Small Track', 'Skidpad' or 'Acceleration', and the number of laps of a given track to publish in total. On the other hand, the 'Planned Trajectory Subscriber' receives the published trajectories by the Path Planner and logs them to the console. These nodes ensure that all required inputs are generated and dispatched and that the required output is published and acquired. The tracks themselves can be plotted manually using the 'Track Plotter'. % TODO Reference to Picture
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Verification_Track_Plotter.png}
     \caption{The ``Rand'' track plotted by the Track Plotter.}
-    \label{fig:Verification Visual Plots Exploration}
+    \label{fig:Verification Track Plotter}
 \end{figure}
 
 \subsubsection{Visual Verification with Plots} \label{sec:Visual Verification with Plots}
@@ -369,7 +369,7 @@ During verification, every algorithm step is plotted on a ``Matplotlib'' figure:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Verification_Visual_Plots_Exploration.png}
-    \caption{Figures (a) and (b) show a plot of the 'Small Track' with the middle points. The start cones (big orange cones) are red, blue cones are blue, yellow cones are yellow, the middle points are black, and the triangles from triangulation are a variety of colours. Figures (c) and (d) show the same with the interpolated middle line.}
+    \caption{Figures (a) and (b) show a plot of the 'Small Track' with the middle points. The start cones (big orange cones) are red, blue cones are blue, yellow cones are yellow, the middle points are black, and the triangles from triangulation are a variety of colors. Figures (c) and (d) show the same with the interpolated middle line.}
     \label{fig:Verification Visual Plots Exploration}
 \end{figure}
 
@@ -385,7 +385,7 @@ The optimization algorithm was first verified with hard-coded cones given by a t
 \end{figure}
 
 \subsubsection{Verification with Simulation Tool} \label{sec:Verification with Simulation Tool}
-Additionally to visual verifications using Python plots, the algorithms were also verified using the Simulation Tool built on top of the \acrlong{fsds} mentioned in section \ref{sec:Formula Student Implementations}. The work done implementing the tool for the \acrlong{zur} team is documented in ``Evolving a software simulator for self-driving racing cars at the Formula Student Team ZHAW'' by A. Kamberi and G. Briner. \cite{zur_sim_tool}
+Additionally, to visual verifications using Python plots, the algorithms were also verified using the Simulation Tool built on top of the \acrlong{fsds} mentioned in section \ref{sec:Formula Student Implementations}. The work done implementing the tool for the \acrlong{zur} team is documented in ``Evolving a software simulator for self-driving racing cars at the Formula Student Team ZHAW'' by A. Kamberi and G. Briner. \cite{zur_sim_tool}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Verification_Sim_Tool_Example.png}

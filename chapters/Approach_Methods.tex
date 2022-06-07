@@ -169,8 +169,37 @@ The pseudocode of the exploration algorithm is shown in figure \ref{fig:Algorith
     \label{fig:Algorithm Exploration Pseudocode}
 \end{figure}
 
-\subsubsection{Planned Path Filter} \label{sec:Planned Path Filter} \todo{add content}
-\lipsum[1]
+\subsubsection{Planned Path Filter} \label{sec:Planned Path Filter}
+If all points of the planned path are published like the Exploration Algorithm creates them, there would be an issue regarding the Autopilot module of the autonomous system, which controls the car itself. The Autopilot currently drives from point to point as it receives them by the Path Planner. \cite{zur_autopilot}
+
+Figure \ref{fig:Path Planner Planned Path Filter 1} shows two sets of points, each created by the detection of another cone.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Planned_Path_Filter_1.png}
+    \caption{Figure (a) shows the created points by detecting the blue cone encircled in green, while figure (b) shows the created points by detecting the yellow cone encircled in purple.}
+    \label{fig:Path Planner Planned Path Filter 1}
+\end{figure}
+By displaying both sets of points on top of each other, it can be seen in figure \ref{fig:Path Planner Planned Path Filter 2} that there is an overlap with both batches.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Planned_Path_Filter_2.png}
+    \caption{An overlap between both sets of points is seen.}
+    \label{fig:Path Planner Planned Path Filter 2}
+\end{figure}
+Because the Autopilot drives from point to point as they are received, it would try to drive back to the first point of the second set because of the overlap, as illustrated in figure \ref{fig:Path Planner Planned Path Filter 3}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Planned_Path_Filter_3.png}
+    \caption{The car will first drive to all green points (1), as it receives all of them first. Then it will try to drive to all purple points, but by doing that, it would first drive back to the first purple point (2) and then to the last purple point (3).}
+    \label{fig:Path Planner Planned Path Filter 3}
+\end{figure}
+The Planned Path Filter stops the turn back by the car by filtering the overlapped points from being published by the planner, as depicted in figure \ref{fig:Path Planner Planned Path Filter 4}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Path_Planner_Planned_Path_Filter_4.png}
+    \caption{The turnback can be stopped by filtering the overlapped points from being published.}
+    \label{fig:Path Planner Planned Path Filter 4}
+\end{figure}
 
 \subsection{Optimization Service Node} \label{sec:Optimization Service Node}
 As seen in the component architecture of the Path Planning package in figure \ref{fig:Path Planning ROS Architecture}, the Optimization Service Node is responsible for receiving the request for optimization by the Path Planner Node. The Service Node prepares the input for optimization, optimizes the path, and then sends it back to the planner for further processing and publishing.

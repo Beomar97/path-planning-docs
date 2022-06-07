@@ -8,7 +8,7 @@ After a series of technical inspections regarding safety and rules compliance, t
 In a single Formula SAE competition, like in Formula Student Germany, a vast amount of teams participate each year, as shown in figure \ref{fig:FS SAE Competition}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{FS_SAE_Competition.jpeg}
+    \includegraphics[width=9cm]{FS_SAE_Competition.jpeg}
     \caption{The image depicts teams participating in Formula Student Germany. \cite{fs_germany}}
     \label{fig:FS SAE Competition}
 \end{figure}
@@ -25,6 +25,8 @@ The following static events are held: Business Plan Presentation, Cost and Manuf
 \subsection{Dynamic Events} \label{sec:Dynamic Events}
 The following dynamic events are held: Skidpad, Acceleration, Autocross, Endurance and Efficiency, and Track Drive.
 The dynamic events reveal the driving performance of the prototypes. Every discipline puts different abilities of the cars to the test. \cite{fs_rules_2022_handbook}
+
+\pagebreak
 
 \textbf{Skid Pad:} The Skidpad track, as shown in figure \ref{fig:FS Skidpad layout} consists of two pairs of concentric circles in the shape of an eight. This track will test the lateral grip of the car.
 \begin{figure}[H]
@@ -177,7 +179,7 @@ The problem in planning is often that the machine interacts with the physical wo
 Planners construct plans and are either a machine or a human. Should the planner be a machine, then a planning algorithm would be the planner. Should the planner be a human, the human itself would be the algorithm making the decisions. Figure \ref{fig:Planner Machine Environment} shows the interaction of a planner on a machine or a plan.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=5cm]{Planner_Machine_Environment.png}
+    \includegraphics[width=6cm]{Planner_Machine_Environment.png}
     \caption{A planner executes the plan on the machine that actuates on the environment. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Planner Machine Environment}
 \end{figure}
@@ -198,19 +200,17 @@ Motion planning is interested in the planning in continuous state spaces. This m
 \textbf{Sampling-Based Motion Planning} is a field in motion planning that covers sampling-based algorithms. Sampling-based planning algorithms use collision detection as a \Gls{black_box} separated from the geometric and kinematic models of motion planning. There are two different types of algorithm models. First, the single-query algorithm consists of a ($q_i,q_G$) pair as an input. $q_i$ defines the start and $q_G$ the end goal. In this strategy, no pre-computation is possible. Figure \ref{fig:Geometric Models Collision Detection Algorithm} illustrates the interaction between the geometric models, collision detection, the sampling-based motion planning algorithm, and the discrete searching method.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{Sampling-Based_Motion_Planning.png}
+    \includegraphics[width=12cm]{Sampling-Based_Motion_Planning.png}
     \caption{The geometric models will generate the collision detection input, which influences the discrete searching in the sampling-based motion planning algorithm. The C-space is the configuration space of the algorithm. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Geometric Models Collision Detection Algorithm}
 \end{figure}
 A multi-query algorithm can have multiple initial goals; that is when it makes sense to precompute the models for more efficiency. An example of a single-query algorithm is the \acrlong{rdt} (\acrshort{rdt}) algorithm, similar to the \acrshort{rrt} algorithm mentioned in \ref{sec:Related Work}, which is a subset of the \acrshort{rdt} algorithm. It searches for the shortest path by creating random sequences that end up in a tree, which holds multiple sequences that can be connected. Figure \ref{fig:Rapidly Exploring Dense Tree} illustrates a simple example how a \acrshort{rdt} works.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{Rapidly_Exploring_Dense_Tree.png}
+    \includegraphics[width=12cm]{Rapidly_Exploring_Dense_Tree.png}
     \caption{$q_0$ is the initial position, and $q_n$ is the vertex. $\alpha(i)$ is the sample based on the nearest point in $S$. (a) shows the tree that has been constructed and (b) the tree after applying the algorithm. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Rapidly Exploring Dense Tree}
 \end{figure}
-
-\pagebreak
 
 Listing \ref{lst:Simple RDT} shows a pseudocode implementation of the \acrshort{rdt} algorithm.
 \begin{lstlisting}[mathescape=true, caption={The simple \acrshort{rdt} computes a random tree with the nearest function. \cite{planning_algorithms_steven_m_lavalle}}, label={lst:Simple RDT}]
@@ -246,12 +246,14 @@ Decision-Theoretic Planning is also known as planning under uncertainty. Two asp
 \textbf{Planning Under Sensing Uncertainty} covers algorithms that can be used to plan under sensing uncertainty. Localization as a problem in robotics can be hard to accomplish. There is passive localization and active localization. In passive localization, a robot acts under different circumstances. It derives its position from probabilistic approaches, whereas in active localization, the focus is more on how the robot should move to be in that exact position. Figure \ref{fig:Localization Example} gives an example of a robot that interacts on a grid map and shows the possible moves he can do. \cite{planning_algorithms_steven_m_lavalle}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=3cm]{Localization_Example.png}
+    \includegraphics[width=4cm]{Localization_Example.png}
     \caption{This example shows the possible moves of a robot to which grids he could move. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Localization Example}
 \end{figure}
 
 Different sensors like a compass and a camera make it possible to define a position. Further information on localization can be read in the mentioned book. The environment uncertainty and mapping topic focus on how to define an environment when there is no map given so that the robot has to act upon sensors only. \cite{planning_algorithms_steven_m_lavalle}
+
+\pagebreak
 
 \subsection{Planning under Differential Constraints} \label{sec:Planning under Differential Constraints}
 Allowable velocities at each point are examples of differential constraints—local limitations. Differential constraints are mostly from kinematics and dynamics. Smoothness is a weak differential constraint, while obstacles are global constraints.

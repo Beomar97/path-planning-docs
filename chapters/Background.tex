@@ -1,15 +1,15 @@
-Essential background information lays the foundation for the used approaches and methods described later in chapter \ref{ch:Approach / Methods}. In the first section, the Formula SAE Competitions, the goal of every Formula Student team, are explained in more detail. The \acrlong{ros}, the foundation of many robotic and autonomous systems, will be explained further. With these foundations, the autonomous system of \acrlong{zur} can be introduced. After all that, the concept of driverless will be explained. To conclude, several categories of path planning algorithms and their peculiarities are described.
+Essential background information lays the foundation for the used approaches and methods described later in chapter \ref{ch:Approach / Methods}. In the first section, the Formula SAE Competitions, the goal of every Formula Student team, are explained in more detail. The \acrlong{ros}, the foundation of many robotic and autonomous systems, will also be explained further. With these foundations, the autonomous system of \acrlong{zur} can be introduced. After all that, the concept of driverless will be explained. To conclude, several categories of path planning algorithms and their peculiarities are described.
 
 \section{Formula SAE Competitions} \label{sec:Formula SAE Competitions}
 The main idea of a Formula SAE competition is to conceive, design, fabricate, develop and compete with small, formula-style race cars.
 The competition is split into two classes: Internal Combustion Engine Vehicle (\acrshort{cv}) and Electric Vehicle (\acrshort{ev}).
 Additionally, a team can opt-in to take part in the Driverless Cup (\acrshort{dc}).
-After a series of technical inspections regarding safety and rules compliance, the vehicles will compete in a series of static and dynamic events. In the end, the team with the most overall points will win the competition for its class or the \acrlong{dc}, respectively. \cite{fs_rules_2022_handbook}
-In a single Formula Student Germany competition, dozens of teams are participating, as shown in figure \ref{fig:FS SAE Competition}.
+After a series of technical inspections regarding safety and rules compliance, the vehicles will compete in static and dynamic events. In the end, the team with the most overall points will win the competition for its class or the \acrlong{dc}, respectively. \cite{fs_rules_2022_handbook}
+In a single Formula SAE competition, like in Formula Student Germany, a vast amount of teams participate each year, as shown in figure \ref{fig:FS SAE Competition}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{FS_SAE_Competition.jpeg}
-    \caption{Teams participating in Formula Student Germany. \cite{fs_germany}}
+    \caption{The image depicts teams participating in Formula Student Germany. \cite{fs_germany}}
     \label{fig:FS SAE Competition}
 \end{figure}
 
@@ -23,33 +23,35 @@ The following static events are held: Business Plan Presentation, Cost and Manuf
 \textbf{Engineering Design:} Evaluation of the engineering process and effort that went into the design of the vehicle. Technical aspects, the construction, and the car's key attributes are judged.
 
 \subsection{Dynamic Events} \label{sec:Dynamic Events}
-The following dynamic events are held: Skid Pad, Acceleration, Autocross, Endurance and Efficiency, and Track Drive.
+The following dynamic events are held: Skidpad, Acceleration, Autocross, Endurance and Efficiency, and Track Drive.
 The dynamic events reveal the driving performance of the prototypes. Every discipline puts different abilities of the cars to the test. \cite{fs_rules_2022_handbook}
 
-\textbf{Skid Pad:} The skid pad track as shown in figure \ref{fig:FS Skid Pad layout} consists of two pairs of concentric circles in the shape of an eight. This track will test the lateral grip of the car.
+\textbf{Skid Pad:} The Skidpad track, as shown in figure \ref{fig:FS Skidpad layout} consists of two pairs of concentric circles in the shape of an eight. This track will test the lateral grip of the car.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{FS_Event_Skid_Pad.png}
-    \caption{Skid Pad track layout according to the Formula Student Rules 2022 handbook. \cite{fs_rules_2022_handbook}}
-    \label{fig:FS Skid Pad layout}
+    \caption{Skidpad track layout according to the Formula Student Rules 2022 handbook. \cite{fs_rules_2022_handbook}}
+    \label{fig:FS Skidpad layout}
 \end{figure}
+
+\pagebreak
 
 \textbf{Acceleration:} An acceleration race over 75 m distance as shown in figure \ref{fig:FS Acceleration layout} with a standing start, tests the car acceleration in a straight line.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{FS_Event_Acceleration.png}
+    \includegraphics[width=12.5cm]{FS_Event_Acceleration.png}
     \caption{Acceleration track layout according to the Formula Student Rules 2022 handbook. \cite{fs_rules_2022_handbook}.}
     \label{fig:FS Acceleration layout}
 \end{figure}
 
-\textbf{Autocross:} The autocross event tests the car's dynamic ability in a one-lap sprint. The objective of the autocross event is to evaluate the car's maneuverability and handling qualities.
+\textbf{Autocross:} The Autocross event tests the car's dynamic ability in a one-lap sprint. The objective of the autocross event is to evaluate the car's manoeuvrability and handling qualities.
 
 \textbf{Endurance and Efficiency:} An endurance race over a distance of 22 km, including one driver change. One lap of the endurance track is approximately 1 km. The Efficiency scoring rates the consumed amount of energy to the total time.
 
-\textbf{Trackdrive (DC Only):}  Over a distance of 10 rounds, the car has to prove its durability without a driver under long-term conditions. As shown in figure \ref{fig:FS Autocross, Endurance and Trackdrive layout} a basic layout is given as a reference.
+\textbf{Trackdrive (DC Only):}  Over a distance of 10 rounds, the car has to prove its durability without a driver under long-term conditions. As shown in figure \ref{fig:FS Autocross, Endurance and Trackdrive layout}, a basic layout is given as a reference.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{FS_Event_Trackdrive.png}
+    \includegraphics[width=12.5cm]{FS_Event_Trackdrive.png}
     \caption{Base layout for the Autocross, Endurance and Trackdrive events according to the Formula Student Rules 2022 handbook. \cite{fs_rules_2022_handbook}}
     \label{fig:FS Autocross, Endurance and Trackdrive layout}
 \end{figure}
@@ -57,19 +59,21 @@ The dynamic events reveal the driving performance of the prototypes. Every disci
 \section{Robot Operating System (ROS)} \label{sec:Robot Operating System (ROS)}
 The \acrlong{ros} (\acrshort{ros}) is not, like the name may suggest, a full-fledged operating system but a set of software libraries and tools for the development of robotics applications. The open-source robotics middleware comes shipped with capable developer tools, drivers, and advanced algorithms. \cite{ros2_documentation}
 
-There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. \cite{ros2_documentation} Beginning with releases after 'Foxy Fitzroy', releases in odd years will be non-LTS (Long Term Support). They will only be supported for 1.5 years, while new releases in even years will be supported long-term for five years. \cite{ros2_documentation}
+There are currently two major versions of \acrshort{ros} which are seeing releases, ROS 1 and ROS 2. Beginning with releases after ``Foxy Fitzroy'', releases in odd years will be non-LTS (Long Term Support). They will only be supported for 1.5 years, while new releases in even years will be supported long-term for five years. \cite{ros2_documentation}
 
 \subsection{ROS Graph} \label{sec:ROS Graph}
 Five main concepts of ROS 2 make up the ROS (2) graph:
 \begin{enumerate}
-    \item Nodes
-    \item Topics
-    \item Services
-    \item Parameters
-    \item Actions
+    \item \textbf{Nodes:} A node is a fundamental ROS 2 element that serves a single modular purpose in a robotics system. \cite{ros2_documentation}
+    \item \textbf{Topics:} Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_documentation}
+    \item \textbf{Services:} Services are based on a call-and-response model versus topics’ publisher-subscriber model. Services only provide data when a client calls them explicitly. \cite{ros2_documentation}
+    \item \textbf{Parameters:} Nodes have parameters to define their default configuration values. \cite{ros2_documentation}
+    \item \textbf{Actions:} Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow someone to execute long-running tasks, provide regular feedback, and are cancellable. \cite{ros2_documentation}
 \end{enumerate}
 
-The ROS graph is a network of ROS 2 elements that process data simultaneously. The graph encompasses all executables and the connections between them.
+\pagebreak
+
+The ROS graph is a network of ROS 2 elements that process data simultaneously. The graph encompasses all executables and the connections between them. Figure \ref{fig:ROS 2 main concepts} depicts an illustration containing all five main ROS 2 concepts.
 
 \begin{figure}[H]
     \centering
@@ -78,64 +82,53 @@ The ROS graph is a network of ROS 2 elements that process data simultaneously. T
     \label{fig:ROS 2 main concepts}
 \end{figure}
 
-\subsubsection{Nodes} \label{sec:ROS Nodes}
-A node is a fundamental ROS 2 element that serves a single modular purpose in a robotics system. \cite{ros2_documentation}
-
-\subsubsection{Topics} \label{sec:ROS Topics}
-Nodes publish information over topics, which allows any number of other nodes to subscribe to and access that information. \cite{ros2_documentation}
-
-\subsubsection{Services} \label{sec:ROS Services}
-Services are based on a call-and-response model versus topics’ publisher-subscriber model. Services only provide data when a client calls them explicitly. \cite{ros2_documentation}
-
-\subsubsection{Parameters} \label{sec:ROS Parameters}
-Nodes have parameters to define their default configuration values. \cite{ros2_documentation}
-
-\subsubsection{Actions} \label{sec:ROS Actions}
-Actions are built on topics and services and consist of a goal, feedback, and a result. Actions are like services that allow someone to execute long-running tasks, provide regular feedback, and are cancellable. \cite{ros2_documentation}
+\pagebreak
 
 \section{Zurich UAS Racing Autonomous System} \label{sec:Zurich UAS Racing Autonomous System}
-On a high-level view, the 'Autonomous System' is made up of five domains: the 'Controls', 'Perception', 'Localization and Mapping', 'Path planning' as well as 'Simulation'. Figure \ref{fig:AS Component Diagram} shows an abstraction of how the different components interact with each other. The design of the autonomous system is further described in ``Autonomous Driving Framework - Designing a Driverless System for an Electric Race Vehicle'' by L. Miranda. \cite{zur_autonomous_driving_framework} \todo{Explain image in more detail}
+On a high-level view, the ``Autonomous System'' is made up of five domains: ``Controls'', ``Perception'', ``Localization and Mapping'', ``Path Planning'', and ``Simulation''. The design of the autonomous system is further described in ``Autonomous Driving Framework - Designing a Driverless System for an Electric Race Vehicle'' by L. Miranda. \cite{zur_autonomous_driving_framework}
+
+The five domains are described as follows:
+\textbf{Controls} is responsible for the steering, braking, and acceleration of the car.
+\textbf{Perception} is recognizing the track by perceiving the different types of cones the track is made up of.
+\textbf{Localization and Mapping} estimates the current position of the vehicle relative to the starting position and maps it into an absolute position on the track.
+\textbf{Path Planning} computes the best possible path along the track.
+\textbf{Simulation} is responsible for providing the rest of the domains with an adequate tool to simulate and test on.
+Figure \ref{fig:AS Component Diagram} shows an abstraction of how the different components interact with each other.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{AS_Component_Diagram.png}
+    \includegraphics[width=\columnwidth]{AS_Component_Diagram_Simple.png}
     \caption{The Autonomous System Component Diagram shows an illustration between the hardware layer and software layer. The autonomous system (red box) is on the software layer, in which the 'Path Planning' domain (marked yellow) lies.}
     \label{fig:AS Component Diagram}
 \end{figure}
-The five domains are described as follows:
-\textbf{'Controls'} is responsible for the steering, braking, and acceleration of the car.
-\textbf{'Perception'} is recognizing the track by perceiving the different types of cones the track is made up of.
-\textbf{'Localization and Mapping'} estimates the current position of the vehicle relative to the starting position and maps it into an absolute position on the track.
-\textbf{'Path Planning'} computes the best possible path along the track.
-\textbf{'Simulation'} is responsible for providing the rest of the domains with an adequate tool to simulate and test on.
 
-Essential hardware components of the autonomous system are stored inside a box, which will be mounted on the vehicle itself. The connections coming into the box from the various components outside can be seen in the reference figure \ref{fig:AS DV Box}. \todo{Explain image in more detail}
+The \textbf{\acrlong{res}} (\acrshort{res}) receives the \acrshort{rf} signal from the \acrshort{res} transmitter and requests the emergency mode. The \acrshort{res} also gives the system the overall ``Go Signal'' to start the autonomous system. The \textbf{Autonomous System State Machine} receives the selected autonomous mission by the Vehicle Mode \& Mission Selector. The state machine propagates the state of the Autonomous System to all modules that require it. The currently selected mission will be indicated by the \textbf{Autonomous State and Mission Indicator}.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\columnwidth]{AS_DV_Box.png}
-    \caption{The Autonomous System DV Box consists of different components and connections to sensors, cameras and several other hardware components. The processing unit (marked in green) will house the software for the autonomous system itself.}
-    \label{fig:AS DV Box}
-\end{figure}
+The \textbf{Perception System} gets images from the Stereo Camera and point clouds, which are sets of points that describe an object or surface, from the \Gls{lidar}. It uses the data from the Lidar and Stereo Camera and can identify and classify cones and estimate the relative distances to the cones. \textbf{\Gls{odometry}} estimates the vehicle position based on the distance to the reference points and the travelled trajectory. It receives its inputs from the Stereo Camera, the \acrshort{gnss}, and from the \Gls{controller_area_network} Driver (\acrshort{can}). The data from \Gls{odometry} and the Perception System are received by the \textbf{Mapping} module, which converts the relative distance from the car to the cones into absolute positions.
 
-These components are shown in figure \ref{fig:AS HW Components}. Data needed for 'Localization' is received from the \acrshort{gnss} sensor and antenna (a MIKROE GNSS 7 Click and a u-blox ANN-MB). In contrast, the inputs for 'Perception' are received from the stereo camera (a Stereolabs ZED 2) and Lidar sensor (a Velodyne Lidar Puck Hi-Res), which are also needed for the 'Path Planning' module. Information for the 'Control' unit is sent over to the engine control unit (ECU) (a dSPACE MicroAutoBox III). In the end, all critical data for the operation leads into the processing unit of the system, which is, in this case, a 'Jetson AGX Xavier' by NVIDIA.
+The \textbf{Path Planner} computes in runtime the best trajectory in the known track, according to the selected mission and the vehicle's position. The planned trajectory calculated by the Path Planning module is received by the \textbf{Autopilot}, which controls the vehicle in order to keep its actual trajectory as close as possible to the planned trajectory. The vehicle controls are sent to the Vehicle Control Unit via the \textbf{CAN Driver}. The position of the vehicle and cones are received via the Mapping module.
+
+Essential hardware components of the autonomous system are stored inside a box, which will be mounted on the vehicle itself. These components are shown in figure \ref{fig:AS HW Components}. Data needed for ``Localization'' is received from the \acrshort{gnss} sensor and antenna (a MIKROE GNSS 7 Click and a u-blox ANN-MB). In contrast, the inputs for ``Perception'' are received from the stereo camera (a Stereolabs ZED 2) and Lidar sensor (a Velodyne Lidar Puck Hi-Res), which are also needed for the ``Path Planning'' module. Information for the ``Control'' unit is sent over to the engine control unit (ECU) (a dSPACE MicroAutoBox III). In the end, all critical data for the operation leads into the processing unit of the system, which is, in this case, a ``Jetson AGX Xavier'' by NVIDIA.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{AS_HW_Components.png}
-    \caption{The Autonomous System Hardware Components consists of the Stereolabs ZED 2, MIKROE GNSS 7 Click, u-block AHN-MB, Velodyne Lidar Puck Hi-Res, dSPACE MicroAutoBox III and the NVIDIA Jetson AGX Xavier.}
+    \caption{The Autonomous System Hardware Components consist of the Stereolabs ZED 2, MIKROE GNSS 7 Click, u-block AHN-MB, Velodyne Lidar Puck Hi-Res, dSPACE MicroAutoBox III and the NVIDIA Jetson AGX Xavier.}
     \label{fig:AS HW Components}
 \end{figure}
 
 The processing unit is set up with an installation of Ubuntu Linux 20.04, which will run the software of the autonomous system on top of \acrshort{ros}. Figure \ref{fig:AS Deployment Diagram} shows the levels of the software layers used.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=6cm]{AS_Deployment_Diagram.png}
-    \caption{The Autonomous System Deployment Diagram shows the different layers of software on the processing unit.}
+    \caption{The Autonomous System Deployment Diagram shows the different software layers on the processing unit.}
     \label{fig:AS Deployment Diagram}
 \end{figure}
 
 \section{Driverless} \label{sec:Driverless}
-The concept of driverless respectively an autonomous vehicle is a car incorporating vehicular automation, that is, a ground vehicle that is capable of sensing its environment and moving safely with little or no human input. \cite{driverless_cooperative_control}
-Autonomous cars combine a variety of sensors to perceive their surroundings, such as cameras, radar, lidar, GPS, odometry and more. Control systems interpret sensory information to identify appropriate paths and obstacles and relevant signalizations. \cite{driverless_governing_autonomous_vehicles}
+The concept of a driverless vehicle and an autonomous vehicle is a car incorporating vehicular automation, that is, a ground vehicle capable of sensing its environment and moving safely with little or no human input. \cite{driverless_cooperative_control}
+Autonomous cars combine a variety of sensors to perceive their surroundings, such as cameras, radar, \gls{lidar}, \acrshort{gps}, \Gls{odometry} and more. Control systems interpret sensory information to identify appropriate paths, obstacles, and relevant signalizations. \cite{driverless_governing_autonomous_vehicles}
 
 The \acrshort{sae} currently defines six levels of driving automation ranging from Level 0 (fully manual) to Level 5 (fully autonomous). \cite{driverless_sae_levels}
 \begin{figure}[H]
@@ -146,10 +139,10 @@ The \acrshort{sae} currently defines six levels of driving automation ranging fr
 \end{figure}
 
 Even with limitless scenarios for convenience and quality-of-life improvements and its potential for dramatically lowering CO2 emissions. \cite{driverless_study_three_revolutions}
-Fully autonomous cars are still years away, as the challenges range from technological and legislative to environmental and philosophical. For example, lidar and radar scanners are still expensive and commonly used in current driverless cars. There is also the possibility of lidar signals interfering with each other or if the used radio frequency range will be enough to support the mass production of driverless cars. Additionally, there can be trouble with different traffic conditions. For example, how will the vehicle behave in tunnels or on bridges? There are also additional hurdles like laws, regulations, and accident liability. \cite{driverless_what_is_an_autonomous_car}
+Fully autonomous cars are still years away, as the challenges range from technological and legislative to environmental and philosophical. For example, \gls{lidar} and radar scanners are still expensive and commonly used in current driverless cars. There is also the possibility of \gls{lidar} signals interfering with each other or if the used radio frequency range will be enough to support the mass production of driverless cars. Additionally, there can be trouble with different traffic conditions. For example, how will the vehicle behave in tunnels or on bridges? There are also additional hurdles like laws, regulations, and accident liability. \cite{driverless_what_is_an_autonomous_car}
 
 Currently, we are largely still at level two according to \acrshort{sae}'s levels of driving automation, with cars able to control steering, acceleration and braking while still requiring drivers to remain engaged. Vehicles operating at Level 3 and above remain a marginal portion of the market. \cite{driverless_whats_the_status_of_self_driving_cars}
-In March 2021, Honda became the first manufacturer to provide a legally approved Level 3 car and Toyota operated a potentially Level 4 service around the Tokyo 2020 Olympic Village. \cite{driverless_honda_sensing_elite} \cite{driverless_toyota_olympics}
+In March 2021, Honda became the first manufacturer to provide a legally approved Level 3 car, and Toyota operated a potentially Level 4 service around the Tokyo 2020 Olympic Village. \cite{driverless_honda_sensing_elite} \cite{driverless_toyota_olympics}
 \begin{figure}[H]
     \centering
     \includegraphics[width=12cm]{Driverless_Honda_Sensing_Elite.jpeg}
@@ -157,14 +150,14 @@ In March 2021, Honda became the first manufacturer to provide a legally approved
     \label{fig:Driverless Honda Sensing Elite}
 \end{figure}
 
-\section{Path Planning Algorithms} \label{sec:Path Planning Algorithms}
+\section{Path Planning Algorithms} \label{sec:Path Planning Algorithms} \todo{werden die verwendeten Begriffe wieder erwähnt? Referenzen auf diese Section hinzufügen}
 Path planning algorithms are used in many environments, e.g. in the assembly of a car with a robot arm, in the autonomous parking of a car, or in finding a landmine with a robot during a military operation.
 
 \subsection{Overview} \label{sec:Overview Path Planning Algorithms}
 A human follows a path if it goes from point A to point B while following certain signalization, e.g. on hiking trails. It also follows a path if it follows one predetermined for them by a GPS. The difference lies between a manual plan and a machine-generated plan. Only the latter one is addressed.
 
 The planning of a path consists of a state, the time needed, actions, an initial / goal state, a criterion, and a plan. A planning algorithm represents the state typically. Time is based on a sequence of decisions that must be made at a particular time. Actions manipulate the state and cover how the state should be changed. The initial and goal state define where the planner should start and finish.
-The criterion defines the outcome and the boundaries of the planner. The type of criterion is either based on feasibility or optimality. Feasibility covers the arrival of the goal state without the concern for efficiency. Optimality finds a plan with optimized performance in mind. The plan, in general, covers the strategy or behavior of a decision-maker. \cite{planning_algorithms_steven_m_lavalle}
+The criterion defines the outcome and the boundaries of the planner. The type of criterion is either based on feasibility or optimality. Feasibility covers the arrival of the goal state without the concern for efficiency. Optimality finds a plan with optimized performance in mind. The plan, in general, covers the strategy or behaviour of a decision-maker. \cite{planning_algorithms_steven_m_lavalle}
 
 A path planning algorithm can be categorized into one of the following groups: Motion Planning, Decision-Theoretic Planning, and Planning under Differential Constraints.
 \cite{planning_algorithms_steven_m_lavalle}
@@ -174,7 +167,7 @@ An algorithm usually consists of a machine and environment where there are actua
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Machine_Environment.png}
-    \caption{Two different illustrations that show what is the relationship between the machine and the environment. \cite{planning_algorithms_steven_m_lavalle}}
+    \caption{Two different illustrations show the relationship between the machine and the environment. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Machine and Environment interaction}
 \end{figure}
 The problem in planning is often that the machine interacts with the physical world, which has uncountable different influences on the plan to be calculated. Because of the interaction with the physical world, the environment is often an approximation of the natural world since not every sensing mechanism can be processed from the environment to the machine.
@@ -192,7 +185,7 @@ These plans can be used in three ways: Execution, refinement, or hierarchical in
 \subsection{Motion Planning} \label{sec:Motion Planning}
 Motion planning is interested in the planning in continuous state spaces. This means that space is not static and will have changes with time. Motion planning is also referred to as planning in continuous state spaces. \cite{planning_algorithms_steven_m_lavalle}
 
-\textbf{Implicit Representation} of state space in motion planning must be dealt with in planning algorithms. Implicit representations become more important in motion planning as the state space is uncountable infinite. It also tries to define 2D and 3D geometric models and transform them. The state spaces arise from these problems. \cite{planning_algorithms_steven_m_lavalle} \todo{werden die verwendeten Begriffe wieder erwähnt?}
+\textbf{Implicit Representation} of state space in motion planning must be dealt with in planning algorithms. Implicit representations become more critical in motion planning as the state space is uncountable infinite. It also tries to define 2D and 3D geometric models and transform them. The state spaces arise from these problems. \cite{planning_algorithms_steven_m_lavalle}
 
 \textbf{Continuous $\rightarrow$ discrete} is the central theme in motion planning to transform models. Motion planning also covers combinatorial motion planning, where the algorithm builds a representation of the original problem with an input model. Additionally, there exists the field of sampling-based motion planning. \cite{planning_algorithms_steven_m_lavalle}
 
@@ -200,18 +193,18 @@ Motion planning is interested in the planning in continuous state spaces. This m
 
 \textbf{The Configuration Space} is needed for the motion planning algorithm to define the space in which a set of possible transformations could be applied to the robot. \cite{planning_algorithms_steven_m_lavalle}
 
-\textbf{Sampling-Based Motion Planning} is a field in motion planning that covers sampling-based algorithms. Sampling-based planning algorithms use collision detection as a "black box" separated from the geometric and kinematic models of motion planning. There are two different types of algorithm models. First, the single-query algorithm consists of a ($q_i,q_G$) pair as an input. $q_i$ defines the start and $q_G$ the end goal. In this strategy, no pre-computation is possible. Figure \ref{fig:Geometric Models Collision Detection Algorithm} illustrates the interaction between the geometric models, collision detection, the sampling-based motion planning algorithm, and the discrete searching method.
+\textbf{Sampling-Based Motion Planning} is a field in motion planning that covers sampling-based algorithms. Sampling-based planning algorithms use collision detection as a \Gls{black_box} separated from the geometric and kinematic models of motion planning. There are two different types of algorithm models. First, the single-query algorithm consists of a ($q_i,q_G$) pair as an input. $q_i$ defines the start and $q_G$ the end goal. In this strategy, no pre-computation is possible. Figure \ref{fig:Geometric Models Collision Detection Algorithm} illustrates the interaction between the geometric models, collision detection, the sampling-based motion planning algorithm, and the discrete searching method.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Sampling-Based_Motion_Planning.png}
-    \caption{The geometric models will generate the input for the collision detection, that influences the discrete searching in the sampling-based motion planning algorithm. The C-space is the configuration space of the algorithm. \cite{planning_algorithms_steven_m_lavalle}}
+    \caption{The geometric models will generate the collision detection input, which influences the discrete searching in the sampling-based motion planning algorithm. The C-space is the configuration space of the algorithm. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Geometric Models Collision Detection Algorithm}
 \end{figure}
-A multi-query algorithm can have multiple initial goals; that is when it makes sense to precompute the models for more efficiency. An example of a single-query algorithm is the \acrshort{rdt} algorithm, similar to the \acrshort{rrt} algorithm mentioned in \ref{sec:Related Work}, which is a subset of the \acrlong{rdt} (\acrshort{rdt}) algorithm. It searches for the shortest path by creating random sequences that end up in a tree, which holds multiple sequences that can be connected. Figure \ref{fig:Rapidly Exploring Dense Tree} illustrates a simple example how a \acrshort{rdt} works.
+A multi-query algorithm can have multiple initial goals; that is when it makes sense to precompute the models for more efficiency. An example of a single-query algorithm is the \acrlong{rdt} (\acrshort{rdt}) algorithm, similar to the \acrshort{rrt} algorithm mentioned in \ref{sec:Related Work}, which is a subset of the \acrshort{rdt} algorithm. It searches for the shortest path by creating random sequences that end up in a tree, which holds multiple sequences that can be connected. Figure \ref{fig:Rapidly Exploring Dense Tree} illustrates a simple example how a \acrshort{rdt} works.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Rapidly_Exploring_Dense_Tree.png}
-    \caption{$q_0$ is the initial position and $q_n$ the vertex. $\alpha(i)$ is the sample based on the nearest point in $S$. (a) shows the tree that has been constructed and (b) the tree after applying the algorithm. \cite{planning_algorithms_steven_m_lavalle}}
+    \caption{$q_0$ is the initial position, and $q_n$ is the vertex. $\alpha(i)$ is the sample based on the nearest point in $S$. (a) shows the tree that has been constructed and (b) the tree after applying the algorithm. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Rapidly Exploring Dense Tree}
 \end{figure}
 
@@ -224,25 +217,25 @@ SIMPLE RDT($q_0$)
  4 $q_n \rightarrow$ nearest(S(G), $\alpha(i)$);
  5 G.add edge($q_n$, $\alpha(i)$);
 \end{lstlisting}
-The goal of the multi-query method is the creation of a roadmap for each $q_i$ and $q_G$ and is the reason why the family of the algorithm is called a sampling-based roadmap. \cite{planning_algorithms_steven_m_lavalle}
+The goal of the multi-query method is the creation of a roadmap for each $q_i$ and $q_G$. It is the reason why the family of the algorithm is called a sampling-based roadmap. \cite{planning_algorithms_steven_m_lavalle}
 
-\textbf{Combinatorial Motion Planning} covers the discovery of a path in a continuous space without resorting to approximations. Cell decomposition and cylindrical algebraic decomposition are two different subcategories of combinatorial motion planning algorithms. Cell decomposition is based on a collection of cells called a complex. In the 2D decomposition field exists a triangulation algorithm performed by vertical decomposition. The algorithm connects every built triangle with three nodes at a time. With four nodes, two triangles are made. Figure \ref{fig:Theory of Triangulation} gives an example of how the edges from the result of the triangulation are connected through the middle points.
+\textbf{Combinatorial Motion Planning} covers the discovery of a path in a continuous space without resorting to approximations. \Gls{cell_decomposition} and \Gls{cylindrical_algebraic_decomposition} are two different subcategories of combinatorial motion planning algorithms. Cell decomposition is based on a collection of cells called a complex. In the 2D decomposition field exists a triangulation algorithm performed by vertical decomposition. The algorithm connects every built triangle with three nodes at a time. With four nodes, two triangles are made. Figure \ref{fig:Theory of Triangulation} gives an example of how the edges from the result of the triangulation are connected through the middle points.
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Theory_of_Triangulation.png}
-    \caption{The black lines represent the triangles which are computed. The red dots on the other hand represent the middle point of the edges and the triangle itself. The red lines have the red dots as a reference point and can build a path. \cite{planning_algorithms_steven_m_lavalle}}
+    \caption{The black lines represent the triangles which are computed. On the other hand, the red dots represent the middle point of the edges and the triangle itself. The red lines have the red dots as a reference point and can build a path. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Theory of Triangulation}
 \end{figure}
-In computational algebraic geometry, a very general definition is given. It can cover many solutions for problems, but it is also challenging to implement. The definitions are described in Tarski sentences. The problems that can exist with this method are the decision problem and the quantifier-elimination problem. The explanation of each problem is out of scope. Canny's roadmap algorithm, a subset of computational algebraic geometry algorithms, covers the avoidance of doubly exponentially cells in cylindrical algebraic. \cite{constructing_roadmaps_of_semi-algebraic_sets_I} The result is an algorithm that can be run in polynomial time. The complexity of motion planning describes if it makes sense for an algorithm to be programmed more complex or to leave it as it is timewise or storage wise. Optimal motion planning is different from feasibility as it covers finding an optimal solution to the problem. It deals with finding an approximation of a continuous problem as a discrete problem. \cite{planning_algorithms_steven_m_lavalle}
+In computational algebraic geometry, a very general definition is given. It can cover many solutions for problems, but it is also challenging to implement. The definitions are described in \Gls{tarski_sentences}. The problems that can exist with this method are the decision problem and the quantifier-elimination problem. The explanation of each problem is out of scope. Canny's roadmap algorithm, a subset of computational algebraic geometry algorithms, covers the avoidance of doubly exponentially cells in cylindrical algebraic. \cite{constructing_roadmaps_of_semi-algebraic_sets_I} The result is an algorithm that can be run in polynomial time. The complexity of motion planning describes if it makes sense for an algorithm to be programmed more complex or to leave it as it is timewise or storage wise. Optimal motion planning is different from feasibility as it covers finding an optimal solution to the problem. It deals with finding an approximation of a continuous problem as a discrete problem. \cite{planning_algorithms_steven_m_lavalle}
 
-\textbf{Extensions of Basic Motion Planning} defines flavors of motion planning algorithms. There are, for example, time-varying problems, which are defined in a planning formulation. Time-varying problems consider time in the planning formulation. For example, obstacles can change over time, and the space would not be considered static. Solutions for that are either sampling-based, combinatorial methods, or bounded speed. Furthermore, there can be multiple robots in space. With multiple robots, it is possible to combine the information of each robot so that one can benefit from the other. Otherwise, there is also the problem that the robots do not collide with each other. \cite{planning_algorithms_steven_m_lavalle} Euclidean shortest path algorithm gives a solution for solving a motion plan. \cite{efficient_computation_of_euclidean_shortest_paths_in_the_plane}
+\textbf{Extensions of Basic Motion Planning} defines flavours of motion planning algorithms. There are, for example, time-varying problems, which are defined in a planning formulation. Time-varying problems consider time in the planning formulation. For example, obstacles can change over time, and the space would not be considered static. Solutions for that are either sampling-based, combinatorial methods, or bounded speed. Furthermore, there can be multiple robots in space. With multiple robots, it is possible to combine the information of each robot so that one can benefit from the other. Otherwise, there is also the problem that the robots do not collide with each other. \cite{planning_algorithms_steven_m_lavalle} Euclidean shortest path algorithm gives a solution for solving a motion plan. \cite{efficient_computation_of_euclidean_shortest_paths_in_the_plane}
 
-\textbf{Feedback Motion Planning} describes a class of motion planning algorithms that take feedback, for example, from the real world, into account. With the help of the Dijkstra algorithm, an optimal navigation function can be programmed to work in a feedback motion planning environment, with acceleration in consideration, for example. \cite{planning_algorithms_steven_m_lavalle}
+\textbf{Feedback Motion Planning} describes a class of motion planning algorithms that take feedback, for example, from the real world, into account. With the help of the Dijkstra algorithm, \cite{dijkstras_algorithm} an optimal navigation function can be programmed to work in a feedback motion planning environment, with acceleration in consideration, for example. \cite{planning_algorithms_steven_m_lavalle}
 
 \subsection{Decision-Theoretic Planning} \label{sec:Decision-Theoretic Planning}
 Decision-Theoretic Planning is also known as planning under uncertainty. Two aspects evolve under uncertainty: predictability and sensing. The interference of the algorithm with another decision-maker could be possible under these circumstances. Instead of decision-making plans, the topic covers strategies for a decision-maker. While nature can be a decision-maker as well, and it is already possible to predict certain things about nature, the factors of interference of nature are still too big. Therefore, the programmer has to concentrate on so-called primary decision-makers. \cite{planning_algorithms_steven_m_lavalle}
 
-\textbf{Sequential Decision Theory} deals with forward and backward projections. A forward projection predicts what the future route will look like. Forward projection is a method where several possible stages are computed before deciding which path to go. Backward projection is the other way around. With the help of graph search, it is possible to have a more stable solution for calculating a path than with other methods like value iteration or policy iteration. Infinite-horizon problems can occur when dealing with algorithms under the sequential decision theory. Reinforcement Learning helps to solve infinite-horizon problems in combination with the optimal path in one algorithm. \cite{planning_algorithms_steven_m_lavalle}
+\textbf{Sequential Decision Theory} deals with forward and backward projections. A forward projection predicts what the future route will look like. Forward projection is a method where several possible stages are computed before deciding which path to go. Backward projection is the other way around. With the help of graph search, it is possible to have a more stable solution for calculating a path than with other methods like value iteration or policy iteration. \Gls{infinite_horizon_problem} can occur when dealing with algorithms under the sequential decision theory. Reinforcement Learning helps to solve infinite-horizon problems in combination with the optimal path in one algorithm. \cite{planning_algorithms_steven_m_lavalle}
 
 \textbf{Sensors and Information Spaces} describes how the sensors act and the planning problem, which is described as an information space. There are discrete state spaces and derived information spaces. Sensors have two components: the observation space that defines possible states and a sensor mapping, which reads from the sensor. \cite{planning_algorithms_steven_m_lavalle}
 
@@ -254,7 +247,7 @@ Decision-Theoretic Planning is also known as planning under uncertainty. Two asp
     \label{fig:Localization Example}
 \end{figure}
 
-With different sensors like a compass and a camera, it is possible to define a position. Further information on localization can be read in the mentioned book. The environment uncertainty and mapping topic focus on how to define an environment when there is no map given so that the robot has to act upon sensors only. \cite{planning_algorithms_steven_m_lavalle}
+Different sensors like a compass and a camera make it possible to define a position. Further information on localization can be read in the mentioned book. The environment uncertainty and mapping topic focus on how to define an environment when there is no map given so that the robot has to act upon sensors only. \cite{planning_algorithms_steven_m_lavalle}
 
 \subsection{Planning under Differential Constraints} \label{sec:Planning under Differential Constraints}
 Allowable velocities at each point are examples of differential constraints—local limitations. Differential constraints are mostly from kinematics and dynamics. Smoothness is a weak differential constraint, while obstacles are global constraints.
@@ -263,20 +256,20 @@ Allowable velocities at each point are examples of differential constraints—lo
 \begin{figure}[H]
     \centering
     \includegraphics[width=6cm]{Simple_Car_Velocity_Space.png}
-    \caption{The velocity space in which the car can maneuver. \cite{planning_algorithms_steven_m_lavalle}}
+    \caption{The velocity space in which the car can manoeuvre. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Simple Car Velocity Space}
 \end{figure}
 The velocity is two-dimensional, on the other hand. Therefore, the dimensions must be shrunken down from three to two. There are also concepts of multiple decision-makers, which are not covered in this thesis.
 
 \textbf{Sampling-Based Planning Under Differential Constraints} covers the satisfaction of differential constraints with an initial and goal state. Constraints like continuity or smoothness can be applied as well. Kinodynamic planning is a motion planning problem with velocity and acceleration bounds. On the other hand, trajectory planning deals with a velocity and path function. There can also be collision constraints with obstacles, for example.
-Reachable sets describe what has to be visited, there could also be time-limited reachable sets. A reachability graph can help to visualize which sets are already visited like the one in figure \ref{fig:Reachability Graph}.
+Reachable sets describe what has to be visited. There could also be time-limited reachable sets. A reachability graph can help to visualize which sets are already visited, like the one in figure \ref{fig:Reachability Graph}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=4cm]{Reachability_Graph.png}
     \caption{This figure shows how a reachability graph can be visualized and represents two stages. \cite{planning_algorithms_steven_m_lavalle}}
     \label{fig:Reachability Graph}
 \end{figure}
-Local planning by having smaller problems that can be solved locally to solve the bigger problem. The following pseudocode snipped in listing \ref{lst:Simple RDT with differential constraints} shows how the \acrlong{rdt} (\acrshort{rdt}) can be used for calculating a path under differential constraints.
+Local planning has smaller problems that can be solved locally to solve the bigger problem. The following pseudocode snipped in listing \ref{lst:Simple RDT with differential constraints} shows how the \acrlong{rdt} (\acrshort{rdt}) can be used for calculating a path under differential constraints.
 \begin{lstlisting}[mathescape=true, caption={The local planning method computes $x_r$. A new vertex will be available: $x_r$. \cite{planning_algorithms_steven_m_lavalle}}, label={lst:Simple RDT with differential constraints}]
 SIMPLE RDT WITH DIFFERENTIAL CONSTRAINTS($x_0$)
  1 G.init($x_0$);

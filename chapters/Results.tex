@@ -408,7 +408,7 @@ Additionally, the following outputs of the Optimization Algorithm with the Minim
 \end{figure}
 
 \section{Competition 2021 Track} \label{sec:Results Competition 2021 Track}
-An overview of the track is shown in figure \ref{fig:Results Comp 2021 Initial}. The track was created by the \acrshort{eufs} team and is called ``Comp 2021''. \cite{eufs_sim_gitlab} The track was used for a competition in 2021 and consists of more corners than the ``Rand'' track. The track consists of 156 blue cones and 156 yellow cones for the track limits and four big orange cones for the start, respectively the end of the track.
+An overview of the track is shown in figure \ref{fig:Results Comp 2021 Initial}. The track was created by the \acrshort{eufs} team and is called ``Competition 2021''. \cite{eufs_sim_gitlab} The track was used for a competition in 2021 and consists of more corners than the ``Rand'' track. The track consists of 156 blue cones and 156 yellow cones for the track limits and four big orange cones for the start, respectively the end of the track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Track_Plotter_Comp_2021.png}
@@ -418,7 +418,7 @@ An overview of the track is shown in figure \ref{fig:Results Comp 2021 Initial}.
 
 \textbf{Exploration Algorithm}
 
-During the run with the ``Comp 2021'' track, the algorithm did 320 cycles with a total computation time of 0.6621 seconds. The average cycle lasted 0.0021 seconds, with the fastest cycle taking under < 0.0000 seconds long and the slowest cycle taking 0.0069 seconds long. The algorithm created 3425 reference points during the run. The results are listed in table \ref{tab:Results Comp 2021 Exploration}.
+During the run with the ``Competition 2021'' track, the algorithm did 320 cycles with a total computation time of 0.6621 seconds. The average cycle lasted 0.0021 seconds, with the fastest cycle taking under < 0.0000 seconds long and the slowest cycle taking 0.0069 seconds long. The algorithm created 3425 reference points during the run. The results are listed in table \ref{tab:Results Comp 2021 Exploration}.
 
 \begin{table}[H]
     \centering
@@ -432,11 +432,11 @@ During the run with the ``Comp 2021'' track, the algorithm did 320 cycles with a
         Number of Cycles           & 215            \\ \hline
         Generated Reference Points & 2635           \\ \hline
     \end{tabular}
-    \caption{Results of the Exploration Algorithm on the Competition 2021 track.}
+    \caption{Results of the Exploration Algorithm on the ``Competition 2021'' track.}
     \label{tab:Results Comp 2021 Exploration}
 \end{table}
 
-Figure \ref{fig:Result Comp 2021 Final} shows the final implementation of the algorithm on the ``Comp 2021'' track.
+Figure \ref{fig:Result Comp 2021 Final} shows the final implementation of the algorithm on the ``Competition 2021'' track.
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Result_Comp2021_final.png}
@@ -446,7 +446,7 @@ Figure \ref{fig:Result Comp 2021 Final} shows the final implementation of the al
 
 \textbf{Optimization Algorithm}
 
-A comparison of the different objectives on the Competition 2021 track is given in table \ref{tab:Results Comp 2021 Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Comp 2021 Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Comp 2021 Laps 2 Minimum Curvature}, and the calculation with the Minimum Curvature objective with an iterative call did not finish in a reasonable time. In these figures, the reference line (dotted black line), the vehicle width with safety distance (blue line), the actual vehicle width (cyan line), the track limits (black line), and the calculated racing line (red line) are pictured.
+A comparison of the different objectives on the ``Competition 2021'' track is given in table \ref{tab:Results Comp 2021 Optimization Objectives}. Two laps on the given track were calculated for each objective: Shortest Path, Minimum Curvature and Minimum Curvature with iterative call. The result with the Shortest Path objective is seen in figure \ref{fig:Results Comp 2021 Laps 2 Shortest Path}, the result with the Minimum Curvature objective is seen in figure \ref{fig:Results Comp 2021 Laps 2 Minimum Curvature}, and the calculation with the Minimum Curvature objective with an iterative call did not finish in a reasonable time. In these figures, the reference line (dotted black line), the vehicle width with safety distance (blue line), the actual vehicle width (cyan line), the track limits (black line), and the calculated racing line (red line) are pictured.
 
 \begin{table}[H]
     \noindent\setlength\tabcolsep{4pt}
@@ -457,19 +457,19 @@ A comparison of the different objectives on the Competition 2021 track is given 
         Minimum Curvature     & 0.30 s           & 58.87 s                     & 259 Reference Points                \\ \hline
         Minimum Curvature IQP & DNF*             & DNF*                        & DNF*                                \\ \hline
     \end{tabularx}
-    \caption{Results of the different Optimization Algorithm objectives on the Competition 2021 track for two laps. (* Did not finish)}
+    \caption{Results of the different Optimization Algorithm objectives on the ``Competition 2021'' track for two laps. (* Did not finish)}
     \label{tab:Results Comp 2021 Optimization Objectives}
 \end{table}
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Results_Optimization_Comp_2021_Laps_2_Shortest_Path.png}
-    \caption{Optimization on the Competition 2021 track for two laps with the Shortest Path objective.}
+    \caption{Optimization on the ``Competition 2021'' track for two laps with the Shortest Path objective.}
     \label{fig:Results Comp 2021 Laps 2 Shortest Path}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Results_Optimization_Comp_2021_Laps_2.png}
-    \caption{Optimization on the Competition 2021 track for two laps with the Minimum Curvature objective.}
+    \caption{Optimization on the ``Competition 2021'' track for two laps with the Minimum Curvature objective.}
     \label{fig:Results Comp 2021 Laps 2 Minimum Curvature}
 \end{figure}
 
@@ -486,39 +486,39 @@ The results for the Optimization Algorithm with the Minimum Curvature objective 
         5             & 1.66 s           & 146.97 s                    & 642 Reference Points                \\ \hline
         8             & 5.37 s           & 234.88 s                    & 1029 Reference Points               \\ \hline
     \end{tabularx}
-    \caption{Results of the Optimization Algorithm with the Minimum Curvature objective on the Competition 2021 track for one to eight laps.}
+    \caption{Results of the Optimization Algorithm with the Minimum Curvature objective on the ``Competition 2021'' track for one to eight laps.}
     \label{tab:Results Comp 2021 Optimization Laps 1-8}
 \end{table}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Results_Optimization_Comp_2021_Laps_1-8.png}
-    \caption{Optimization on the Competition 2021 track with the Minimum Curvature objective for one lap (a), three laps (b), five laps (c), and eight laps (d).}
+    \caption{Optimization on the ``Competition 2021'' track with the Minimum Curvature objective for one lap (a), three laps (b), five laps (c), and eight laps (d).}
     \label{fig:Results Comp 2021 Laps 1-8}
 \end{figure}
 
-Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the Competition 2021 track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Comp 2021 Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Comp 2021 Laps 2 Curv Profile}, the 3D Velocity Profile in figure \ref{fig:Results Comp 2021 Laps 2 3D Vel Profile}, and the Spline Normals in figure \ref{fig:Results Comp 2021 Laps 2 Spline Normals}.
+Additionally, the following outputs of the Optimization Algorithm with the Minimum Curvature objective for two laps on the ``Competition 2021'' track are shown: The Velocity and Acceleration Profile in figure \ref{fig:Results Comp 2021 Laps 2 VelAcc Profile}, the Curvature Profile in figure \ref{fig:Results Comp 2021 Laps 2 Curv Profile}, the 3D Velocity Profile in figure \ref{fig:Results Comp 2021 Laps 2 3D Vel Profile}, and the Spline Normals in figure \ref{fig:Results Comp 2021 Laps 2 Spline Normals}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Results_Optimization_Comp_2021_Laps_2_VelAcc_Profile.png}
-    \caption{The Velocity and Acceleration Profile on the Competition 2021 track for two laps.}
+    \caption{The Velocity and Acceleration Profile on the ``Competition 2021'' track for two laps.}
     \label{fig:Results Comp 2021 Laps 2 VelAcc Profile}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Results_Optimization_Comp_2021_Laps_2_Curv_Profile.png}
-    \caption{The Curvature Profile on the Competition 2021 track for two laps.}
+    \caption{The Curvature Profile on the ``Competition 2021'' track for two laps.}
     \label{fig:Results Comp 2021 Laps 2 Curv Profile}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Results_Optimization_Comp_2021_Laps_2_3D_Vel_Profile.png}
-    \caption{The 3D Velocity Profile on the Competition 2021 track for two laps.}
+    \caption{The 3D Velocity Profile on the ``Competition 2021'' track for two laps.}
     \label{fig:Results Comp 2021 Laps 2 3D Vel Profile}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Results_Optimization_Comp_2021_Laps_2_Spline_Normals.png}
-    \caption{The Spline Normals on the Competition 2021 track for two laps.}
+    \caption{The Spline Normals on the ``Competition 2021'' track for two laps.}
     \label{fig:Results Comp 2021 Laps 2 Spline Normals}
 \end{figure}
 

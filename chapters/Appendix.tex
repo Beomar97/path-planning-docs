@@ -65,6 +65,69 @@ Track-specific configurations, like the starting position or the distance thresh
 
 Setup files required by \acrshort{ros} are ``package.xml'' (containing meta information about the package), ``setup.cfg'' (required when a package has executables) and ``setup.py'' (containing instructions for how to install the package).
 
+\subsection{Optimization Algorithm Parameters} \label{sec:Appendix Optimization Algorithm Parameters}
+
+\subsubsection{GGV Diagram} \label{sec:Appendix GGV Diagram}
+The default supplied GGV diagram is shown in table \ref{tab:GGV Diagram}.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{v\_mps} & \textbf{ax\_max\_mps2} & \textbf{ay\_max\_mps2} \\ \hline
+        0.0             & 12.0                   & 12.0                   \\ \hline
+        4.0             & 12.0                   & 12.0                   \\ \hline
+        8.0             & 12.0                   & 12.0                   \\ \hline
+        12.0            & 12.0                   & 12.0                   \\ \hline
+        16.0            & 12.0                   & 12.0                   \\ \hline
+        20.0            & 12.0                   & 12.0                   \\ \hline
+        24.0            & 12.0                   & 12.0                   \\ \hline
+        28.0            & 12.0                   & 12.0                   \\ \hline
+        32.0            & 12.0                   & 12.0                   \\ \hline
+        36.0            & 12.0                   & 12.0                   \\ \hline
+        40.0            & 12.0                   & 12.0                   \\ \hline
+        44.0            & 12.0                   & 12.0                   \\ \hline
+        48.0            & 12.0                   & 12.0                   \\ \hline
+        52.0            & 12.0                   & 12.0                   \\ \hline
+        56.0            & 12.0                   & 12.0                   \\ \hline
+        60.0            & 12.0                   & 12.0                   \\ \hline
+        64.0            & 12.0                   & 12.0                   \\ \hline
+        68.0            & 12.0                   & 12.0                   \\ \hline
+        72.0            & 12.0                   & 12.0                   \\ \hline
+    \end{tabular}
+    \caption{The supplied GGV diagram (``ggv.csv''), also known as the performance envelope, shows the maximum acceleration the car can sustain in any horizontal direction when travelling at any speed.}
+    \label{tab:GGV Diagram}
+\end{table}
+
+\subsubsection{Ax Machines Array} \label{sec:Appendix Ax Machines Array}
+The default supplied ``Ax Machines Array'' is shown in table \ref{tab:Ax Machines Array}.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{v\_mps} & \textbf{ax\_max\_machines\_mps2} \\ \hline
+        0.0             & 5.3                              \\ \hline
+        4.0             & 5.3                              \\ \hline
+        8.0             & 5.3                              \\ \hline
+        12.0            & 5.3                              \\ \hline
+        16.0            & 5.3                              \\ \hline
+        20.0            & 5.3                              \\ \hline
+        24.0            & 5.3                              \\ \hline
+        28.0            & 5.3                              \\ \hline
+        32.0            & 5.3                              \\ \hline
+        36.0            & 5.3                              \\ \hline
+        40.0            & 5.1                              \\ \hline
+        44.0            & 5.0                              \\ \hline
+        48.0            & 4.6                              \\ \hline
+        52.0            & 4.1                              \\ \hline
+        56.0            & 3.7                              \\ \hline
+        60.0            & 2.7                              \\ \hline
+        66.0            & 2.2                              \\ \hline
+        72.0            & 1.5                              \\ \hline
+    \end{tabular}
+    \caption{The supplied ``ax\_max\_machines.csv'', containing an array with the longitudinal acceleration limits by the electrical motors.}
+    \label{tab:Ax Machines Array}
+\end{table}
+
 \subsection{Scrum} \label{sec:Scrum}
 Scrum is a framework which can be used by people, teams and organizations to solve problems through adaptive solutions. Four simple steps describe the process of Scrum which is lead by a Scrum Master:
 \begin{enumerate}

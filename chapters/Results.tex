@@ -106,11 +106,11 @@ During the run with the Acceleration track, the algorithm did 43 cycles with a t
     \label{tab:Results Acceleration Exploration}
 \end{table}
 
-Figure \ref{fig:Result Acceleration First Approaches} shows the first approach (a) and the second (b) approach side by side on the acceleration track, which was described in section \ref{sec:Dynamic Events}. The second approach calculated the middle points between the grouped four points used for the triangulation. In addition to the added points, a line was drawn to smoothen the track. Since the plot on (a) and (b) do not plot the start and the end cones (orange cones), they were just used as a basis for the final, more usable algorithm implementation seen in figure \ref{fig:Result Acceleration Final}. \todo{erklären was der erste und zweite approach war im vergleich zur finalen implementation}
+Figure \ref{fig:Result Acceleration First Approaches} shows the first approach (a) and the second (b) approach side by side on the acceleration track, which was described in section \ref{sec:Dynamic Events}. The second approach calculated the middle points between the grouped four points used for the triangulation. It is more usable than the (a) approach since it has more middle points to later interpolate the path. In addition to the added points, a line was drawn to smoothen the track. Since the plot on (a) and (b) do not plot the start and the end cones (orange cones), they were just used as a basis for the final, more usable algorithm implementation seen in figure \ref{fig:Result Acceleration Final}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Result_Acceleration_First_Approaches.png}
-    \caption{Image (a) shows the first approach on the Acceleration track, while image (b) shows the second approach drawing a middle line.}
+    \caption{Image (a) shows the first approach on the Acceleration track, while image (b) shows the second approach drawing a middle line. Approach (b) has middle point between the calculated triangulation and interpolates based on the middle points.}
     \label{fig:Result Acceleration First Approaches}
 \end{figure}
 \begin{figure}[H]
@@ -155,7 +155,7 @@ Figure \ref{fig:Result Skidpad Final} shows the application of the algorithm on 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{Result_Skidpad_final.png}
-    \caption{The calculation of the middle line on the Skidpad track.}
+    \caption{The calculation of the middle line on the Skidpad track. It is visible that it can handle the track with some problems while driving the straight line in the middle. The algorithm also made some shortcuts while driving into the straight line in the middle of the track.}
     \label{fig:Result Skidpad Final}
 \end{figure}
 
@@ -188,11 +188,11 @@ During the run with the ``Small Track'' track, the algorithm did 71 cycles with 
     \label{tab:Results Small Track Exploration}
 \end{table}
 
-Figure \ref{fig:Result Small Track First Approaches} shows the progression of the improvements from the first implementation of the algorithm (a) to the second improved version of the algorithm (b) and to the final implementation of the algorithm in figure \ref{fig:Result Small Track Final}. Again, for the first and second approaches, the implementation of publishing the start and end cones (big orange cones) was not made. \todo{unterschied erste und zweite implementation beschreiben}
+Figure \ref{fig:Result Small Track First Approaches} shows the progression of the improvements from the first implementation of the algorithm (a) to the second improved version of the algorithm (b) and to the final implementation of the algorithm in figure \ref{fig:Result Small Track Final}. Again, for the first and second approaches, the implementation of publishing the start and end cones (big orange cones) was not made. It is visible that the final implemenation can handle the curve on the bottom left corner more smoothly.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{Result_SmallTrack_First_Approaches.png}
-    \caption{The progression of the improvements of the first implementation (a) to the second implementation (b) is shown.}
+    \caption{The progression of the improvements of the first implementation (a) to the second implementation (b) is shown. The difference in the (a) and (b) implementation is the points between the calculated triangulation and the interpolated middle line.}
     \label{fig:Result Small Track First Approaches}
 \end{figure}
 \begin{figure}[H]

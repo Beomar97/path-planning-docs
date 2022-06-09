@@ -873,9 +873,114 @@ Additionally, the following outputs of the Optimization Algorithm with the Minim
     \label{fig:Results Modena 2019 Laps 2 Spline Normals}
 \end{figure}
 
-\section{Integration} \todo{add content}
-\begin{itemize}
-    \item Test im Python Plots
-    \item Simulationstool (Screenshot, evtl. folge von Screenshots), welche strecke (grafik simulationstool)
-\end{itemize}
+\section{Simulation Tool}
+As mentioned in section \ref{sec:Verification with Simulation Tool}, additional verification using the Simulation Tool was done. The setup of the different components with the Simulation Tool is depicted in figure \ref{fig:Verification Sim Tool Architecture} of the same section mentioned above. A Screenshot of the car driving in the Simulation Tool is seen in figure \ref{fig:Results Sim Tool Training Map Vehicle}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Sim_Tool_Training_Map_Vehicle.png}
+    \caption{The car driving on the ``Training Map'' track inside the Simulation Tool.}
+    \label{fig:Results Sim Tool Training Map Vehicle}
+\end{figure}
 
+\textbf{Acceleration Track}
+
+The Acceleration track was verified using the actual car's position from the Simulation Tool in combination with the Autopilot and the Path Planner.
+
+Looking at the Exploration Algorithm's output in figure \ref{fig:Results Sim Tool Acceleration Exploration}, everything seems adequate. 
+However, during the run in the Simulation Tool, the car would start steering out of the track when reaching the stopping zone marked by the orange cones, seen in the car's actual trajectory depicted in figure \ref{fig:Results Sim Tool Acceleration Overview} and in figure \ref{fig:Results Sim Tool Acceleration Trajectory}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{Results_Sim_Tool_Acceleration_Exploration.png}
+    \caption{The output of the Exploration Algorithm during the run on the Acceleration track using the Simulation Tool.}
+    \label{fig:Results Sim Tool Acceleration Exploration}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Sim_Tool_Acceleration_Overview.png}
+    \caption{The car's current conditions like steering, acceleration and GPS position are displayed on the left side. The car's trajectory in the Simulation Tool is displayed in the centre, while an overview of the track, the car's positions and the planned trajectories are displayed on the right side.}
+    \label{fig:Results Sim Tool Acceleration Overview}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{Results_Sim_Tool_Acceleration_Trajectory.png}
+    \caption{The actual trajectory of the car in the Simulation Tool during the run on the Acceleration track.}
+    \label{fig:Results Sim Tool Acceleration Trajectory}
+\end{figure}
+
+There seems to be an issue with how the orange cones are published in the end, as they are currently published per side, meaning first all orange cones on the right side are published and then all on the left side. Consequently, publishing the planned path in the stopping zone is delayed, which the Autopilot cannot currently handle well. An adjustment of the Cone Publisher's handle of the Acceleration track has to be made. On the other hand, as the track's layout and dimensions are well known beforehand, the planned path can be statically implemented. This step has been undertaken for the Skidpad track and will be shown later in this section.
+
+\textbf{Skidpad Track}
+
+The Cone Publisher is not yet configured correctly to work with the Skidpad track on the Simulation Tool. Therefore, using the Path Planning package, the vehicle fails to drive on the Skidpad track. The results with the current configurations are shown in figure \ref{fig:Results Sim Tool Skidpad Overview Actual}.
+However, using a static path, created explicitly for usage in the Simulation Tool, bypasses the need for a Path Planner on that track. The results with the static path can be seen in figure \ref{fig:Results Sim Tool Skidpad Overview Fixed}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Sim_Tool_Skidpad_Overview_Actual.png}
+    \caption{The car's conditions during the Simulation Tool run on the Skidpad track like its trajectory, steering and position when used in combination with the Path Planner.}
+    \label{fig:Results Sim Tool Skidpad Overview Actual}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Sim_Tool_Skidpad_Overview_Fixed.png}
+    \caption{The car's conditions during the Simulation Tool run on the Skidpad track like its trajectory, steering and position when used in combination with a static path.}
+    \label{fig:Results Sim Tool Skidpad Overview Fixed}
+\end{figure}
+
+It can be seen in the actual trajectory pictured in figure \ref{fig:Results Sim Tool Skidpad Trajectory} that the car handles the static path very well.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm]{Results_Sim_Tool_Skidpad_Trajectory.png}
+    \caption{The actual trajectory of the car in the Simulation Tool during the run on the Skidpad track using a static path.}
+    \label{fig:Results Sim Tool Skidpad Trajectory}
+\end{figure}
+
+\pagebreak
+
+\textbf{Training Map Track}
+
+The ``Training Map'' track is an example of a Track Drive track as described in section \ref{sec:Dynamic Events}. The vehicle cannot finish the entire track with the current configurations of the Path Planner, Cone Publisher and Autopilot, as seen in figure \ref{fig:Results Sim Tool Training Map Overview}. Currently, it seems that the publisher releases the cones too fast, resulting in the car being unable to keep up with the newly released path points. The difference between the car's current position and the released path points gets too big, resulting in the Autopilot not finding a nearby enough path point to drive to. Therefore, additional adjustments need to be made to attune all components with each other.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Sim_Tool_Training_Map_Overview.png}
+    \caption{The car's conditions during the Simulation Tool run on the Training Map track like its trajectory, steering and position when used in combination with the Path Planner.}
+    \label{fig:Results Sim Tool Training Map Overview}
+\end{figure}
+
+The case is already different by mocking the car's current position in the Path Planner, meaning that newly released path points get set as the current car position. The Exploration Algorithm can comprehensively map the middle line of the track as shown in figure \ref{fig:Results Sim Tool Training Map Exploration}. The algorithm can then achieve an entire track, as seen in figure \ref{fig:Results Sim Tool Training Map Overview Mocked}. The Optimization Algorithm can also handle the Exploration Algorithm's input and successfully creates an optimized path, a velocity and acceleration profile and a curvature profile. The results of the Optimization Algorithm can be seen in figures \ref{fig:Results Sim Tool Training Map Optimization}, \ref{fig:Results Sim Tool Training Map Optimization VelAcc Profile}, \ref{fig:Results Sim Tool Training Map Optimization Curv Profile} and \ref{fig:Results Sim Tool Training Map Optimization Spline Normals}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{Results_Sim_Tool_Training_Map_Overview_Mocked.png}
+    \caption{The car's conditions during the Simulation Tool run on the Training Map track like its trajectory, steering and position when used in combination with the Path Planner and the current position mocked.}
+    \label{fig:Results Sim Tool Training Map Overview Mocked}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{Results_Sim_Tool_Training_Map_Exploration.png}
+    \caption{The output of the Exploration Algorithm during the run on the Training Map track using the Simulation Tool with the current position mocked.}
+    \label{fig:Results Sim Tool Training Map Exploration}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm]{Results_Sim_Tool_Training_Map_Optimization.png}
+    \caption{The optimized path for the Training Map track on the Simulation Tool.}
+    \label{fig:Results Sim Tool Training Map Optimization}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11cm]{Results_Sim_Tool_Training_Map_Optimization_VelAcc_Profile.png}
+    \caption{The Velocity and Acceleration Profile for the optimized path on the Training Map track.}
+    \label{fig:Results Sim Tool Training Map Optimization VelAcc Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11cm]{Results_Sim_Tool_Training_Map_Optimization_Curv_Profile.png}
+    \caption{The Curvature Profile for the optimized path on the Training Map track.}
+    \label{fig:Results Sim Tool Training Map Optimization Curv Profile}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11cm]{Results_Sim_Tool_Training_Map_Optimization_Spline_Normals.png}
+    \caption{The Spline Normals for the optimized path on the Training Map track.}
+    \label{fig:Results Sim Tool Training Map Optimization Spline Normals}
+\end{figure}

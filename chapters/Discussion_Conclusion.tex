@@ -1,11 +1,8 @@
-A deep dive into the interpretation and validation of the results of the ``Exploration'' and ``Optimization'' algorithms from chapter \ref{ch:Results} will be taken. 
-
-%First, the problem definition will be revisited, and it will be examined how the mentioned objectives have been achieved or not. Secondly, the results of the Exploration Algorithm on the different tracks are compared side by side, and a conclusion on them will be made, followed by the interpretation of the results of the Optimization Algorithm.
-
+A deep dive into the interpretation and validation of the results of the ``Exploration'' and ``Optimization'' algorithms from chapter \ref{ch:Results} will be taken.
 Back in section \ref{sec:Problem Definition / Objective / Requirements}, the research and implementation of a new path planning module as part of the new autonomous system of \acrlong{zur} has been defined as the problem to solve. The objective has been defined as implementing path planning algorithms that can adapt to different tracks and driving scenarios. The goal of researching and implementing several path planning algorithms has been achieved by implementing both the Exploration Algorithm, which can calculate the middle line of a track, and the Optimization Algorithm, which then optimizes the calculated middle line to an optimal racing line. Both algorithms have proven usable on many tracks and driving scenarios, like ``Acceleration'' and ``Skidpad'' and tracks like ``Small Track'', ``Rand'' or ``Competition 2021''.
 
 \section{Exploration Algorithm}
-The discussion and conclusion of the Exploration Algorithm are described in the following section. Foremost, the results on the ``Acceleration'' track are interpreted. After that, several Track Drive tracks are compared and discussed. With these comparisons, the outcomes on the different tracks and the versatility of the algorithm can be explained. Lastly, the ``Skidpad'' track is interpreted based on the applied final implementation of the Exploration Algorithm.
+With the following comparisons, the outcomes on the different tracks and the versatility of the algorithm can be explained.
 
 Beginning with the interpretation of the ``Acceleration'' track shown in section \ref{sec:Results Acceleration Track}. At the first look, every algorithm version can be used to calculate the middle line of the ``Acceleration'' track. The advantage of the second implementation compared to the first one is in the additional points and smoothening of the path, which makes the results more precise and gives the car an improved path. The final implementation of the algorithm takes the approach of the second one further and creates additional points from the smoothened path to be even more precise so that the car can drive more accurately. Since the track is the most simplistic one mentioned, no more improvements could be made.
 
@@ -33,7 +30,7 @@ While the use of the IQP Handler makes it impractical because of its long comput
         \multicolumn{3}{|l|}{\textbf{Rand}}                                                                                                    \\ \hline
         \multicolumn{1}{|l|}{Shortest Path}         & \multicolumn{1}{l|}{- 24.32\%}        & \multicolumn{1}{l|}{+ 22.10\%}                   \\ \hline
         \multicolumn{1}{|l|}{Minimum Curvature IQP} & \multicolumn{1}{l|}{+ 121.62\%}       & \multicolumn{1}{l|}{- 4.07\%}                    \\ \hline
-        \multicolumn{3}{|l|}{\textbf{Competition 2021}}                                                                                               \\ \hline
+        \multicolumn{3}{|l|}{\textbf{Competition 2021}}                                                                                        \\ \hline
         \multicolumn{1}{|l|}{Shortest Path}         & \multicolumn{1}{l|}{- 16.67\%}        & \multicolumn{1}{l|}{+ 0.71\%}                    \\ \hline
         \multicolumn{1}{|l|}{Minimum Curvature IQP} & \multicolumn{1}{l|}{DNF*}             & \multicolumn{1}{l|}{DNF*}                        \\ \hline
         \multicolumn{3}{|l|}{\textbf{Garden Light}}                                                                                            \\ \hline

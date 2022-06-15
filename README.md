@@ -37,4 +37,4 @@ Eine weitere Verbesserung der Rennzeit könnte zudem erreicht werden, wenn diese
 Ein Wechsel zur minimaler Zeitzielsetzung könnte die geschätzten Rundenzeiten weiter verbessern, sobald alle notwendigen Parametern bereitgestellt werden können.
 Um die Berechnungszeiten zu reduzieren, könnte die Optimierung des Pfades für einzelne Teilstrecken bereits während der Erkundungsphase erfolgen.
 
-<img src="https://github.com/Beomar97/path-planning-docs/blob/master/img/Result_Rand_final.png" alt="Exploration Algorithm on the ''Rand'' track." height="300px"/> <img src="https://github.com/Beomar97/path-planning-docs/blob/master/img/Results_Optimization_Rand_Laps_2.png" alt="Optimization Algorithm on the ''Rand'' track." height="300px"/>
+<img src="https://github.com/Beomar97/path-planning-docs/blob/master/img/Result_Rand_final.png" alt="Exploration Algorithm on the ''Rand'' track." height="200px"/> <img src="https://github.com/Beomar97/path-planning-docs/blob/master/img/Results_Optimization_Rand_Laps_2.png" alt="Optimization Algorithm on the ''Rand'' track." height="200px"/>
